@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="fr" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JIGEENINDEX SENEGAL</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:wght@600;700;800&amp;display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            deep: '#0B3C5D',
+            violet: '#6C4AB6',
+            gold: '#F2C94C',
+            cream: '#FFF9EC',
+            light: '#F0F4F8',
+            deepLight: '#134A6B'
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['DM Sans', 'Arial', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    * { box-sizing: border-box; }
+    .app-shell { height: 100%; overflow-y: auto; overflow-x: hidden; width: 100%; }
+    .page { display: none; }
+    .page.active { display: block; }
+    .nav-link { cursor: pointer; transition: color 0.2s; }
+    .nav-link:hover, .nav-link.active-link { color: #F2C94C; }
+    .card-hover { transition: transform 0.25s, box-shadow 0.25s; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(11,60,93,0.15); }
+    .pillar-card { transition: all 0.3s; border-left: 4px solid transparent; position: relative; }
+    .pillar-card:hover { border-left-color: #6C4AB6; background: #f8f6ff; }
+    .tooltip-pillar { position: absolute; bottom: 100%; left: 0; background: #0B3C5D; color: white; padding: 10px 12px; border-radius: 8px; font-size: 0.7rem; width: 260px; pointer-events: none; opacity: 0; transition: opacity 0.2s; z-index: 20; margin-bottom: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+    .pillar-card:hover .tooltip-pillar { opacity: 1; }
+    .tooltip-region { position: absolute; background: #0B3C5D; color: white; padding: 12px 16px; border-radius: 8px; font-size: 13px; pointer-events: none; z-index: 50; opacity: 0; transition: opacity 0.2s; min-width: 180px; }
+    .tooltip-region.show { opacity: 1; }
+    .region-path { transition: fill 0.2s, opacity 0.2s; cursor: pointer; }
+    .region-path:hover { opacity: 0.8; stroke: #F2C94C; stroke-width: 2; }
+    .bar { transition: width 0.8s ease; }
+    .fade-in { animation: fadeIn 0.5s ease forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .radar-anim { animation: radarDraw 1.2s ease forwards; }
+    @keyframes radarDraw { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
+    .score-ring { transition: stroke-dashoffset 1.5s ease; }
+    .mobile-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
+    .mobile-menu.open { transform: translateX(0); }
+    input, select, textarea { font-family: 'DM Sans', Arial, sans-serif; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: #0B3C5D; min-width: 180px; border-radius: 12px; padding: 0.5rem 0; box-shadow: 0 12px 24px rgba(0,0,0,0.2); z-index: 60; }
+    .nav-dropdown:hover .dropdown-menu { display: block; }
+    .dropdown-menu a { display: block; padding: 0.5rem 1.2rem; color: white; font-size: 0.85rem; transition: 0.2s; cursor: pointer; }
+    .dropdown-menu a:hover { background: #6C4AB6; color: #F2C94C; }
+    .carousel-slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1s ease; }
+    .carousel-slide.active { opacity: 1; }
+  </style>
+</head>
+<body class="h-full font-body text-gray-800 bg-white">
+<div class="app-shell" id="app">
+
+  <!-- HEADER AVEC SOUS-MENUS -->
+  <header class="bg-deep text-white sticky top-0 z-40 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('accueil')">
+        <div class="w-9 h-9 rounded-full bg-violet flex items-center justify-center">
+          <span class="text-gold font-heading font-bold text-lg"><img style="width: 100px;height: auto;" src="jeader.jpg" alt=""></span>
+        </div>
+        <div class="leading-tight"><span class="font-heading font-bold text-base tracking-wide">JIGEENINDEX</span> <span class="block text-gold text-xs font-medium -mt-0.5">SÉNÉGAL</span></div>
+      </div>
+
+      <!-- Desktop navigation avec dropdowns -->
+      <nav class="hidden md:flex items-center gap-5 text-sm font-medium">
+        <span class="nav-link" data-page="accueil" onclick="navigateTo('accueil')">Accueil</span>
+
+        <div class="nav-dropdown">
+          <span class="nav-link flex items-center gap-1">Observatoire <i data-lucide="chevron-down" class="w-4 h-4"></i></span>
+          <div class="dropdown-menu">
+            <a onclick="navigateTo('dashboard')">Dashboard</a>
+            <a onclick="navigateTo('cartographie')">Cartographie</a>
+            <a onclick="navigateTo('indicateurs')">Indicateurs</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <span class="nav-link flex items-center gap-1">Ressources <i data-lucide="chevron-down" class="w-4 h-4"></i></span>
+          <div class="dropdown-menu">
+            <a onclick="navigateTo('bibliotheque')">Bibliothèque</a>
+            <a onclick="navigateTo('signalement')">Signalement</a>
+            <a onclick="navigateTo('actualites')">Actualités</a>
+            <a onclick="navigateTo('evenements')">Événements</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <span class="nav-link flex items-center gap-1">Engagement <i data-lucide="chevron-down" class="w-4 h-4"></i></span>
+          <div class="dropdown-menu">
+            <a onclick="navigateTo('partenaires')">Partenaires</a>
+            <a onclick="navigateTo('opportunites')">Opportunités</a>
+            <a onclick="navigateTo('about')">À propos</a>
+          </div>
+        </div>
+      </nav>
+      <button class="md:hidden text-white" onclick="toggleMobile()"><i data-lucide="menu" class="w-6 h-6"></i></button>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div id="mobileMenu" class="mobile-menu fixed inset-0 z-50 bg-deep text-white flex flex-col">
+    <div class="flex justify-between items-center px-6 h-16 border-b border-white/10"><span class="font-heading font-bold text-lg">Menu</span> <button onclick="toggleMobile()"><i data-lucide="x" class="w-6 h-6"></i></button></div>
+    <nav class="flex flex-col p-6 gap-4 text-lg font-medium overflow-y-auto">
+      <span onclick="navigateTo('accueil');toggleMobile()">Accueil</span>
+      <span class="font-semibold text-gold mt-2">Observatoire</span>
+      <span class="pl-4" onclick="navigateTo('dashboard');toggleMobile()">Dashboard</span>
+      <span class="pl-4" onclick="navigateTo('cartographie');toggleMobile()">Cartographie</span>
+      <span class="pl-4" onclick="navigateTo('indicateurs');toggleMobile()">Indicateurs</span>
+      <span class="font-semibold text-gold mt-2">Ressources</span>
+      <span class="pl-4" onclick="navigateTo('bibliotheque');toggleMobile()">Bibliothèque</span>
+      <span class="pl-4" onclick="navigateTo('signalement');toggleMobile()">Signalement</span>
+      <span class="pl-4" onclick="navigateTo('actualites');toggleMobile()">Actualités</span>
+      <span class="pl-4" onclick="navigateTo('evenements');toggleMobile()">Événements</span>
+      <span class="font-semibold text-gold mt-2">Engagement</span>
+      <span class="pl-4" onclick="navigateTo('partenaires');toggleMobile()">Partenaires</span>
+      <span class="pl-4" onclick="navigateTo('opportunites');toggleMobile()">Opportunités</span>
+      <span class="pl-4" onclick="navigateTo('about');toggleMobile()">À propos</span>
+    </nav>
+  </div>
+
+  <!-- LOGOS COMMISSIONS -->
+  <div class="bg-white border-b border-gray-100 py-3 hidden md:flex justify-center gap-8 items-center text-xs text-gray-500">
+    <div class="flex flex-col items-center"><i data-lucide="crown" class="w-5 h-5 text-violet"></i><span class="mt-1">JEADER</span></div>
+    <div class="flex flex-col items-center"><i data-lucide="users" class="w-5 h-5 text-violet"></i><span class="mt-1">JIGEENINDEER</span></div>
+    <div class="flex flex-col items-center"><i data-lucide="eye" class="w-5 h-5 text-violet"></i><span class="mt-1">CitiZen</span></div>
+    <div class="flex flex-col items-center"><i data-lucide="heart-handshake" class="w-5 h-5 text-violet"></i><span class="mt-1">Éducation</span></div>
+    <div class="flex flex-col items-center"><i data-lucide="briefcase" class="w-5 h-5 text-violet"></i><span class="mt-1">Économie</span></div>
+  </div>
+
+  <!-- PAGE ACCUEIL -->
+  <div id="page-accueil" class="page active">
+    <!-- Hero avec carrousel (remplacement des images par des dégradés) -->
+    <div class="relative h-[520px] overflow-hidden">
+      <div id="heroCarousel" class="relative w-full h-full">
+        <div class="carousel-slide active" style="background-image: linear-gradient(135deg, #0B3C5D, #6C4AB6), url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMwQjNDNUQiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkRlZmF1bHQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+JiM4MjM0OyBFeGNlbGxlbmNlIGTDqXMgZmVtbWVzPC90ZXh0Pjwvc3ZnPg==');"></div>
+        <div class="carousel-slide" style="background-image: linear-gradient(135deg, #6C4AB6, #0B3C5D), url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiM2QzRBQjYiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkRlZmF1bHQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+JiM4MjM0OyBQb3V2b2lyIGwnw6lnaXRlPC90ZXh0Pjwvc3ZnPg==');"></div>
+        <div class="carousel-slide" style="background-image: linear-gradient(135deg, #F2C94C, #0B3C5D), url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNGOUM5NEMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkRlZmF1bHQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+JiM4MjM0OyBJbm5vdmF0aW9uPC90ZXh0Pjwvc3ZnPg==');"></div>
+      </div>
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4 z-10">
+        <p class="text-gold font-medium tracking-widest uppercase mb-4">Observatoire National Digital</p>
+        <h1 class="font-heading text-4xl md:text-6xl font-extrabold leading-tight max-w-3xl">Mesurer pour mieux agir</h1>
+        <p class="text-white/90 text-lg md:text-xl max-w-2xl mt-4">JIGEENINDEX Sénégal : 55 indicateurs, 14 régions, 9 piliers pour l'égalité.</p>
+        <button onclick="navigateTo('dashboard')" class="mt-8 inline-flex items-center gap-2 bg-violet hover:bg-violet/80 px-8 py-3 rounded-full font-semibold shadow-lg transition">Voir l'Index <i data-lucide="arrow-right" class="w-5 h-5"></i></button>
+      </div>
+    </div>
+
+    <!-- Présentation + stats -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="font-heading text-3xl font-bold text-deep mb-4">Un outil de pilotage pour l'égalité</h2>
+          <p class="text-gray-600 leading-relaxed mb-6">JIGEENINDEX SENEGAL agrège 55 indicateurs socio-économiques répartis en 9 piliers thématiques pour produire un score synthétique par région. Conçu pour les décideurs, chercheurs et la société civile.</p>
+          <div class="flex flex-wrap gap-3"><span class="px-4 py-1.5 bg-violet/10 text-violet rounded-full text-sm font-medium">Open Data</span> <span class="px-4 py-1.5 bg-gold/20 text-deep rounded-full text-sm font-medium">14 régions</span> <span class="px-4 py-1.5 bg-deep/10 text-deep rounded-full text-sm font-medium">Temps réel</span></div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-light rounded-2xl p-6 text-center card-hover"><p class="text-4xl font-heading font-bold text-violet">55</p><p class="text-gray-500 text-sm mt-1">Indicateurs</p></div>
+          <div class="bg-light rounded-2xl p-6 text-center card-hover"><p class="text-4xl font-heading font-bold text-deep">14</p><p class="text-gray-500 text-sm mt-1">Régions</p></div>
+          <div class="bg-light rounded-2xl p-6 text-center card-hover"><p class="text-4xl font-heading font-bold text-gold">9</p><p class="text-gray-500 text-sm mt-1">Piliers</p></div>
+          <div class="bg-light rounded-2xl p-6 text-center card-hover"><p class="text-4xl font-heading font-bold text-violet">68</p><p class="text-gray-500 text-sm mt-1">Score national</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Piliers avec tooltips détaillés -->
+    <section class="bg-light py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <h2 class="font-heading text-3xl font-bold text-deep text-center mb-10">Les 9 piliers de l'Index</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" id="pillarPreview"></div>
+      </div>
+    </section>
+
+    <!-- À propos de la Commission JIGEENINDEER + réalisations -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+      <div class="bg-white rounded-2xl shadow-md border p-8 md:p-10">
+        <h2 class="font-heading text-3xl font-bold text-deep border-l-4 border-violet pl-4 mb-6">À propos de la Commission JIGEENINDEER</h2>
+        <div class="grid md:grid-cols-2 gap-10">
+          <div>
+            <p class="text-gray-600 leading-relaxed">Créée par JEADER, la Commission JIGEENINDEER est un programme innovant dédié à l’autonomisation des femmes entrepreneures au Sénégal. Il offre des formations, des ressources et un soutien financier pour les aider à développer leurs projets.</p>
+            <div class="mt-6 flex flex-wrap gap-2"><span class="bg-deep/5 text-deep px-3 py-1 rounded-full text-sm">+5000 Bénéficiaires</span><span class="bg-deep/5 text-deep px-3 py-1 rounded-full text-sm">+100 partenariats actifs</span><span class="bg-deep/5 text-deep px-3 py-1 rounded-full text-sm">50 Femmes primées</span></div>
+          </div>
+          <div>
+            <h3 class="font-semibold text-deep text-xl mb-2">Nos réalisations</h3>
+            <p class="text-gray-600">Le programme JIGEENINDEER a permis d’améliorer les compétences des jeunes entrepreneurs. Grâce à des formations ciblées, nous avons observé une augmentation significative de leur employabilité.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actualités + Événements -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 grid lg:grid-cols-2 gap-12">
+      <div>
+        <h2 class="font-heading text-2xl font-bold text-deep flex items-center gap-2"><i data-lucide="newspaper" class="w-6 h-6 text-violet"></i> Actualités récentes</h2>
+        <div class="space-y-4 mt-6">
+          <div class="border-l-4 border-violet pl-4"><p class="font-semibold">Rapport JIGEENINDEX 2024 publié</p><p class="text-sm text-gray-500">15 mars 2025 – Le score national atteint 68/100, Dakar en tête.</p></div>
+          <div class="border-l-4 border-gold pl-4"><p class="font-semibold">Atelier régional : données ouvertes pour les politiques publiques</p><p class="text-sm text-gray-500">5 avril 2025 – Thiès, réunion des acteurs ministériels.</p></div>
+          <div class="border-l-4 border-violet pl-4"><p class="font-semibold">Partenariat avec ONU Femmes pour la collecte de données communautaires</p><p class="text-sm text-gray-500">20 février 2025 – Extension dans 6 régions.</p></div>
+          <a href="#" onclick="navigateTo('actualites');return false;" class="text-violet text-sm font-medium inline-block mt-4">Voir toutes les actualités →</a>
+        </div>
+      </div>
+      <div>
+        <h2 class="font-heading text-2xl font-bold text-deep flex items-center gap-2"><i data-lucide="calendar" class="w-6 h-6 text-gold"></i> Événements à venir</h2>
+        <div class="space-y-4 mt-6">
+          <div class="bg-light p-4 rounded-xl"><p class="font-semibold">📅 12 Mai 2025 – Webinaire « Femmes et leadership économique »</p><p class="text-sm">Inscription gratuite – avec le Ministère de la Femme</p></div>
+          <div class="bg-light p-4 rounded-xl"><p class="font-semibold">📅 28-30 Juin 2025 – Forum JIGEENINDEX : « Données pour l’égalité »</p><p class="text-sm">Dakar, CICAD – Appel à communications ouvert</p></div>
+          <div class="bg-light p-4 rounded-xl"><p class="font-semibold">📅 8 Mars 2026 – Lancement de la campagne « Score régional participatif »</p><p class="text-sm">Dans les 14 régions du Sénégal</p></div>
+          <a href="#" onclick="navigateTo('evenements');return false;" class="text-violet text-sm font-medium mt-4 inline-block">Tous les événements →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Marketplace / Opportunités -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 mb-12">
+      <div class="bg-white rounded-2xl shadow-md border p-6">
+        <div class="flex justify-between items-center"><h2 class="font-heading text-2xl font-bold text-deep"><i data-lucide="store" class="inline w-6 h-6 text-gold mr-2"></i> Opportunités de collaboration</h2><button onclick="navigateTo('opportunites')" class="text-violet font-medium text-sm">Voir toutes les offres →</button></div>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-5 mt-6">
+          <div class="border rounded-xl p-4 hover:shadow transition"><div class="text-gold text-lg mb-1">📢 Appel à projets</div><p class="font-semibold">Fonds pour l’autonomisation économique</p><p class="text-xs text-gray-500">Date limite : 30 juin 2025</p><button class="mt-2 text-xs text-violet font-medium">Postuler</button></div>
+          <div class="border rounded-xl p-4 hover:shadow transition"><div class="text-gold text-lg mb-1">👩‍💻 Offre de mission</div><p class="font-semibold">Data Analyst pour l’observatoire</p><p class="text-xs text-gray-500">CDD – Dakar</p><button class="mt-2 text-xs text-violet font-medium">Détails</button></div>
+          <div class="border rounded-xl p-4 hover:shadow transition"><div class="text-gold text-lg mb-1">🤝 Partenariat</div><p class="font-semibold">Appel à partenaires techniques pour la collecte mobile</p><button class="mt-2 text-xs text-violet font-medium">Rejoindre</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="page-dashboard" class="page">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div><h1 class="font-heading text-3xl font-bold text-deep">Dashboard National</h1><p class="text-gray-500 mt-1">Vue d'ensemble de l'Index JIGEEN — Données 2024</p></div>
+        <div class="flex gap-3">
+          <select id="regionFilter" onchange="updateDashboard()" class="border border-gray-200 rounded-lg px-4 py-2 text-sm bg-white focus:ring-2 focus:ring-violet/30 focus:border-violet outline-none">
+            <option value="national">🇸🇳 National</option>
+          </select>
+          <select id="yearFilter" onchange="updateDashboard()" class="border border-gray-200 rounded-lg px-4 py-2 text-sm bg-white focus:ring-2 focus:ring-violet/30 focus:border-violet outline-none">
+            <option>2024</option><option>2023</option><option>2022</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-deep rounded-2xl p-8 text-white text-center col-span-1 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-violet/20 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          <p class="text-sm text-white/70 mb-2">Score Global JIGEENINDEX</p>
+          <div class="relative inline-block"><svg width="140" height="140" class="mx-auto"><circle cx="70" cy="70" r="58" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10" /><circle id="scoreRing" cx="70" cy="70" r="58" fill="none" stroke="#F2C94C" stroke-width="10" stroke-linecap="round" stroke-dasharray="364.4" stroke-dashoffset="364.4" transform="rotate(-90 70 70)" class="score-ring" /></svg><span id="scoreText" class="absolute inset-0 flex items-center justify-center font-heading text-4xl font-bold text-gold">68</span></div>
+          <p class="text-white/60 text-xs mt-3" id="scoreLabel">National • 2024</p>
+        </div>
+        <div class="col-span-2 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm"><h3 class="font-semibold text-deep mb-4 flex items-center gap-2"><i data-lucide="bar-chart-3" class="w-5 h-5 text-violet"></i> Scores par pilier</h3><div id="pillarBars" class="space-y-3"></div></div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm"><h3 class="font-semibold text-deep mb-4 flex items-center gap-2"><i data-lucide="activity" class="w-5 h-5 text-violet"></i> Radar des piliers</h3><div class="flex justify-center"><svg id="radarChart" width="300" height="300" class="radar-anim"></svg></div></div>
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm"><h3 class="font-semibold text-deep mb-4 flex items-center gap-2"><i data-lucide="trending-up" class="w-5 h-5 text-violet"></i> Évolution nationale</h3><svg id="lineChart" width="100%" height="240" viewbox="0 0 500 240"></svg></div>
+      </div>
+      <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-8"><h3 class="font-semibold text-deep mb-4 flex items-center gap-2"><i data-lucide="git-compare" class="w-5 h-5 text-violet"></i> Comparaison régionale</h3><div id="regionComparison" class="space-y-2"></div></div>
+    </div>
+  </div>
+
+  <!-- CARTOGRAPHIE (avec avertissement) -->
+  <div id="page-cartographie" class="page">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <h1 class="font-heading text-3xl font-bold text-deep mb-2">Cartographie régionale</h1>
+      <p class="text-gray-500 mb-4">Score JIGEENINDEX par région du Sénégal (illustration – formes non contractuelles)</p>
+      <div class="grid lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm relative">
+          <div id="mapTooltip" class="tooltip-region"></div>
+          <svg id="senegalMap" viewbox="0 0 600 450" class="w-full"></svg>
+        </div>
+        <div>
+          <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-4"><h3 class="font-semibold text-deep mb-3">Légende</h3><div class="space-y-2 text-sm"><div class="flex items-center gap-2"><span class="w-5 h-3 rounded" style="background:#2d6a4f"></span> 75+ Excellent</div><div class="flex items-center gap-2"><span class="w-5 h-3 rounded" style="background:#52b788"></span> 65–74 Bon</div><div class="flex items-center gap-2"><span class="w-5 h-3 rounded" style="background:#f4a261"></span> 55–64 Moyen</div><div class="flex items-center gap-2"><span class="w-5 h-3 rounded" style="background:#e76f51"></span> &lt;55 Faible</div></div></div>
+          <div id="regionDetail" class="bg-light rounded-2xl p-6"><p class="text-gray-400 text-sm text-center">Survolez une région sur la carte</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INDICATEURS -->
+  <div id="page-indicateurs" class="page">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <h1 class="font-heading text-3xl font-bold text-deep mb-2">Indicateurs</h1>
+      <p class="text-gray-500 mb-6">55 indicateurs répartis en 9 piliers thématiques</p>
+      <div class="flex flex-wrap gap-3 mb-6">
+        <select id="pillarFilter" onchange="filterIndicators()" class="border border-gray-200 rounded-lg px-4 py-2 text-sm bg-white focus:ring-2 focus:ring-violet/30 outline-none"><option value="all">Tous les piliers</option></select>
+        <select id="indRegionFilter" onchange="filterIndicators()" class="border border-gray-200 rounded-lg px-4 py-2 text-sm bg-white focus:ring-2 focus:ring-violet/30 outline-none"><option value="national">National</option></select>
+        <div class="relative flex-1 min-w-[200px]"><i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i><input type="text" id="indSearch" oninput="filterIndicators()" placeholder="Rechercher un indicateur…" class="w-full border border-gray-200 rounded-lg pl-10 pr-4 py-2 text-sm bg-white focus:ring-2 focus:ring-violet/30 outline-none"></div>
+      </div>
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden"><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-deep text-white"><tr><th class="text-left px-4 py-3 font-medium">Indicateur</th><th class="text-left px-4 py-3 font-medium">Pilier</th><th class="text-center px-4 py-3 font-medium">Score</th><th class="px-4 py-3 font-medium text-left" style="min-width:140px">Niveau</th></tr></thead><tbody id="indicatorTable"></tbody></table></div></div>
+    </div>
+  </div>
+
+  <!-- SIGNALEMENT (avec réinitialisation) -->
+  <div id="page-signalement" class="page">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-8">
+      <div class="text-center mb-8"><div class="w-16 h-16 bg-violet/10 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="shield" class="w-8 h-8 text-violet"></i></div><h1 class="font-heading text-3xl font-bold text-deep mb-2">Signalement confidentiel</h1><p class="text-gray-500">Votre témoignage est anonyme et sécurisé. Il contribue à améliorer les données de l'observatoire.</p></div>
+      <div id="reportFormContainer">
+        <form id="reportForm" onsubmit="submitReport(event)" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-5">
+          <div><label for="reportType" class="block text-sm font-medium text-deep mb-1.5">Type de signalement</label><select id="reportType" required class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-violet/30 focus:border-violet outline-none"><option value="">Sélectionnez…</option><option>Violence basée sur le genre</option><option>Besoin d'assistance</option><option>Discrimination</option><option>Autre</option></select></div>
+          <div><label for="reportRegion" class="block text-sm font-medium text-deep mb-1.5">Région</label><select id="reportRegion" required class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-violet/30 focus:border-violet outline-none"></select></div>
+          <div><label for="reportDesc" class="block text-sm font-medium text-deep mb-1.5">Description</label><textarea id="reportDesc" rows="4" required placeholder="Décrivez la situation…" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-violet/30 focus:border-violet outline-none resize-none"></textarea></div>
+          <div class="flex items-start gap-2 text-xs text-gray-400"><i data-lucide="lock" class="w-4 h-4 mt-0.5 flex-shrink-0"></i><span>Vos données sont traitées de manière anonyme et confidentielle.</span></div>
+          <button type="submit" class="w-full bg-violet hover:bg-violet/90 text-white py-3 rounded-xl font-semibold transition flex items-center justify-center gap-2"><i data-lucide="send" class="w-5 h-5"></i> Envoyer le signalement</button>
+          <div id="reportSuccess" class="hidden text-center py-4"><div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3"><i data-lucide="check-circle" class="w-6 h-6 text-green-600"></i></div><p class="font-semibold text-deep">Signalement envoyé</p><p class="text-sm text-gray-500 mt-1">Merci pour votre contribution.</p><button type="button" onclick="resetReportForm()" class="mt-4 text-violet text-sm font-medium underline">➕ Nouveau signalement</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- BIBLIOTHÈQUE -->
+  <div id="page-bibliotheque" class="page">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <h1 class="font-heading text-3xl font-bold text-deep mb-2">Bibliothèque</h1>
+      <p class="text-gray-500 mb-6">Rapports, études et publications de l'observatoire</p>
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button data-cat="all" onclick="filterDocs('all')" class="doc-filter px-4 py-1.5 rounded-full text-sm font-medium bg-deep text-white">Tous</button>
+        <button data-cat="rapport" onclick="filterDocs('rapport')" class="doc-filter px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Rapports</button>
+        <button data-cat="etude" onclick="filterDocs('etude')" class="doc-filter px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Études</button>
+        <button data-cat="policy" onclick="filterDocs('policy')" class="doc-filter px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Policy Briefs</button>
+      </div>
+      <div id="docGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </div>
+  </div>
+
+  <!-- PARTENAIRES -->
+  <div id="page-partenaires" class="page">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <h1 class="font-heading text-3xl font-bold text-deep mb-2">Partenaires</h1>
+      <p class="text-gray-500 mb-8">Institutions et organisations soutenant l'observatoire</p>
+      <div id="partnersGrid"></div>
+    </div>
+  </div>
+
+  <!-- ACTUALITÉS -->
+  <div id="page-actualites" class="page"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-12"><h1 class="font-heading text-3xl font-bold text-deep">Actualités</h1><div class="grid md:grid-cols-2 gap-6 mt-8"><div class="border rounded-xl p-5"><div class="bg-violet/10 w-12 h-12 rounded-full flex items-center justify-center mb-3"><i data-lucide="newspaper" class="text-violet"></i></div><h3 class="font-bold">Rapport annuel 2024 disponible</h3><p class="text-gray-500 text-sm mt-1">Analyse complète des 55 indicateurs, tendances nationales et recommandations.</p><span class="text-xs text-gold">15 mars 2025</span></div><div class="border rounded-xl p-5"><div class="bg-violet/10 w-12 h-12 rounded-full flex items-center justify-center mb-3"><i data-lucide="megaphone" class="text-violet"></i></div><h3 class="font-bold">Atelier régional à Thiès</h3><p class="text-gray-500 text-sm mt-1">Renforcement des capacités des acteurs locaux sur l'utilisation des données.</p><span class="text-xs text-gold">5 avril 2025</span></div><div class="border rounded-xl p-5"><div class="bg-violet/10 w-12 h-12 rounded-full flex items-center justify-center mb-3"><i data-lucide="handshake" class="text-violet"></i></div><h3 class="font-bold">Nouveau partenariat avec ONU Femmes</h3><p class="text-gray-500 text-sm mt-1">Collecte de données communautaires dans 6 régions.</p><span class="text-xs text-gold">20 février 2025</span></div><div class="border rounded-xl p-5"><div class="bg-violet/10 w-12 h-12 rounded-full flex items-center justify-center mb-3"><i data-lucide="book-open" class="text-violet"></i></div><h3 class="font-bold">Publication : Étude sur l'entrepreneuriat féminin</h3><p class="text-gray-500 text-sm mt-1">Barrières et leviers d'accès au financement.</p><span class="text-xs text-gold">10 janvier 2025</span></div></div></div></div>
+
+  <!-- ÉVÉNEMENTS -->
+  <div id="page-evenements" class="page"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-12"><h1 class="font-heading text-3xl font-bold text-deep">Événements à venir</h1><div class="space-y-5 mt-8"><div class="bg-light p-5 rounded-xl flex justify-between items-center"><div><p class="font-semibold">📅 12 Mai 2025 – Webinaire « Femmes et leadership économique »</p><p class="text-sm">Organisé par le Ministère de la Femme et JIGEENINDEX</p></div><button class="bg-violet/20 text-violet px-4 py-1 rounded-full text-sm">S'inscrire</button></div><div class="bg-light p-5 rounded-xl flex justify-between items-center"><div><p class="font-semibold">📅 28-30 Juin 2025 – Forum JIGEENINDEX : « Données pour l'égalité »</p><p class="text-sm">Dakar, CICAD – Appel à communications ouvert</p></div><button class="bg-violet/20 text-violet px-4 py-1 rounded-full text-sm">Soumettre</button></div><div class="bg-light p-5 rounded-xl flex justify-between items-center"><div><p class="font-semibold">📅 8 Mars 2026 – Lancement de la campagne « Score régional participatif »</p><p class="text-sm">Dans les 14 régions du Sénégal</p></div><button class="bg-violet/20 text-violet px-4 py-1 rounded-full text-sm">Participer</button></div></div></div></div>
+
+  <!-- OPPORTUNITÉS -->
+  <div id="page-opportunites" class="page"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-12"><h1 class="font-heading text-3xl font-bold text-deep">Marketplace – Opportunités d’affaires & collaborations</h1><div class="grid md:grid-cols-2 gap-6 mt-8"><div class="border rounded-xl p-6"><i data-lucide="briefcase" class="text-gold w-8 h-8"></i><h3 class="font-bold text-xl mt-2">Appel d’offres : développement d’une API publique</h3><p class="text-gray-600 mt-1">L’observatoire recherche un prestataire pour l’ouverture des données. Budget : 8M FCFA.</p><button class="mt-3 bg-deep text-white px-4 py-2 rounded-lg text-sm">Postuler</button></div><div class="border rounded-xl p-6"><i data-lucide="users" class="text-gold w-8 h-8"></i><h3 class="font-bold text-xl mt-2">Recherche partenaires locaux – 14 régions</h3><p class="text-gray-600">Pour la collecte de données terrain et la sensibilisation.</p><button class="mt-3 bg-deep text-white px-4 py-2 rounded-lg text-sm">Devenir partenaire</button></div><div class="border rounded-xl p-6"><i data-lucide="handshake" class="text-gold w-8 h-8"></i><h3 class="font-bold text-xl mt-2">Incubateur "ELLES Innovent"</h3><p class="text-gray-600">Accompagnement et financement de startups féminines dans l’agritech.</p><button class="mt-3 bg-deep text-white px-4 py-2 rounded-lg text-sm">Candidater</button></div><div class="border rounded-xl p-6"><i data-lucide="globe" class="text-gold w-8 h-8"></i><h3 class="font-bold text-xl mt-2">Consultant·e en analyse de données</h3><p class="text-gray-600">Mission de 6 mois pour la mise à jour des indicateurs.</p><button class="mt-3 bg-deep text-white px-4 py-2 rounded-lg text-sm">Postuler</button></div></div></div></div>
+
+  <!-- À PROPOS -->
+  <div id="page-about" class="page"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-12"><h1 class="font-heading text-3xl font-bold text-deep">À propos de JIGEENINDEX SENEGAL</h1><div class="prose max-w-none mt-6"><p>JIGEENINDEX SENEGAL est la plateforme digitale de référence pour mesurer, comprendre et améliorer les conditions des femmes au Sénégal. Portée par JEADER – Commission JIGEENINDEER, elle a été créée pour répondre à un besoin crucial : disposer de données fiables, accessibles et actualisées afin de suivre les progrès en matière de droits, de protection et d’autonomisation des femmes.</p><p>La plateforme centralise les informations existantes, développe un Index national sur l’évolution des conditions des femmes et propose des outils interactifs pour les décideurs, chercheurs, ONG et citoyens. Elle permet de visualiser les indicateurs par région, de signaler des violences ou besoins, et de renforcer la redevabilité des politiques publiques.</p><div class="grid grid-cols-3 gap-4 mt-8"><div class="text-center"><div class="text-4xl font-bold text-violet">9</div><div>Piliers stratégiques</div></div><div class="text-center"><div class="text-4xl font-bold text-violet">55</div><div>Indicateurs suivis</div></div><div class="text-center"><div class="text-4xl font-bold text-violet">14</div><div>Régions couvertes</div></div></div></div></div></div>
+
+  <!-- FOOTER -->
+  <footer class="bg-deep text-white/70 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+      <div class="grid sm:grid-cols-3 gap-8 mb-8">
+        <div><div class="flex items-center gap-2 mb-3"><div class="w-8 h-8 rounded-full bg-violet flex items-center justify-center"><span class="text-gold font-heading font-bold"><img style="width: 100px;height: auto;" src="jeader.jpg" alt=""></span></div><span class="font-heading font-bold text-white">JIGEENINDEX</span></div><p class="text-sm leading-relaxed">Observatoire digital national des conditions des femmes au Sénégal. Données ouvertes pour l'action.</p></div>
+        <div><h4 class="text-white font-semibold mb-3 text-sm">Navigation</h4><div class="space-y-1.5 text-sm"><p class="cursor-pointer hover:text-gold transition" onclick="navigateTo('dashboard')">Dashboard</p><p class="cursor-pointer hover:text-gold transition" onclick="navigateTo('cartographie')">Cartographie</p><p class="cursor-pointer hover:text-gold transition" onclick="navigateTo('indicateurs')">Indicateurs</p><p class="cursor-pointer hover:text-gold transition" onclick="navigateTo('bibliotheque')">Bibliothèque</p></div></div>
+        <div><h4 class="text-white font-semibold mb-3 text-sm">Contact</h4><p class="text-sm">info@jigeenindex.sn</p><p class="text-sm">Dakar, Sénégal</p><div class="flex gap-3 mt-3"><div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-violet transition cursor-pointer"><i data-lucide="twitter" class="w-4 h-4"></i></div><div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-violet transition cursor-pointer"><i data-lucide="facebook" class="w-4 h-4"></i></div><div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-violet transition cursor-pointer"><i data-lucide="linkedin" class="w-4 h-4"></i></div></div></div>
+      </div>
+      <div class="border-t border-white/10 pt-6 text-center text-xs text-white/40">© 2026 JIGEENINDEX SENEGAL — Prototype / Démo. Données fictives à titre illustratif.</div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // ==================== DONNÉES ====================
+  const PILLARS = [
+    { name: 'Inclusion sociale & pauvreté', icon: 'users', score: 62, color: '#e76f51', desc: 'Taux de pauvreté monétaire, droits de propriété, Code de la Famille, autonomie financière.' },
+    { name: 'Alimentation', icon: 'utensils', score: 58, color: '#f4a261', desc: 'Sous-alimentation, insécurité alimentaire, anémie, accès à l\'alimentation.' },
+    { name: 'Santé & protection sociale', icon: 'heart-pulse', score: 70, color: '#2a9d8f', desc: 'Mortalité maternelle, fécondité adolescente, planification familiale, VBG, MGF, protection sociale.' },
+    { name: 'Éducation de qualité', icon: 'graduation-cap', score: 65, color: '#264653', desc: 'Scolarisation filles, alphabétisation, NEET, achèvement secondaire, filières scientifiques.' },
+    { name: 'Inclusion politique & gouvernance', icon: 'landmark', score: 52, color: '#6C4AB6', desc: 'Femmes maires, parlementaires, participation électorale, postes ministériels.' },
+    { name: 'Eau, assainissement & énergie', icon: 'droplet', score: 67, color: '#0B3C5D', desc: 'Accès eau potable, assainissement, énergie propre, temps de collecte, satisfaction.' },
+    { name: 'Travail décent & croissance', icon: 'briefcase', score: 61, color: '#e9c46a', desc: 'Égalité salariale, inclusion financière, taux d\'activité, emploi formel.' },
+    { name: 'Innovation & infrastructures', icon: 'microchip', score: 58, color: '#9b5de5', desc: 'Accès financements, paiements digitaux, internet, entrepreneuriat, accès à la terre.' },
+    { name: 'Justice & réduction inégalités', icon: 'scale', score: 63, color: '#52b788', desc: 'Autonomie personnelle, assistance juridique, temps traitement VBG, instruments internationaux.' }
+  ];
+
+  const REGIONS = [
+    { name: 'Dakar', score: 78, pop: '3.9M', path: 'M95,235 L115,220 L130,230 L120,250 L100,248Z' },
+    { name: 'Thiès', score: 71, pop: '2.1M', path: 'M130,220 L160,210 L170,235 L145,250 L130,240Z' },
+    { name: 'Diourbel', score: 64, pop: '1.8M', path: 'M170,200 L200,190 L210,215 L185,230 L170,220Z' },
+    { name: 'Fatick', score: 62, pop: '0.9M', path: 'M155,250 L185,240 L195,265 L170,275 L155,260Z' },
+    { name: 'Kaolack', score: 60, pop: '1.1M', path: 'M195,235 L225,225 L240,255 L215,265 L195,255Z' },
+    { name: 'Kaffrine', score: 57, pop: '0.7M', path: 'M240,220 L280,210 L290,240 L260,250 L240,240Z' },
+    { name: 'Saint-Louis', score: 68, pop: '1.1M', path: 'M130,120 L200,100 L210,160 L170,180 L130,170Z' },
+    { name: 'Louga', score: 63, pop: '1.0M', path: 'M160,160 L210,145 L220,185 L185,200 L160,190Z' },
+    { name: 'Matam', score: 55, pop: '0.7M', path: 'M280,90 L350,75 L370,130 L310,150 L280,130Z' },
+    { name: 'Tambacounda', score: 53, pop: '0.8M', path: 'M310,160 L400,140 L420,220 L340,240 L310,210Z' },
+    { name: 'Kédougou', score: 50, pop: '0.2M', path: 'M400,250 L450,230 L470,280 L430,300 L400,290Z' },
+    { name: 'Kolda', score: 56, pop: '0.8M', path: 'M310,290 L370,275 L385,320 L340,335 L310,320Z' },
+    { name: 'Sédhiou', score: 58, pop: '0.5M', path: 'M265,300 L310,290 L320,330 L285,340 L265,325Z' },
+    { name: 'Ziguinchor', score: 66, pop: '0.6M', path: 'M210,310 L265,295 L275,340 L235,355 L210,340Z' }
+  ];
+
+  // Indicateurs basés sur les piliers (score dérivé)
+  const INDICATORS = [];
+  const indMap = {
+    "Inclusion sociale & pauvreté": ["Taux de pauvreté monétaire", "Droits de propriété", "Code de la Famille", "Autonomie financière"],
+    "Alimentation": ["Sous-alimentation", "Insécurité alimentaire", "Anémie", "Accès alimentation"],
+    "Santé & protection sociale": ["Mortalité maternelle", "Fécondité adolescente", "Planification familiale", "Accouchements assistés", "MGF", "Protection sociale"],
+    "Éducation de qualité": ["Scolarisation filles", "Alphabétisation", "NEET", "Achèvement secondaire", "Filières scientifiques"],
+    "Inclusion politique & gouvernance": ["Femmes maires", "Femmes parlementaires", "Participation électorale", "Postes ministériels"],
+    "Eau, assainissement & énergie": ["Accès eau potable", "Assainissement", "Énergie propre", "Temps collecte eau"],
+    "Travail décent & croissance": ["Égalité salariale", "Inclusion financière", "Taux d'activité", "Emploi formel"],
+    "Innovation & infrastructures": ["Accès financements", "Paiements digitaux", "Accès internet", "Entrepreneuriat"],
+    "Justice & réduction inégalités": ["Autonomie personnelle", "Assistance juridique", "Traitement plaintes VBG", "Instruments internationaux"]
+  };
+  PILLARS.forEach(p => {
+    let items = indMap[p.name] || ["Indicateur exemple"];
+    items.forEach(item => {
+      // Score autour de celui du pilier ± 10
+      let base = p.score;
+      let delta = Math.floor(Math.random() * 21) - 10;
+      let score = Math.min(100, Math.max(30, base + delta));
+      INDICATORS.push({ name: item, pillar: p.name, score: score });
+    });
+  });
+
+  const DOCS = [
+    { title: 'Rapport annuel JIGEENINDEX 2024', cat: 'rapport', date: 'Mars 2024', pages: 84 },
+    { title: 'Étude sur l\'accès à l\'éducation des filles', cat: 'etude', date: 'Jan 2024', pages: 42 },
+    { title: 'Policy Brief — Violences basées sur le genre', cat: 'policy', date: 'Fév 2024', pages: 12 },
+    { title: 'Analyse régionale Casamance', cat: 'rapport', date: 'Déc 2023', pages: 56 },
+    { title: 'Étude entrepreneuriat féminin', cat: 'etude', date: 'Nov 2023', pages: 38 },
+    { title: 'Policy Brief — Santé maternelle', cat: 'policy', date: 'Oct 2023', pages: 10 }
+  ];
+
+  const PARTNERS = [
+    { cat: 'Public', items: ['Ministère de la Femme', 'ANSD', 'Ministère de la Santé', 'Assemblée Nationale'] },
+    { cat: 'ONG', items: ['ONU Femmes', 'UNICEF', 'Action Aid', 'Plan International'] },
+    { cat: 'Privé', items: ['Fondation Sonatel', 'Ecobank Foundation', 'DER/FJ'] }
+  ];
+
+  // Fonctions globales
+  let currentRegionForHistory = 'national';
+
+  function navigateTo(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-link'));
+    document.querySelectorAll(`[data-page="${page}"]`).forEach(l => l.classList.add('active-link'));
+    document.getElementById('app').scrollTop = 0;
+    if (page === 'dashboard') initDashboard();
+    if (page === 'cartographie') initMap();
+    if (page === 'indicateurs') initIndicators();
+    if (page === 'bibliotheque') initDocs();
+    if (page === 'partenaires') initPartners();
+    lucide.createIcons();
+  }
+
+  function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('open'); }
+
+  function initPillarPreview() {
+    const c = document.getElementById('pillarPreview');
+    if (!c) return;
+    c.innerHTML = PILLARS.map(p => `
+      <div class="pillar-card bg-white rounded-xl p-5 flex items-center gap-4 shadow-sm cursor-pointer relative" onclick="navigateTo('dashboard')">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background:${p.color}15">
+          <i data-lucide="${p.icon}" class="w-6 h-6" style="color:${p.color}"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="font-semibold text-deep text-sm">${p.name}</p>
+          <div class="flex items-center gap-2 mt-1">
+            <div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full rounded-full" style="width:${p.score}%;background:${p.color}"></div></div>
+            <span class="text-xs font-bold" style="color:${p.color}">${p.score}</span>
+          </div>
+        </div>
+        <div class="tooltip-pillar">${p.desc}</div>
+      </div>
+    `).join('');
+    lucide.createIcons();
+  }
+
+  let slideIndex = 0;
+  function startCarousel() {
+    const slides = document.querySelectorAll('#heroCarousel .carousel-slide');
+    if (!slides.length) return;
+    setInterval(() => {
+      slides[slideIndex].classList.remove('active');
+      slideIndex = (slideIndex + 1) % slides.length;
+      slides[slideIndex].classList.add('active');
+    }, 5000);
+  }
+
+  function getScoreColor(s) { return s >= 75 ? '#2d6a4f' : s >= 65 ? '#52b788' : s >= 55 ? '#f4a261' : '#e76f51'; }
+
+  // Fonctions Dashboard (avec historique par région)
+  function initDashboard() {
+    const rf = document.getElementById('regionFilter');
+    if (rf && rf.children.length === 1) {
+      REGIONS.forEach(r => {
+        const o = document.createElement('option');
+        o.value = r.name;
+        o.textContent = r.name;
+        rf.appendChild(o);
+      });
+    }
+    updateDashboard();
+  }
+
+  function updateDashboard() {
+    const region = document.getElementById('regionFilter')?.value || 'national';
+    const year = document.getElementById('yearFilter')?.value || '2024';
+    currentRegionForHistory = region;
+    const yearOffset = year === '2023' ? -3 : year === '2022' ? -7 : 0;
+    const isNational = region === 'national';
+    const regionData = isNational ? null : REGIONS.find(r => r.name === region);
+    const baseScore = isNational ? 68 : (regionData ? regionData.score : 68);
+    let score = Math.max(30, Math.min(95, baseScore + yearOffset));
+    const ring = document.getElementById('scoreRing');
+    if (ring) {
+      const circ = 2 * Math.PI * 58;
+      ring.style.strokeDasharray = circ;
+      ring.style.strokeDashoffset = circ - (circ * score / 100);
+    }
+    document.getElementById('scoreText').textContent = score;
+    document.getElementById('scoreLabel').textContent = (isNational ? 'National' : region) + ' • ' + year;
+
+    // Mise à jour des barres des piliers (avec variation selon année)
+    const pb = document.getElementById('pillarBars');
+    if (pb) {
+      pb.innerHTML = PILLARS.map(p => {
+        let ps = p.score + yearOffset;
+        ps = Math.max(30, Math.min(95, ps));
+        return `<div class="flex items-center gap-3"><span class="text-xs font-medium text-gray-600 w-36 truncate">${p.name}</span><div class="flex-1 h-5 bg-gray-100 rounded-full overflow-hidden"><div class="bar h-full rounded-full flex items-center justify-end pr-2" style="width:${ps}%;background:${p.color}"><span class="text-white text-xs font-bold">${ps}</span></div></div></div>`;
+      }).join('');
+    }
+
+    drawRadar(yearOffset);
+    drawLineChart(score, region);
+    drawRegionComparison(yearOffset);
+  }
+
+  function drawRadar(yearMod) {
+    const svg = document.getElementById('radarChart'); if (!svg) return;
+    const cx = 150, cy = 150, r = 110;
+    const n = PILLARS.length;
+    let html = '';
+    // Grille
+    for (let g = 1; g <= 4; g++) {
+      const gr = r * g / 4;
+      let pts = '';
+      for (let i = 0; i < n; i++) {
+        const a = (Math.PI * 2 * i / n) - Math.PI / 2;
+        pts += `${cx + gr * Math.cos(a)},${cy + gr * Math.sin(a)} `;
+      }
+      html += `<polygon points="${pts}" fill="none" stroke="#e5e7eb" stroke-width="1"/>`;
+    }
+    // Axes
+    for (let i = 0; i < n; i++) {
+      const a = (Math.PI * 2 * i / n) - Math.PI / 2;
+      const x2 = cx + r * Math.cos(a), y2 = cy + r * Math.sin(a);
+      html += `<line x1="${cx}" y1="${cy}" x2="${x2}" y2="${y2}" stroke="#e5e7eb"/>`;
+      const lx = cx + (r + 20) * Math.cos(a), ly = cy + (r + 20) * Math.sin(a);
+      html += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" fill="#6b7280" font-size="9" font-family="DM Sans">${PILLARS[i].name.split(' ')[0]}</text>`;
+    }
+    // Radar
+    let pts = '';
+    for (let i = 0; i < n; i++) {
+      let s = Math.max(30, Math.min(95, PILLARS[i].score + yearMod));
+      const a = (Math.PI * 2 * i / n) - Math.PI / 2;
+      const dr = r * s / 100;
+      pts += `${cx + dr * Math.cos(a)},${cy + dr * Math.sin(a)} `;
+    }
+    html += `<polygon points="${pts}" fill="rgba(108,74,182,0.15)" stroke="#6C4AB6" stroke-width="2"/>`;
+    svg.innerHTML = html;
+  }
+
+  function drawLineChart(currentScore, region) {
+    const svg = document.getElementById('lineChart'); if (!svg) return;
+    const years = [2019, 2020, 2021, 2022, 2023, 2024];
+    // Générer historique cohérent pour la région sélectionnée
+    let historicalScores;
+    if (region === 'national') {
+      historicalScores = [52, 55, 58, 61, 65, currentScore];
+    } else {
+      const reg = REGIONS.find(r => r.name === region);
+      const base = reg ? reg.score : 68;
+      // Tendance : score légèrement plus faible dans le passé
+      historicalScores = years.map((_, idx) => {
+        let delta = (years.length - 1 - idx) * 1.5;
+        return Math.max(40, Math.min(95, base - delta));
+      });
+    }
+    const pad = { l: 40, r: 20, t: 20, b: 30 };
+    const w = 500 - pad.l - pad.r, h = 240 - pad.t - pad.b;
+    let html = '';
+    // Lignes horizontales
+    for (let i = 0; i <= 4; i++) {
+      const y = pad.t + h * i / 4;
+      const val = 100 - i * 25;
+      html += `<line x1="${pad.l}" y1="${y}" x2="${500-pad.r}" y2="${y}" stroke="#f0f0f0"/>`;
+      html += `<text x="${pad.l-8}" y="${y+4}" text-anchor="end" fill="#9ca3af" font-size="10">${val}</text>`;
+    }
+    const pts = historicalScores.map((s, i) => {
+      const x = pad.l + w * i / (years.length - 1);
+      const y = pad.t + h * (1 - s / 100);
+      return { x, y, val: s };
+    });
+    let pathD = '';
+    pts.forEach((p, i) => { pathD += (i === 0 ? 'M' : 'L') + `${p.x},${p.y} `; });
+    html += `<path d="${pathD}" fill="none" stroke="#6C4AB6" stroke-width="2.5" stroke-linecap="round"/>`;
+    html += `<path d="${pathD} L${pts[pts.length-1].x},${pad.t+h} L${pts[0].x},${pad.t+h}Z" fill="url(#areaGrad)" opacity="0.3"/>`;
+    html += `<defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6C4AB6"/><stop offset="100%" stop-color="#6C4AB6" stop-opacity="0"/></linearGradient></defs>`;
+    pts.forEach((p, i) => {
+      html += `<circle cx="${p.x}" cy="${p.y}" r="4" fill="#6C4AB6" stroke="white" stroke-width="2"/>`;
+      html += `<text x="${p.x}" y="${p.y-12}" text-anchor="middle" fill="#0B3C5D" font-size="11" font-weight="bold">${p.val}</text>`;
+      html += `<text x="${p.x}" y="${pad.t+h+18}" text-anchor="middle" fill="#9ca3af" font-size="10">${years[i]}</text>`;
+    });
+    svg.innerHTML = html;
+  }
+
+  function drawRegionComparison(yearMod) {
+    const c = document.getElementById('regionComparison'); if (!c) return;
+    const sorted = [...REGIONS].sort((a, b) => (b.score + yearMod) - (a.score + yearMod));
+    c.innerHTML = sorted.map(r => {
+      const s = Math.max(30, Math.min(95, r.score + yearMod));
+      const col = getScoreColor(s);
+      return `<div class="flex items-center gap-3"><span class="text-xs font-medium text-gray-600 w-28 truncate">${r.name}</span><div class="flex-1 h-4 bg-gray-100 rounded-full overflow-hidden"><div class="bar h-full rounded-full" style="width:${s}%;background:${col}"></div></div><span class="text-xs font-bold w-8 text-right" style="color:${col}">${s}</span></div>`;
+    }).join('');
+  }
+
+  // Cartographie
+  function initMap() {
+    const svg = document.getElementById('senegalMap'); if (!svg) return;
+    const tooltip = document.getElementById('mapTooltip');
+    svg.innerHTML = REGIONS.map(r => {
+      const col = getScoreColor(r.score);
+      return `<path d="${r.path}" fill="${col}" class="region-path" data-region="${r.name}" data-score="${r.score}" data-pop="${r.pop}"/>`;
+    }).join('');
+    svg.querySelectorAll('.region-path').forEach(path => {
+      path.addEventListener('mouseenter', e => {
+        const name = e.target.dataset.region, score = e.target.dataset.score, pop = e.target.dataset.pop;
+        if(tooltip) {
+          tooltip.innerHTML = `<strong class="text-gold">${name}</strong><br>Score: <strong>${score}/100</strong><br>Population: ${pop}`;
+          tooltip.classList.add('show');
+        }
+        const detail = document.getElementById('regionDetail');
+        if(detail) detail.innerHTML = `<h4 class="font-heading font-bold text-deep text-lg mb-2">${name}</h4><p class="text-3xl font-heading font-bold mb-1" style="color:${getScoreColor(score)}">${score}/100</p><p class="text-sm text-gray-500 mb-3">Population: ${pop}</p>`;
+      });
+      path.addEventListener('mousemove', e => {
+        if(tooltip) {
+          const rect = svg.closest('.relative').getBoundingClientRect();
+          tooltip.style.left = (e.clientX - rect.left + 12) + 'px';
+          tooltip.style.top = (e.clientY - rect.top - 10) + 'px';
+        }
+      });
+      path.addEventListener('mouseleave', () => { if(tooltip) tooltip.classList.remove('show'); });
+    });
+  }
+
+  // Indicateurs
+  function initIndicators() {
+    const pf = document.getElementById('pillarFilter');
+    if(pf && pf.children.length <= 1) {
+      PILLARS.forEach(p => {
+        const o = document.createElement('option');
+        o.value = p.name;
+        o.textContent = p.name;
+        pf.appendChild(o);
+      });
+    }
+    filterIndicators();
+  }
+
+  function filterIndicators() {
+    const pillar = document.getElementById('pillarFilter')?.value || 'all';
+    const search = document.getElementById('indSearch')?.value.toLowerCase() || '';
+    const filtered = INDICATORS.filter(ind => (pillar === 'all' || ind.pillar === pillar) && (!search || ind.name.toLowerCase().includes(search)));
+    const tb = document.getElementById('indicatorTable');
+    if(tb) tb.innerHTML = filtered.map((ind,i) => `<tr class="${i%2===0?'bg-white':'bg-gray-50'} hover:bg-violet/5 transition"><td class="px-4 py-2.5 font-medium">${ind.name}</td><td class="px-4 py-2.5"><span class="px-2 py-0.5 rounded-full text-xs font-medium" style="background:${getScoreColor(ind.score)}15;color:${getScoreColor(ind.score)}">${ind.pillar}</span></td><td class="px-4 py-2.5 text-center font-bold" style="color:${getScoreColor(ind.score)}">${ind.score}</td><td class="px-4 py-2.5"><div class="h-2.5 bg-gray-100 rounded-full overflow-hidden"><div class="h-full rounded-full" style="width:${ind.score}%;background:${getScoreColor(ind.score)}"></div></div></td></tr>`).join('');
+    lucide.createIcons();
+  }
+
+  // Signalement avec réinitialisation
+  function submitReport(e) {
+    e.preventDefault();
+    document.getElementById('reportForm').querySelectorAll('input,select,textarea,button[type=submit]').forEach(el => el.style.display = 'none');
+    document.getElementById('reportSuccess').classList.remove('hidden');
+    lucide.createIcons();
+  }
+
+  function resetReportForm() {
+    const formContainer = document.getElementById('reportForm');
+    formContainer.querySelectorAll('input,select,textarea').forEach(el => el.style.display = '');
+    formContainer.querySelector('button[type=submit]').style.display = '';
+    document.getElementById('reportSuccess').classList.add('hidden');
+    formContainer.reset();
+  }
+
+  function initReportRegions() {
+    const s = document.getElementById('reportRegion');
+    if(s) s.innerHTML = '<option value="">Sélectionnez…</option>' + REGIONS.map(r => `<option>${r.name}</option>`).join('');
+  }
+
+  // Bibliothèque
+  function initDocs() { filterDocs('all'); }
+
+  function filterDocs(cat) {
+    document.querySelectorAll('.doc-filter').forEach(btn => {
+      if(btn.dataset.cat === cat || (cat === 'all' && btn.dataset.cat === 'all')) {
+        btn.classList.remove('bg-gray-100', 'text-gray-600');
+        btn.classList.add('bg-deep', 'text-white');
+      } else {
+        btn.classList.remove('bg-deep', 'text-white');
+        btn.classList.add('bg-gray-100', 'text-gray-600');
+      }
+    });
+    const filtered = cat === 'all' ? DOCS : DOCS.filter(d => d.cat === cat);
+    const icons = { rapport: 'file-text', etude: 'book-open', policy: 'file-check' };
+    const colors = { rapport: '#0B3C5D', etude: '#6C4AB6', policy: '#2a9d8f' };
+    const grid = document.getElementById('docGrid');
+    if(grid) grid.innerHTML = filtered.map(d => `<div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm card-hover"><div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background:${colors[d.cat]}15"><i data-lucide="${icons[d.cat]}" class="w-5 h-5" style="color:${colors[d.cat]}"></i></div><h3 class="font-semibold text-deep text-sm mb-2 leading-snug">${d.title}</h3><p class="text-xs text-gray-400 mb-4">${d.date} · ${d.pages} pages</p><button class="w-full py-2 rounded-lg text-sm font-medium border border-deep/20 text-deep hover:bg-deep hover:text-white transition flex items-center justify-center gap-2"><i data-lucide="download" class="w-4 h-4"></i> Télécharger (Démo)</button></div>`).join('');
+    lucide.createIcons();
+  }
+
+  // Partenaires
+  function initPartners() {
+    const icons = { 'Public': 'landmark', 'ONG': 'globe', 'Privé': 'building' };
+    const colors = { 'Public': '#0B3C5D', 'ONG': '#6C4AB6', 'Privé': '#2a9d8f' };
+    const grid = document.getElementById('partnersGrid');
+    if(grid) grid.innerHTML = PARTNERS.map(g => `<div class="mb-8"><div class="flex items-center gap-2 mb-4"><i data-lucide="${icons[g.cat]}" class="w-5 h-5" style="color:${colors[g.cat]}"></i><h3 class="font-heading font-bold text-deep text-lg">${g.cat}</h3></div><div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">${g.items.map(item => `<div class="bg-white rounded-xl border border-gray-100 p-5 text-center card-hover shadow-sm"><div class="w-14 h-14 rounded-full mx-auto mb-3 flex items-center justify-center text-xl font-heading font-bold text-white" style="background:${colors[g.cat]}">${item.charAt(0)}</div><p class="text-sm font-medium text-deep">${item}</p><p class="text-xs text-gray-400 mt-1">${g.cat}</p></div>`).join('')}</div></div>`).join('');
+    lucide.createIcons();
+  }
+
+  // Initialisation
+  function init() {
+    initPillarPreview();
+    startCarousel();
+    initReportRegions();
+    lucide.createIcons();
+    window.navigateTo = navigateTo;
+    window.toggleMobile = toggleMobile;
+    window.updateDashboard = updateDashboard;
+    window.filterIndicators = filterIndicators;
+    window.filterDocs = filterDocs;
+    window.initDashboard = initDashboard;
+    window.initMap = initMap;
+    window.initIndicators = initIndicators;
+    window.initDocs = initDocs;
+    window.initPartners = initPartners;
+    window.submitReport = submitReport;
+    window.resetReportForm = resetReportForm;
+  }
+  init();
+</script>
+</body>
+</html>
