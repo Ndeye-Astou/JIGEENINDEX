@@ -293,8 +293,8 @@
           </div>
         </div>
 
-        <!-- Language and year switchers -->
-        <div class="flex items-center gap-2">
+        <!-- HEADER : sélecteurs cachés sur mobile -->
+        <div class="hidden md:flex items-center gap-2">
           <select id="yearSwitcher" class="bg-white border border-gray-200 rounded-lg px-2 py-1 text-sm">
             <option value="2024">2024 (actuel)</option>
             <option value="2027">2027 (objectif)</option>
@@ -1041,7 +1041,47 @@
       </div>
     </footer>
   </div>
+<!-- Barre flottante mobile (à placer juste avant la fermeture du body ou après le footer) -->
+<div class="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-3 flex justify-center gap-4 z-50 md:hidden border-t border-gray-100">
+  <select id="yearSwitcherMobile" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm w-32">
+    <option value="2024">2024</option>
+    <option value="2027">2027</option>
+    <option value="2030">2030</option>
+    <option value="2035">2035</option>
+  </select>
+  <select id="langSwitcherMobile" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm w-32">
+    <option value="fr">Français</option>
+    <option value="en">English</option>
+    <option value="de">Deutsch</option>
+    <option value="ar">العربية</option>
+    <option value="es">Español</option>
+  </select>
+</div>
 
+<script>
+  // Synchronisation des sélecteurs
+const yearDesktop = document.getElementById('yearSwitcher');
+const yearMobile = document.getElementById('yearSwitcherMobile');
+const langDesktop = document.getElementById('langSwitcher');
+const langMobile = document.getElementById('langSwitcherMobile');
+
+function syncYear() {
+  const year = yearDesktop.value;
+  if (yearMobile) yearMobile.value = year;
+}
+function syncLang() {
+  const lang = langDesktop.value;
+  if (langMobile) langMobile.value = lang;
+}
+yearDesktop.addEventListener('change', () => { syncYear(); setYear(yearDesktop.value); });
+langDesktop.addEventListener('change', () => { syncLang(); setLanguage(langDesktop.value); });
+if (yearMobile) {
+  yearMobile.addEventListener('change', () => { yearDesktop.value = yearMobile.value; setYear(yearMobile.value); });
+  langMobile.addEventListener('change', () => { langDesktop.value = langMobile.value; setLanguage(langMobile.value); });
+}
+syncYear();
+syncLang();
+</script>
   <script>
     // ==================== MULTILINGUE & OBJECTIFS ====================
     let currentLang = localStorage.getItem('lang') || 'fr';
