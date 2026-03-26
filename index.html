@@ -4,15 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JIGEENINDEX SENEGAL</title>
+  <title>JIGEENINDEX SENEGAL - Observatoire des conditions des femmes</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/i18next@23.10.0/dist/umd/i18next.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/i18next-http-backend@2.4.0/i18nextHttpBackend.min.js"></script>
   <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:wght@600;700;800&amp;display=swap"
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
     rel="stylesheet">
-
   <script>
     tailwind.config = {
       theme: {
@@ -255,13 +252,36 @@
       font-size: 2.5rem;
       font-weight: 800;
     }
+
+    /* RTL support */
+    [dir="rtl"] .flex {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .text-left {
+      text-align: right;
+    }
+
+    [dir="rtl"] .ml-4 {
+      margin-left: 0;
+      margin-right: 1rem;
+    }
+
+    [dir="rtl"] .mr-2 {
+      margin-right: 0;
+      margin-left: 0.5rem;
+    }
+
+    [dir="rtl"] .space-x-4> :not([hidden])~ :not([hidden]) {
+      --tw-space-x-reverse: 1;
+    }
   </style>
 </head>
 
 <body class="h-full font-body text-gray-800 bg-white">
   <div class="app-shell" id="app">
 
-    <!-- HEADER AVEC SOUS-MENUS -->
+    <!-- HEADER -->
     <header class="bg-white text-deep sticky top-0 z-40 shadow-lg">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
         <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('accueil')">
@@ -274,40 +294,56 @@
           </div>
         </div>
 
-        <!-- Desktop navigation avec dropdowns -->
+        <!-- Language and year switchers -->
+        <div class="flex items-center gap-2">
+          <select id="yearSwitcher" class="bg-white border border-gray-200 rounded-lg px-2 py-1 text-sm">
+            <option value="2024">2024 (actuel)</option>
+            <option value="2027">2027 (objectif)</option>
+            <option value="2030">2030 (objectif)</option>
+            <option value="2035">2035 (objectif)</option>
+          </select>
+          <select id="langSwitcher" class="bg-white border border-gray-200 rounded-lg px-2 py-1 text-sm">
+            <option value="fr">🇫🇷 Français</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="ar">🇸🇦 العربية</option>
+            <option value="es">🇪🇸 Español</option>
+          </select>
+        </div>
+
+        <!-- Desktop navigation -->
         <nav class="hidden md:flex items-center gap-5 text-sm font-medium">
-          <span class="nav-link" data-page="accueil" onclick="navigateTo('accueil')">Accueil</span>
-
+          <span class="nav-link" data-i18n="nav.accueil" data-page="accueil"
+            onclick="navigateTo('accueil')">Accueil</span>
           <div class="nav-dropdown">
-            <span class="nav-link flex items-center gap-1">Observatoire <i data-lucide="chevron-down"
-                class="w-4 h-4"></i></span>
+            <span class="nav-link flex items-center gap-1" data-i18n="nav.observatoire">Observatoire <i
+                data-lucide="chevron-down" class="w-4 h-4"></i></span>
             <div class="dropdown-menu">
-              <a onclick="navigateTo('dashboard')">Dashboard</a>
-              <a onclick="navigateTo('cartographie')">Cartographie</a>
-              <a onclick="navigateTo('indicateurs')">Indicateurs</a>
+              <a data-i18n="nav.dashboard" onclick="navigateTo('dashboard')">Dashboard</a>
+              <a data-i18n="nav.cartographie" onclick="navigateTo('cartographie')">Cartographie</a>
+              <a data-i18n="nav.indicateurs" onclick="navigateTo('indicateurs')">Indicateurs</a>
             </div>
           </div>
-
           <div class="nav-dropdown">
-            <span class="nav-link flex items-center gap-1">Ressources <i data-lucide="chevron-down"
-                class="w-4 h-4"></i></span>
+            <span class="nav-link flex items-center gap-1" data-i18n="nav.ressources">Ressources <i
+                data-lucide="chevron-down" class="w-4 h-4"></i></span>
             <div class="dropdown-menu">
-              <a onclick="navigateTo('bibliotheque')">Bibliothèque</a>
-              <a onclick="navigateTo('signalement')">Signalement</a>
-              <a onclick="navigateTo('actualites')">Actualités</a>
-              <a onclick="navigateTo('evenements')">Événements</a>
+              <a data-i18n="nav.bibliotheque" onclick="navigateTo('bibliotheque')">Bibliothèque</a>
+              <a data-i18n="nav.signalement" onclick="navigateTo('signalement')">Signalement</a>
+              <a data-i18n="nav.actualites" onclick="navigateTo('actualites')">Actualités</a>
+              <a data-i18n="nav.evenements" onclick="navigateTo('evenements')">Événements</a>
             </div>
           </div>
-
           <div class="nav-dropdown">
-            <span class="nav-link flex items-center gap-1">Engagement <i data-lucide="chevron-down"
-                class="w-4 h-4"></i></span>
+            <span class="nav-link flex items-center gap-1" data-i18n="nav.engagement">Engagement <i
+                data-lucide="chevron-down" class="w-4 h-4"></i></span>
             <div class="dropdown-menu">
-              <a onclick="navigateTo('jigeenindeer')" class="font-bold text-gold">Commission JIGEENINDEER</a>
-              <a onclick="navigateTo('partenaires')">Partenaires</a>
-              <a onclick="navigateTo('opportunites')">Opportunités</a>
-              <a onclick="navigateTo('about')">À propos</a>
-              <a onclick="navigateTo('commissions')">Communauté</a>
+              <a data-i18n="nav.jigeenindeer" onclick="navigateTo('jigeenindeer')"
+                class="font-bold text-gold">Commission JIGEENINDEER</a>
+              <a data-i18n="nav.partenaires" onclick="navigateTo('partenaires')">Partenaires</a>
+              <a data-i18n="nav.opportunites" onclick="navigateTo('opportunites')">Opportunités</a>
+              <a data-i18n="nav.about" onclick="navigateTo('about')">À propos</a>
+              <a data-i18n="nav.communauté" onclick="navigateTo('commissions')">Communauté</a>
             </div>
           </div>
         </nav>
@@ -316,8 +352,8 @@
       </div>
     </header>
 
-
     <!-- MOBILE MENU -->
+    <!-- BOUTON HAMBURGER (ouvrir le menu) -->
     <div class="fixed top-4 right-4 z-50 md:hidden">
       <button onclick="toggleMobile()" class="text-deep text-2xl">
         ☰
@@ -336,23 +372,32 @@
         </button>
       </div>
       <nav class="flex flex-col p-6 gap-4 text-lg font-medium overflow-y-auto">
-        <span onclick="navigateTo('accueil');toggleMobile()">Accueil</span>
-        <span class="font-semibold text-gold mt-2">Observatoire</span>
-        <span class="pl-4" onclick="navigateTo('dashboard');toggleMobile()">Dashboard</span>
-        <span class="pl-4" onclick="navigateTo('cartographie');toggleMobile()">Cartographie</span>
-        <span class="pl-4" onclick="navigateTo('indicateurs');toggleMobile()">Indicateurs</span>
-        <span class="font-semibold text-gold mt-2">Ressources</span>
-        <span class="pl-4" onclick="navigateTo('bibliotheque');toggleMobile()">Bibliothèque</span>
-        <span class="pl-4" onclick="navigateTo('signalement');toggleMobile()">Signalement</span>
-        <span class="pl-4" onclick="navigateTo('actualites');toggleMobile()">Actualités</span>
-        <span class="pl-4" onclick="navigateTo('evenements');toggleMobile()">Événements</span>
-        <span class="font-semibold text-gold mt-2">Engagement</span>
-        <span class="pl-4 font-bold text-gold" onclick="navigateTo('jigeenindeer');toggleMobile()">Commission
-          JIGEENINDEER</span>
-        <span class="pl-4" onclick="navigateTo('partenaires');toggleMobile()">Partenaires</span>
-        <span class="pl-4" onclick="navigateTo('opportunites');toggleMobile()">Opportunités</span>
-        <span class="pl-4" onclick="navigateTo('about');toggleMobile()">À propos</span>
-        <span class="pl-4" onclick="navigateTo('commissions');toggleMobile()">Communauté</span>
+        <span onclick="navigateTo('accueil');toggleMobile()" data-i18n="nav.accueil">Accueil</span>
+        <span class="font-semibold text-gold mt-2" data-i18n="nav.observatoire">Observatoire</span>
+        <span class="pl-4" onclick="navigateTo('dashboard');toggleMobile()" data-i18n="nav.dashboard">Dashboard</span>
+        <span class="pl-4" onclick="navigateTo('cartographie');toggleMobile()"
+          data-i18n="nav.cartographie">Cartographie</span>
+        <span class="pl-4" onclick="navigateTo('indicateurs');toggleMobile()"
+          data-i18n="nav.indicateurs">Indicateurs</span>
+        <span class="font-semibold text-gold mt-2" data-i18n="nav.ressources">Ressources</span>
+        <span class="pl-4" onclick="navigateTo('bibliotheque');toggleMobile()"
+          data-i18n="nav.bibliotheque">Bibliothèque</span>
+        <span class="pl-4" onclick="navigateTo('signalement');toggleMobile()"
+          data-i18n="nav.signalement">Signalement</span>
+        <span class="pl-4" onclick="navigateTo('actualites');toggleMobile()"
+          data-i18n="nav.actualites">Actualités</span>
+        <span class="pl-4" onclick="navigateTo('evenements');toggleMobile()"
+          data-i18n="nav.evenements">Événements</span>
+        <span class="font-semibold text-gold mt-2" data-i18n="nav.engagement">Engagement</span>
+        <span class="pl-4 font-bold text-gold" onclick="navigateTo('jigeenindeer');toggleMobile()"
+          data-i18n="nav.jigeenindeer">Commission JIGEENINDEER</span>
+        <span class="pl-4" onclick="navigateTo('partenaires');toggleMobile()"
+          data-i18n="nav.partenaires">Partenaires</span>
+        <span class="pl-4" onclick="navigateTo('opportunites');toggleMobile()"
+          data-i18n="nav.opportunites">Opportunités</span>
+        <span class="pl-4" onclick="navigateTo('about');toggleMobile()" data-i18n="nav.about">À propos</span>
+        <span class="pl-4" onclick="navigateTo('commissions');toggleMobile()"
+          data-i18n="nav.communauté">Communauté</span>
       </nav>
     </div>
 
@@ -364,7 +409,7 @@
       }
     </script>
 
-    <!-- LOGOS COMMISSIONS -->
+    <!-- LOGOS COMMISSIONS (static) -->
     <div
       class="bg-white border-b border-gray-100 py-3 hidden md:flex justify-center gap-8 items-center text-xs text-gray-500">
       <div class="flex flex-col items-center"><i data-lucide="crown" class="w-5 h-5 text-violet"></i><span
@@ -379,40 +424,29 @@
           class="mt-1">Économie</span></div>
     </div>
 
+    <!-- ========== PAGE ACCUEIL ========== -->
     <div id="page-accueil" class="page active">
-      <!-- Hero avec carrousel -->
+      <!-- Hero carousel -->
       <div class="relative h-[520px] overflow-hidden">
         <div id="heroCarousel" class="relative w-full h-full">
-          <div class="carousel-slide active" style="background-image: url('a5.jpg');">
-          </div>
-          <div class="carousel-slide" style="background-image: url('a1.jpg');">
-          </div>
-          <div class="carousel-slide" style="background-image: url('a4.jpg');">
-          </div>
-          <div class="carousel-slide" style="background-image: url('a3.jpg');">
-          </div>
-          <div class="carousel-slide" style="background-image: url('a6.jpg');">
-          </div>
-          <div class="carousel-slide" style="background-image: url('a7.jpg');">
-          </div>
+          <div class="carousel-slide active" style="background-image: url('a5.jpg');"></div>
+          <div class="carousel-slide" style="background-image: url('a1.jpg');"></div>
+          <div class="carousel-slide" style="background-image: url('a4.jpg');"></div>
+          <div class="carousel-slide" style="background-image: url('a3.jpg');"></div>
+          <div class="carousel-slide" style="background-image: url('a6.jpg');"></div>
+          <div class="carousel-slide" style="background-image: url('a7.jpg');"></div>
+
         </div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4 z-10">
-          <p class="text-gold font-medium tracking-widest uppercase mb-2">
-            Observatoire national numérique
-          </p>
-
-          <h1 class="font-heading text-4xl md:text-5xl font-extrabold leading-tight max-w-2xl">
-            Mesurer pour mieux agir
-          </h1>
-
-          <p class="text-white/90 text-base md:text-lg max-w-xl mt-2">
-            55 indicateurs · 14 régions · 9 piliers
-          </p>
-
+          <p class="text-gold font-medium tracking-widest uppercase mb-2" data-i18n="hero.slogan">Observatoire national
+            numérique</p>
+          <h1 class="font-heading text-4xl md:text-5xl font-extrabold leading-tight max-w-2xl" data-i18n="hero.title">
+            Mesurer pour mieux agir</h1>
+          <p class="text-white/90 text-base md:text-lg max-w-xl mt-2" data-i18n="hero.sub">55 indicateurs · 14 régions ·
+            9 piliers</p>
           <button onclick="navigateTo('dashboard')"
-            class="mt-6 inline-flex items-center gap-2 bg-violet hover:bg-violet/80 px-6 py-3 rounded-full font-semibold shadow-lg transition">
-            Voir l'Index <i data-lucide="arrow-right" class="w-5 h-5"></i>
-          </button>
+            class="mt-6 inline-flex items-center gap-2 bg-violet hover:bg-violet/80 px-6 py-3 rounded-full font-semibold shadow-lg transition"
+            data-i18n="hero.cta">Voir l'Index <i data-lucide="arrow-right" class="w-5 h-5"></i></button>
         </div>
       </div>
 
@@ -420,126 +454,66 @@
       <section class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
         <div class="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 class="font-heading text-3xl font-bold text-deep mb-4">Un outil de pilotage pour la complémentarité :
-              suivre, analyser, agir.</h2>
-            <p class="text-gray-600 leading-relaxed mb-6">JIGEENINDEX SENEGAL agrège 55 indicateurs socio-économiques
-              répartis en 9 piliers thématiques pour produire un score synthétique par région. Conçu pour les décideurs,
-              chercheurs et la société civile.</p>
-            <div class="flex flex-wrap gap-3"><span
-                class="px-4 py-1.5 bg-violet/10 text-violet rounded-full text-sm font-medium">Open Data</span> <span
-                class="px-4 py-1.5 bg-gold/20 text-deep rounded-full text-sm font-medium">14 régions</span> <span
-                class="px-4 py-1.5 bg-deep/10 text-deep rounded-full text-sm font-medium">Temps réel</span></div>
+            <h2 class="font-heading text-3xl font-bold text-deep mb-4" data-i18n="home.presentation_title">Un outil de
+              pilotage pour la complémentarité : suivre, analyser, agir.</h2>
+            <p class="text-gray-600 leading-relaxed mb-6" data-i18n="home.presentation_desc">JIGEENINDEX SENEGAL agrège
+              55 indicateurs socio-économiques répartis en 9 piliers thématiques pour produire un score synthétique par
+              région. Conçu pour les décideurs, chercheurs et la société civile.</p>
+            <div class="flex flex-wrap gap-3">
+              <span class="px-4 py-1.5 bg-violet/10 text-violet rounded-full text-sm font-medium"
+                data-i18n="home.badge_open_data">Open Data</span>
+              <span class="px-4 py-1.5 bg-gold/20 text-deep rounded-full text-sm font-medium"
+                data-i18n="home.badge_regions">14 régions</span>
+              <span class="px-4 py-1.5 bg-deep/10 text-deep rounded-full text-sm font-medium"
+                data-i18n="home.badge_realtime">Temps réel</span>
+            </div>
           </div>
-          <div class="grid grid-cols-2 gap-4">
-            <div class="bg-light rounded-2xl p-6 text-center card-hover">
-              <p class="text-4xl font-heading font-bold text-violet">55</p>
-              <p class="text-gray-500 text-sm mt-1">Indicateurs</p>
-            </div>
-            <div class="bg-light rounded-2xl p-6 text-center card-hover">
-              <p class="text-4xl font-heading font-bold text-deep">14</p>
-              <p class="text-gray-500 text-sm mt-1">Régions</p>
-            </div>
-            <div class="bg-light rounded-2xl p-6 text-center card-hover">
-              <p class="text-4xl font-heading font-bold text-gold">9</p>
-              <p class="text-gray-500 text-sm mt-1">Piliers</p>
-            </div>
-            <div class="bg-light rounded-2xl p-6 text-center card-hover">
-              <p class="text-4xl font-heading font-bold text-violet">68</p>
-              <p class="text-gray-500 text-sm mt-1">Score national</p>
-            </div>
+          <div class="grid grid-cols-2 gap-4" id="homeStats">
           </div>
         </div>
       </section>
 
-      <!-- Piliers avec tooltips -->
+      <!-- Piliers -->
       <section class="bg-light py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
-          <h2 class="font-heading text-3xl font-bold text-deep text-center mb-10">Les 9 piliers de l'Index</h2>
+          <h2 class="font-heading text-3xl font-bold text-deep text-center mb-10" data-i18n="home.pillars_title">Les 9
+            piliers de l'Index</h2>
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" id="pillarPreview"></div>
         </div>
       </section>
-
-
 
       <!-- Actualités + Événements -->
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 grid lg:grid-cols-2 gap-12">
         <div>
           <h2 class="font-heading text-2xl font-bold text-deep flex items-center gap-2"><i data-lucide="newspaper"
-              class="w-6 h-6 text-violet"></i> Actualités récentes</h2>
-          <div class="space-y-4 mt-6">
-            <div class="border-l-4 border-violet pl-4">
-              <p class="font-semibold">Rapport JIGEENINDEX 2024 publié</p>
-              <p class="text-sm text-gray-500">15 mars 2025 – Le score national atteint 68/100, Dakar en tête.</p>
-            </div>
-            <div class="border-l-4 border-gold pl-4">
-              <p class="font-semibold">Atelier régional : données ouvertes pour les politiques publiques</p>
-              <p class="text-sm text-gray-500">5 avril 2025 – Thiès, réunion des acteurs ministériels.</p>
-            </div>
-            <div class="border-l-4 border-violet pl-4">
-              <p class="font-semibold">Partenariat avec ONU Femmes pour la collecte de données communautaires</p>
-              <p class="text-sm text-gray-500">20 février 2025 – Extension dans 6 régions.</p>
-            </div>
-            <a href="#" onclick="navigateTo('actualites');return false;"
-              class="text-violet text-sm font-medium inline-block mt-4">Voir toutes les actualités →</a>
-          </div>
+              class="w-6 h-6 text-violet"></i> <span data-i18n="home.news_title">Actualités récentes</span></h2>
+          <div class="space-y-4 mt-6" id="newsList"></div>
         </div>
         <div>
           <h2 class="font-heading text-2xl font-bold text-deep flex items-center gap-2"><i data-lucide="calendar"
-              class="w-6 h-6 text-gold"></i> Événements à venir</h2>
-          <div class="space-y-4 mt-6">
-            <div class="bg-light p-4 rounded-xl">
-              <p class="font-semibold">12 Mai 2025 – Webinaire « Femmes et leadership économique »</p>
-              <p class="text-sm">Inscription gratuite – avec le Ministère de la Femme</p>
-            </div>
-            <div class="bg-light p-4 rounded-xl">
-              <p class="font-semibold">28-30 Juin 2025 – Forum JIGEENINDEX : « Données pour l’égalité »</p>
-              <p class="text-sm">Dakar, CICAD – Appel à communications ouvert</p>
-            </div>
-            <div class="bg-light p-4 rounded-xl">
-              <p class="font-semibold">8 Mars 2026 – Lancement de la campagne « Score régional participatif »</p>
-              <p class="text-sm">Dans les 14 régions du Sénégal</p>
-            </div>
-            <a href="#" onclick="navigateTo('evenements');return false;"
-              class="text-violet text-sm font-medium mt-4 inline-block">Tous les événements →</a>
-          </div>
+              class="w-6 h-6 text-gold"></i> <span data-i18n="home.events_title">Événements à venir</span></h2>
+          <div class="space-y-4 mt-6" id="eventsList"></div>
         </div>
       </div>
 
-      <!-- Marketplace / Opportunités -->
+      <!-- Marketplace -->
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 mb-12">
         <div class="bg-white rounded-2xl shadow-md border p-6">
           <div class="flex justify-between items-center">
             <h2 class="font-heading text-2xl font-bold text-deep"><i data-lucide="store"
-                class="inline w-6 h-6 text-gold mr-2"></i> Opportunités de collaboration</h2><button
-              onclick="navigateTo('opportunites')" class="text-violet font-medium text-sm">Voir toutes les offres
-              →</button>
+                class="inline w-6 h-6 text-gold mr-2"></i><span data-i18n="home.opportunities_title">Opportunités de
+                collaboration</span></h2>
+            <button onclick="navigateTo('opportunites')" class="text-violet font-medium text-sm"
+              data-i18n="home.see_all">Voir toutes les offres →</button>
           </div>
-          <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-5 mt-6">
-            <div class="border rounded-xl p-4 hover:shadow transition">
-              <div class="text-gold text-lg mb-1">📢 Appel à projets</div>
-              <p class="font-semibold">Fonds pour l’autonomisation économique</p>
-              <p class="text-xs text-gray-500">Date limite : 30 juin 2025</p><button
-                class="mt-2 text-xs text-violet font-medium">Postuler</button>
-            </div>
-            <div class="border rounded-xl p-4 hover:shadow transition">
-              <div class="text-gold text-lg mb-1">Offre de mission</div>
-              <p class="font-semibold">Data Analyst pour l’observatoire</p>
-              <p class="text-xs text-gray-500">CDD – Dakar</p><button
-                class="mt-2 text-xs text-violet font-medium">Détails</button>
-            </div>
-            <div class="border rounded-xl p-4 hover:shadow transition">
-              <div class="text-gold text-lg mb-1">Partenariat</div>
-              <p class="font-semibold">Appel à partenaires techniques pour la collecte mobile</p><button
-                class="mt-2 text-xs text-violet font-medium">Rejoindre</button>
-            </div>
-          </div>
+          <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-5 mt-6" id="opportunitiesList"></div>
         </div>
       </div>
     </div>
 
     <!-- ========== PAGE COMMISSION JIGEENINDEER ========== -->
     <div id="page-jigeenindeer" class="page">
-      <!-- Hero avec fond -->
+      <!-- Hero -->
       <div class="relative bg-gradient-to-r from-deep to-deepLight py-20 md:py-28">
         <div class="absolute inset-0 opacity-20"
           style="background-image: url('a4.jpg'); background-size: cover; background-position: center;"></div>
@@ -564,24 +538,24 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
         <!-- Statistiques clés -->
         <div class="grid md:grid-cols-3 gap-8 mb-16">
-          <div class="bg-white rounded-2xl shadow-md p-6 text-center border-l-4 border-gold">
-            <i data-lucide="calendar-heart" class="w-10 h-10 text-violet mx-auto mb-3"></i>
+          <div class="bg-white rounded-2xl shadow-md p-6 text-center border-l-4 border-gold"><i
+              data-lucide="calendar-heart" class="w-10 h-10 text-violet mx-auto mb-3"></i>
             <div class="stat-number text-deep">2015</div>
             <p class="text-gray-500">1ère édition du Women Entrepreneurship Day</p>
           </div>
-          <div class="bg-white rounded-2xl shadow-md p-6 text-center border-l-4 border-gold">
-            <i data-lucide="users" class="w-10 h-10 text-violet mx-auto mb-3"></i>
+          <div class="bg-white rounded-2xl shadow-md p-6 text-center border-l-4 border-gold"><i data-lucide="users"
+              class="w-10 h-10 text-violet mx-auto mb-3"></i>
             <div class="stat-number text-deep">1000+</div>
             <p class="text-gray-500">Femmes inspirées & accompagnées</p>
           </div>
-          <div class="bg-white rounded-2xl shadow-md p-6 text-center border-l-4 border-gold">
-            <i data-lucide="award" class="w-10 h-10 text-violet mx-auto mb-3"></i>
+          <div class="bg-white rounded-2xl shadow-md p-6 text-center border-l-4 border-gold"><i data-lucide="award"
+              class="w-10 h-10 text-violet mx-auto mb-3"></i>
             <div class="stat-number text-deep">68+</div>
             <p class="text-gray-500">Trophées JIGEENINDEER décernés</p>
           </div>
         </div>
 
-        <!-- Description complète du programme -->
+        <!-- Description -->
         <div class="prose max-w-none bg-light rounded-2xl p-8 md:p-10 mb-16 shadow-sm">
           <h2 class="font-heading text-2xl font-bold text-deep mb-4">Le programme JIGEENINDEER de JEADER</h2>
           <p class="mb-4">Le programme JIGEENINDEER de JEADER considère le genre et l’implication des femmes dans
@@ -610,12 +584,12 @@
           </div>
         </div>
 
-        <!-- Événements phares (détaillés) -->
+        <!-- Événements -->
         <div id="events-jigeen" class="mb-20">
           <h2 class="font-heading text-3xl font-bold text-deep mb-8 text-center">Événements emblématiques</h2>
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
-              <div class="h-48 bg-cover bg-center" style="background-image: url('a1.jpg');"></div>
+              <div class="h-48 bg-cover bg-center" style="background-image: url('SuperWomen.jpg');"></div>
               <div class="p-5">
                 <h3 class="font-bold text-xl text-deep">SuperWomen Leadership Conference 2018</h3>
                 <p class="text-gray-600 text-sm mt-2">17 Mars 2018 – Plus de 500 personnes inscrites sous le sceau de la
@@ -625,7 +599,7 @@
               </div>
             </div>
             <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
-              <div class="h-48 bg-cover bg-center" style="background-image: url('a3.jpg');"></div>
+              <div class="h-48 bg-cover bg-center" style="background-image: url('BeautifulRoses.jpg');"></div>
               <div class="p-5">
                 <h3 class="font-bold text-xl text-deep">Beautiful Roses × Téléthon LISCA</h3>
                 <p class="text-gray-600 text-sm mt-2">11 Mai 2018 – Ateliers de pose de foulards, maquillage et
@@ -635,7 +609,7 @@
               </div>
             </div>
             <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
-              <div class="h-48 bg-cover bg-center" style="background-image: url('a5.jpg');"></div>
+              <div class="h-48 bg-cover bg-center" style="background-image: url('ONUFemmes.png');"></div>
               <div class="p-5">
                 <h3 class="font-bold text-xl text-deep">Women of Exception – ONU Femmes</h3>
                 <p class="text-gray-600 text-sm mt-2">23 Juillet 2018 – Plus de 40 jeunes entrepreneuses reçues par Mme
@@ -645,7 +619,7 @@
               </div>
             </div>
             <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
-              <div class="h-48 bg-cover bg-center" style="background-image: url('a6.jpg');"></div>
+              <div class="h-48 bg-cover bg-center" style="background-image: url('TransMISSION.jpg');"></div>
               <div class="p-5">
                 <h3 class="font-bold text-xl text-deep">TransMISSION avec Evelyne Tall</h3>
                 <p class="text-gray-600 text-sm mt-2">7 Août 2017 – Déjeuner avec les Women of Exception et l’ancienne
@@ -653,7 +627,7 @@
               </div>
             </div>
             <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
-              <div class="h-48 bg-cover bg-center" style="background-image: url('a4.jpg');"></div>
+              <div class="h-48 bg-cover bg-center" style="background-image: url('Rwanda.jpg');"></div>
               <div class="p-5">
                 <h3 class="font-bold text-xl text-deep">Rwanda Gender Summit</h3>
                 <p class="text-gray-600 text-sm mt-2">19-28 Mars 2018 – Intervention au Forum sur le Genre et au Next
@@ -662,7 +636,7 @@
               </div>
             </div>
             <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
-              <div class="h-48 bg-cover bg-center" style="background-image: url('a7.jpg');"></div>
+              <div class="h-48 bg-cover bg-center" style="background-image: url('WomenEntrepreneurship.jpg');"></div>
               <div class="p-5">
                 <h3 class="font-bold text-xl text-deep">Women Entrepreneurship Day 2017</h3>
                 <p class="text-gray-600 text-sm mt-2">Novembre 2017 – Réseautage, mentorat et remise des trophées
@@ -672,7 +646,7 @@
           </div>
         </div>
 
-        <!-- Liste complète des récipiendaires (68) -->
+        <!-- Galerie -->
         <div class="mb-16">
           <h2 class="font-heading text-3xl font-bold text-deep mb-2 text-center">Récipiendaires des trophées
             JIGEENINDEER</h2>
@@ -695,114 +669,72 @@
       </div>
     </div>
 
-    <!-- PAGE COMMENTAIRE (avec toutes les commissions JEADER) -->
+    <!-- ========== PAGE COMMENTAIRES ========== -->
     <div id="page-commissions" class="page">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div class="text-center mb-8">
-          <h1 class="font-heading text-3xl font-bold text-deep">Espace collaboratif des commissions JEADER</h1>
-          <p class="text-gray-500 mt-2">Partagez vos idées, commentaires et ressources avec les membres de chaque
-            commission.</p>
+          <h1 class="font-heading text-3xl font-bold text-deep" data-i18n="commissions.title">Espace collaboratif des
+            commissions JEADER</h1>
+          <p class="text-gray-500 mt-2" data-i18n="commissions.subtitle">Partagez vos idées, commentaires et ressources
+            avec les membres de chaque commission.</p>
           <div class="mt-4 flex justify-center gap-3">
-            <a href="https://www.jeader.defarsci.fr/" target="_blank" class="text-violet underline text-sm">Site JEADER
-              →</a>
+            <a href="https://www.jeader.defarsci.fr/" target="_blank" class="text-violet underline text-sm"
+              data-i18n="commissions.link">Site JEADER →</a>
           </div>
         </div>
-
-        <!-- Sélecteur de commission (toutes les commissions) -->
-        <div class="flex flex-wrap justify-center gap-3 mb-8">
-          <button data-comm="JIGEENINDEER" onclick="setCommission('JIGEENINDEER')"
-            class="comm-btn px-4 py-2 rounded-full bg-deep text-white font-medium shadow-sm transition-all">JIGEENINDEER</button>
-          <button data-comm="CitiZen" onclick="setCommission('CitiZen')"
-            class="comm-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 font-medium transition-all">CitiZen</button>
-          <button data-comm="Éducation" onclick="setCommission('Éducation')"
-            class="comm-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 font-medium transition-all">Éducation</button>
-          <button data-comm="Économie" onclick="setCommission('Économie')"
-            class="comm-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 font-medium transition-all">Économie</button>
-          <button data-comm="Graines" onclick="setCommission('Graines')"
-            class="comm-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 font-medium transition-all">GRAINES
-            D'ENTREPRENEURS</button>
-          <button data-comm="Ayoo" onclick="setCommission('Ayoo')"
-            class="comm-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 font-medium transition-all">AYOO
-            NENE</button>
-          <button data-comm="Diaspower" onclick="setCommission('Diaspower')"
-            class="comm-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 font-medium transition-all">DIASPOWER</button>
-          <button data-comm="Caravane" onclick="setCommission('Caravane')"
-            class="comm-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 font-medium transition-all">CARAVANE
-            APPRENDRE & ENTREPRENDRE</button>
-          <button data-comm="Baydundee" onclick="setCommission('Baydundee')"
-            class="comm-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 font-medium transition-all">BAYDUNDEE</button>
-          <button data-comm="Academy" onclick="setCommission('Academy')"
-            class="comm-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 font-medium transition-all">JEADER
-            ACADEMY</button>
-        </div>
-
-        <!-- Formulaire d'ajout de commentaire -->
+        <div class="flex flex-wrap justify-center gap-3 mb-8" id="commissionButtons"></div>
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
-          <h3 class="font-heading text-xl font-bold text-deep mb-4">Ajouter un commentaire</h3>
+          <h3 class="font-heading text-xl font-bold text-deep mb-4" data-i18n="commissions.add_comment">Ajouter un
+            commentaire</h3>
           <form id="commentForm">
             <div class="grid md:grid-cols-2 gap-4 mb-4">
               <div>
-                <label class="block text-sm font-medium text-deep mb-1">Votre nom (optionnel)</label>
+                <label class="block text-sm font-medium text-deep mb-1" data-i18n="commissions.your_name">Votre nom
+                  (optionnel)</label>
                 <input type="text" id="commentAuthor"
                   class="w-full border border-gray-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-violet/30 focus:border-violet outline-none"
-                  placeholder="Anonyme">
+                  placeholder="">
               </div>
               <div>
-                <label class="block text-sm font-medium text-deep mb-1">Commission</label>
+                <label class="block text-sm font-medium text-deep mb-1"
+                  data-i18n="commissions.commission">Commission</label>
                 <select id="commentCommission"
-                  class="w-full border border-gray-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-violet/30 focus:border-violet outline-none">
-                  <option value="JIGEENINDEER">JIGEENINDEER</option>
-                  <option value="CitiZen">CitiZen</option>
-                  <option value="Éducation">Éducation</option>
-                  <option value="Économie">Économie</option>
-                  <option value="Graines">GRAINES D'ENTREPRENEURS</option>
-                  <option value="Ayoo">AYOO NENE</option>
-                  <option value="Diaspower">DIASPOWER</option>
-                  <option value="Caravane">CARAVANE APPRENDRE & ENTREPRENDRE</option>
-                  <option value="Baydundee">BAYDUNDEE</option>
-                  <option value="Academy">JEADER ACADEMY</option>
-                </select>
+                  class="w-full border border-gray-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-violet/30 focus:border-violet outline-none"></select>
               </div>
             </div>
             <div class="mb-4">
-              <label class="block text-sm font-medium text-deep mb-1">Message</label>
+              <label class="block text-sm font-medium text-deep mb-1" data-i18n="commissions.message">Message</label>
               <textarea id="commentText" rows="3" required
                 class="w-full border border-gray-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-violet/30 focus:border-violet outline-none"
-                placeholder="Partagez votre idée, retour d'expérience, suggestion..."></textarea>
+                placeholder=""></textarea>
             </div>
             <button type="submit"
               class="bg-violet hover:bg-violet/80 text-white font-semibold py-2 px-6 rounded-lg transition flex items-center gap-2"><i
-                data-lucide="send" class="w-4 h-4"></i> Publier</button>
+                data-lucide="send" class="w-4 h-4"></i> <span data-i18n="commissions.publish">Publier</span></button>
           </form>
         </div>
-
-        <!-- Liste des commentaires -->
         <div>
           <h3 class="font-heading text-xl font-bold text-deep mb-4 flex items-center gap-2"><i
-              data-lucide="message-circle" class="w-5 h-5"></i> Discussions récentes</h3>
+              data-lucide="message-circle" class="w-5 h-5"></i> <span
+              data-i18n="commissions.recent_discussions">Discussions récentes</span></h3>
           <div id="commentsList" class="space-y-4"></div>
         </div>
       </div>
     </div>
 
-    <!-- DASHBOARD -->
+    <!-- ========== PAGE DASHBOARD ========== -->
     <div id="page-dashboard" class="page">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <h1 class="font-heading text-3xl font-bold text-deep">Dashboard National</h1>
-            <p class="text-gray-500 mt-1">Vue d'ensemble de l'Index JIGEEN — Données 2024</p>
+            <h1 class="font-heading text-3xl font-bold text-deep" data-i18n="dashboard.title">Dashboard National</h1>
+            <p class="text-gray-500 mt-1" data-i18n="dashboard.subtitle">Vue d'ensemble de l'Index JIGEEN — Données 2024
+            </p>
           </div>
           <div class="flex gap-3">
             <select id="regionFilter" onchange="updateDashboard()"
               class="border border-gray-200 rounded-lg px-4 py-2 text-sm bg-white focus:ring-2 focus:ring-violet/30 focus:border-violet outline-none">
-              <option value="national">🇸🇳 National</option>
-            </select>
-            <select id="yearFilter" onchange="updateDashboard()"
-              class="border border-gray-200 rounded-lg px-4 py-2 text-sm bg-white focus:ring-2 focus:ring-violet/30 focus:border-violet outline-none">
-              <option>2024</option>
-              <option>2023</option>
-              <option>2022</option>
+              <option value="national" data-i18n="dashboard.national">🇸🇳 National</option>
             </select>
           </div>
         </div>
@@ -810,50 +742,55 @@
           <div class="bg-deep rounded-2xl p-8 text-white text-center col-span-1 relative overflow-hidden">
             <div class="absolute top-0 right-0 w-32 h-32 bg-violet/20 rounded-full -translate-y-1/2 translate-x-1/2">
             </div>
-            <p class="text-sm text-white/70 mb-2">Score Global JIGEENINDEX</p>
-            <div class="relative inline-block"><svg width="140" height="140" class="mx-auto">
+            <p class="text-sm text-white/70 mb-2" data-i18n="dashboard.global_score">Score Global JIGEENINDEX</p>
+            <div class="relative inline-block">
+              <svg width="140" height="140" class="mx-auto">
                 <circle cx="70" cy="70" r="58" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10" />
                 <circle id="scoreRing" cx="70" cy="70" r="58" fill="none" stroke="#F2C94C" stroke-width="10"
                   stroke-linecap="round" stroke-dasharray="364.4" stroke-dashoffset="364.4"
                   transform="rotate(-90 70 70)" class="score-ring" />
-              </svg><span id="scoreText"
+              </svg>
+              <span id="scoreText"
                 class="absolute inset-0 flex items-center justify-center font-heading text-4xl font-bold text-gold">68</span>
             </div>
             <p class="text-white/60 text-xs mt-3" id="scoreLabel">National • 2024</p>
           </div>
           <div class="col-span-2 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
             <h3 class="font-semibold text-deep mb-4 flex items-center gap-2"><i data-lucide="bar-chart-3"
-                class="w-5 h-5 text-violet"></i> Scores par pilier</h3>
+                class="w-5 h-5 text-violet"></i> <span data-i18n="dashboard.scores_by_pillar">Scores par pilier</span>
+            </h3>
             <div id="pillarBars" class="space-y-3"></div>
           </div>
         </div>
         <div class="grid md:grid-cols-2 gap-6 mb-8">
           <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
             <h3 class="font-semibold text-deep mb-4 flex items-center gap-2"><i data-lucide="activity"
-                class="w-5 h-5 text-violet"></i> Radar des piliers</h3>
+                class="w-5 h-5 text-violet"></i> <span data-i18n="dashboard.radar">Radar des piliers</span></h3>
             <div class="flex justify-center"><svg id="radarChart" width="300" height="300" class="radar-anim"></svg>
             </div>
           </div>
           <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
             <h3 class="font-semibold text-deep mb-4 flex items-center gap-2"><i data-lucide="trending-up"
-                class="w-5 h-5 text-violet"></i> Évolution nationale</h3><svg id="lineChart" width="100%" height="240"
-              viewbox="0 0 500 240"></svg>
+                class="w-5 h-5 text-violet"></i> <span data-i18n="dashboard.evolution">Évolution nationale</span></h3>
+            <svg id="lineChart" width="100%" height="240" viewbox="0 0 500 240"></svg>
           </div>
         </div>
         <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-8">
           <h3 class="font-semibold text-deep mb-4 flex items-center gap-2"><i data-lucide="git-compare"
-              class="w-5 h-5 text-violet"></i> Comparaison régionale</h3>
+              class="w-5 h-5 text-violet"></i> <span data-i18n="dashboard.regional_comparison">Comparaison
+              régionale</span></h3>
           <div id="regionComparison" class="space-y-2"></div>
         </div>
       </div>
     </div>
 
-    <!-- CARTOGRAPHIE -->
+    <!-- ========== PAGE CARTOGRAPHIE ========== -->
     <div id="page-cartographie" class="page">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <h1 class="font-heading text-3xl font-bold text-deep mb-2">Cartographie régionale</h1>
-        <p class="text-gray-500 mb-4">Score JIGEENINDEX par région du Sénégal (illustration – formes non contractuelles)
-        </p>
+        <h1 class="font-heading text-3xl font-bold text-deep mb-2" data-i18n="cartography.title">Cartographie régionale
+        </h1>
+        <p class="text-gray-500 mb-4" data-i18n="cartography.subtitle">Score JIGEENINDEX par région du Sénégal
+          (illustration – formes non contractuelles)</p>
         <div class="grid lg:grid-cols-3 gap-8">
           <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm relative">
             <div id="mapTooltip" class="tooltip-region"></div>
@@ -861,55 +798,61 @@
           </div>
           <div>
             <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-4">
-              <h3 class="font-semibold text-deep mb-3">Légende</h3>
+              <h3 class="font-semibold text-deep mb-3" data-i18n="cartography.legend">Légende</h3>
               <div class="space-y-2 text-sm">
                 <div class="flex items-center gap-2"><span class="w-5 h-3 rounded" style="background:#2d6a4f"></span>
-                  75+ Excellent</div>
+                  <span data-i18n="cartography.excellent">75+ Excellent</span>
+                </div>
                 <div class="flex items-center gap-2"><span class="w-5 h-3 rounded" style="background:#52b788"></span>
-                  65–74 Bon</div>
+                  <span data-i18n="cartography.good">65–74 Bon</span>
+                </div>
                 <div class="flex items-center gap-2"><span class="w-5 h-3 rounded" style="background:#f4a261"></span>
-                  55–64 Moyen</div>
+                  <span data-i18n="cartography.average">55–64 Moyen</span>
+                </div>
                 <div class="flex items-center gap-2"><span class="w-5 h-3 rounded" style="background:#e76f51"></span>
-                  &lt;55 Faible</div>
+                  <span data-i18n="cartography.low">&lt;55 Faible</span>
+                </div>
               </div>
             </div>
             <div id="regionDetail" class="bg-light rounded-2xl p-6">
-              <p class="text-gray-400 text-sm text-center">Survolez une région sur la carte</p>
+              <p class="text-gray-400 text-sm text-center" data-i18n="cartography.hover">Survolez une région sur la
+                carte</p>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- INDICATEURS -->
+    <!-- ========== PAGE INDICATEURS ========== -->
     <div id="page-indicateurs" class="page">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <h1 class="font-heading text-3xl font-bold text-deep mb-2">Indicateurs</h1>
-        <p class="text-gray-500 mb-6">55 indicateurs répartis en 9 piliers thématiques</p>
+        <h1 class="font-heading text-3xl font-bold text-deep mb-2" data-i18n="indicators.title">Indicateurs</h1>
+        <p class="text-gray-500 mb-6" data-i18n="indicators.subtitle">55 indicateurs répartis en 9 piliers thématiques
+        </p>
         <div class="flex flex-wrap gap-3 mb-6">
           <select id="pillarFilter" onchange="filterIndicators()"
             class="border border-gray-200 rounded-lg px-4 py-2 text-sm bg-white focus:ring-2 focus:ring-violet/30 outline-none">
-            <option value="all">Tous les piliers</option>
+            <option value="all" data-i18n="indicators.all_pillars">Tous les piliers</option>
           </select>
           <select id="indRegionFilter" onchange="filterIndicators()"
             class="border border-gray-200 rounded-lg px-4 py-2 text-sm bg-white focus:ring-2 focus:ring-violet/30 outline-none">
-            <option value="national">National</option>
+            <option value="national" data-i18n="indicators.national">National</option>
           </select>
           <div class="relative flex-1 min-w-[200px]"><i data-lucide="search"
               class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i><input type="text"
-              id="indSearch" oninput="filterIndicators()" placeholder="Rechercher un indicateur…"
-              class="w-full border border-gray-200 rounded-lg pl-10 pr-4 py-2 text-sm bg-white focus:ring-2 focus:ring-violet/30 outline-none">
-          </div>
+              id="indSearch" oninput="filterIndicators()" placeholder=""
+              class="w-full border border-gray-200 rounded-lg pl-10 pr-4 py-2 text-sm bg-white focus:ring-2 focus:ring-violet/30 outline-none"
+              data-i18n-placeholder="indicators.search_placeholder"></div>
         </div>
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div class="overflow-x-auto">
             <table class="w-full text-sm">
               <thead class="bg-deep text-white">
                 <tr>
-                  <th class="text-left px-4 py-3 font-medium">Indicateur</th>
-                  <th class="text-left px-4 py-3 font-medium">Pilier</th>
-                  <th class="text-center px-4 py-3 font-medium">Score</th>
-                  <th class="px-4 py-3 font-medium text-left">Niveau</th>
+                  <th class="text-left px-4 py-3 font-medium" data-i18n="indicators.table.indicator">Indicateur</th>
+                  <th class="text-left px-4 py-3 font-medium" data-i18n="indicators.table.pillar">Pilier</th>
+                  <th class="text-center px-4 py-3 font-medium" data-i18n="indicators.table.score">Score</th>
+                  <th class="px-4 py-3 font-medium text-left" data-i18n="indicators.table.level">Niveau</th>
                 </tr>
               </thead>
               <tbody id="indicatorTable"></tbody>
@@ -919,48 +862,52 @@
       </div>
     </div>
 
-    <!-- SIGNALEMENT -->
+    <!-- ========== PAGE SIGNALEMENT ========== -->
     <div id="page-signalement" class="page">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 py-8">
         <div class="text-center mb-8">
           <div class="w-16 h-16 bg-violet/10 rounded-full flex items-center justify-center mx-auto mb-4"><i
               data-lucide="shield" class="w-8 h-8 text-violet"></i></div>
-          <h1 class="font-heading text-3xl font-bold text-deep mb-2">Signalement confidentiel</h1>
-          <p class="text-gray-500">Votre témoignage est anonyme et sécurisé. Il contribue à améliorer les données de
-            l'observatoire.</p>
+          <h1 class="font-heading text-3xl font-bold text-deep mb-2" data-i18n="report.title">Signalement confidentiel
+          </h1>
+          <p class="text-gray-500" data-i18n="report.subtitle">Votre témoignage est anonyme et sécurisé. Il contribue à
+            améliorer les données de l'observatoire.</p>
         </div>
         <div id="reportFormContainer">
           <form id="reportForm" onsubmit="submitReport(event)"
             class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-5">
-            <div><label for="reportType" class="block text-sm font-medium text-deep mb-1.5">Type de
-                signalement</label><select id="reportType" required
+            <div><label for="reportType" class="block text-sm font-medium text-deep mb-1.5" data-i18n="report.type">Type
+                de signalement</label><select id="reportType" required
                 class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-violet/30 focus:border-violet outline-none">
-                <option value="">Sélectionnez…</option>
-                <option>Violence basée sur le genre</option>
-                <option>Besoin d'assistance</option>
-                <option>Discrimination</option>
-                <option>Autre</option>
+                <option value="" data-i18n="report.select">Sélectionnez…</option>
+                <option data-i18n="report.type_vbg">Violence basée sur le genre</option>
+                <option data-i18n="report.type_assistance">Besoin d'assistance</option>
+                <option data-i18n="report.type_discrimination">Discrimination</option>
+                <option data-i18n="report.type_other">Autre</option>
               </select></div>
-            <div><label for="reportRegion" class="block text-sm font-medium text-deep mb-1.5">Région</label><select
-                id="reportRegion" required
+            <div><label for="reportRegion" class="block text-sm font-medium text-deep mb-1.5"
+                data-i18n="report.region">Région</label><select id="reportRegion" required
                 class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-violet/30 focus:border-violet outline-none"></select>
             </div>
-            <div><label for="reportDesc" class="block text-sm font-medium text-deep mb-1.5">Description</label><textarea
-                id="reportDesc" rows="4" required placeholder="Décrivez la situation…"
-                class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-violet/30 focus:border-violet outline-none resize-none"></textarea>
-            </div>
+            <div><label for="reportDesc" class="block text-sm font-medium text-deep mb-1.5"
+                data-i18n="report.description">Description</label><textarea id="reportDesc" rows="4" required
+                placeholder=""
+                class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-violet/30 focus:border-violet outline-none resize-none"
+                data-i18n-placeholder="report.desc_placeholder"></textarea></div>
             <div class="flex items-start gap-2 text-xs text-gray-400"><i data-lucide="lock"
-                class="w-4 h-4 mt-0.5 flex-shrink-0"></i><span>Vos données sont traitées de manière anonyme et
-                confidentielle.</span></div>
+                class="w-4 h-4 mt-0.5 flex-shrink-0"></i><span data-i18n="report.confidentiality">Vos données sont
+                traitées de manière anonyme et confidentielle.</span></div>
             <button type="submit"
               class="w-full bg-violet hover:bg-violet/90 text-white py-3 rounded-xl font-semibold transition flex items-center justify-center gap-2"><i
-                data-lucide="send" class="w-5 h-5"></i> Envoyer le signalement</button>
+                data-lucide="send" class="w-5 h-5"></i> <span data-i18n="report.send">Envoyer le
+                signalement</span></button>
             <div id="reportSuccess" class="hidden text-center py-4">
               <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3"><i
                   data-lucide="check-circle" class="w-6 h-6 text-green-600"></i></div>
-              <p class="font-semibold text-deep">Signalement envoyé</p>
-              <p class="text-sm text-gray-500 mt-1">Merci pour votre contribution.</p><button type="button"
-                onclick="resetReportForm()" class="mt-4 text-violet text-sm font-medium underline">➕ Nouveau
+              <p class="font-semibold text-deep" data-i18n="report.success_title">Signalement envoyé</p>
+              <p class="text-sm text-gray-500 mt-1" data-i18n="report.success_message">Merci pour votre contribution.
+              </p><button type="button" onclick="resetReportForm()"
+                class="mt-4 text-violet text-sm font-medium underline" data-i18n="report.new">➕ Nouveau
                 signalement</button>
             </div>
           </form>
@@ -968,126 +915,55 @@
       </div>
     </div>
 
-    <!-- BIBLIOTHÈQUE -->
+    <!-- ========== PAGE BIBLIOTHÈQUE ========== -->
     <div id="page-bibliotheque" class="page">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <h1 class="font-heading text-3xl font-bold text-deep mb-2">Bibliothèque</h1>
-        <p class="text-gray-500 mb-6">Rapports, études et publications de l'observatoire</p>
-        <div class="flex flex-wrap gap-3 mb-6">
-          <button data-cat="all" onclick="filterDocs('all')"
-            class="doc-filter px-4 py-1.5 rounded-full text-sm font-medium bg-deep text-white">Tous</button>
-          <button data-cat="rapport" onclick="filterDocs('rapport')"
-            class="doc-filter px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Rapports</button>
-          <button data-cat="etude" onclick="filterDocs('etude')"
-            class="doc-filter px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Études</button>
-          <button data-cat="policy" onclick="filterDocs('policy')"
-            class="doc-filter px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Policy
-            Briefs</button>
+        <h1 class="font-heading text-3xl font-bold text-deep mb-2" data-i18n="library.title">Bibliothèque</h1>
+        <p class="text-gray-500 mb-6" data-i18n="library.subtitle">Rapports, études et publications de l'observatoire
+        </p>
+        <div class="flex flex-wrap gap-3 mb-6" id="docFilterButtons">
+          <button data-cat="all"
+            class="doc-filter active px-4 py-2 rounded-full text-sm bg-deep text-white">Tous</button>
+          <button data-cat="rapport" class="doc-filter px-4 py-2 rounded-full text-sm bg-gray-100">Rapports</button>
+          <button data-cat="etude" class="doc-filter px-4 py-2 rounded-full text-sm bg-gray-100">Études</button>
+          <button data-cat="policy" class="doc-filter px-4 py-2 rounded-full text-sm bg-gray-100">Policy Briefs</button>
         </div>
         <div id="docGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
       </div>
     </div>
 
-    <!-- PARTENAIRES -->
+    <!-- ========== PAGE PARTENAIRES ========== -->
     <div id="page-partenaires" class="page">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <h1 class="font-heading text-3xl font-bold text-deep mb-2">Partenaires</h1>
-        <p class="text-gray-500 mb-8">Institutions et organisations soutenant l'observatoire</p>
+        <h1 class="font-heading text-3xl font-bold text-deep mb-2" data-i18n="partners.title">Partenaires</h1>
+        <p class="text-gray-500 mb-8" data-i18n="partners.subtitle">Institutions et organisations soutenant
+          l'observatoire</p>
         <div id="partnersGrid"></div>
       </div>
     </div>
 
-    <!-- ACTUALITÉS -->
+    <!-- ========== PAGE ACTUALITÉS ========== -->
     <div id="page-actualites" class="page">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <h1 class="font-heading text-3xl font-bold text-deep">Actualités</h1>
-        <div class="grid md:grid-cols-2 gap-6 mt-8">
-          <div class="border rounded-xl p-5">
-            <div class="bg-violet/10 w-12 h-12 rounded-full flex items-center justify-center mb-3"><i
-                data-lucide="newspaper" class="text-violet"></i></div>
-            <h3 class="font-bold">Rapport annuel 2024 disponible</h3>
-            <p class="text-gray-500 text-sm mt-1">Analyse complète des 55 indicateurs, tendances nationales et
-              recommandations.</p><span class="text-xs text-gold">15 mars 2025</span>
-          </div>
-          <div class="border rounded-xl p-5">
-            <div class="bg-violet/10 w-12 h-12 rounded-full flex items-center justify-center mb-3"><i
-                data-lucide="megaphone" class="text-violet"></i></div>
-            <h3 class="font-bold">Atelier régional à Thiès</h3>
-            <p class="text-gray-500 text-sm mt-1">Renforcement des capacités des acteurs locaux sur l'utilisation des
-              données.</p><span class="text-xs text-gold">5 avril 2025</span>
-          </div>
-          <div class="border rounded-xl p-5">
-            <div class="bg-violet/10 w-12 h-12 rounded-full flex items-center justify-center mb-3"><i
-                data-lucide="handshake" class="text-violet"></i></div>
-            <h3 class="font-bold">Nouveau partenariat avec ONU Femmes</h3>
-            <p class="text-gray-500 text-sm mt-1">Collecte de données communautaires dans 6 régions.</p><span
-              class="text-xs text-gold">20 février 2025</span>
-          </div>
-          <div class="border rounded-xl p-5">
-            <div class="bg-violet/10 w-12 h-12 rounded-full flex items-center justify-center mb-3"><i
-                data-lucide="book-open" class="text-violet"></i></div>
-            <h3 class="font-bold">Publication : Étude sur l'entrepreneuriat féminin</h3>
-            <p class="text-gray-500 text-sm mt-1">Barrières et leviers d'accès au financement.</p><span
-              class="text-xs text-gold">10 janvier 2025</span>
-          </div>
-        </div>
+        <h1 class="font-heading text-3xl font-bold text-deep" data-i18n="news.title">Actualités</h1>
+        <div class="grid md:grid-cols-2 gap-6 mt-8" id="allNewsGrid"></div>
       </div>
     </div>
 
-    <!-- ÉVÉNEMENTS -->
+    <!-- ========== PAGE ÉVÉNEMENTS ========== -->
     <div id="page-evenements" class="page">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <h1 class="font-heading text-3xl font-bold text-deep">Événements à venir</h1>
-        <div class="space-y-5 mt-8">
-          <div class="bg-light p-5 rounded-xl flex justify-between items-center">
-            <div>
-              <p class="font-semibold">12 Mai 2025 – Webinaire « Femmes et leadership économique »</p>
-              <p class="text-sm">Organisé par le Ministère de la Femme et JIGEENINDEX</p>
-            </div><button class="bg-violet/20 text-violet px-4 py-1 rounded-full text-sm">S'inscrire</button>
-          </div>
-          <div class="bg-light p-5 rounded-xl flex justify-between items-center">
-            <div>
-              <p class="font-semibold">28-30 Juin 2025 – Forum JIGEENINDEX : « Données pour l'égalité »</p>
-              <p class="text-sm">Dakar, CICAD – Appel à communications ouvert</p>
-            </div><button class="bg-violet/20 text-violet px-4 py-1 rounded-full text-sm">Soumettre</button>
-          </div>
-          <div class="bg-light p-5 rounded-xl flex justify-between items-center">
-            <div>
-              <p class="font-semibold">8 Mars 2026 – Lancement de la campagne « Score régional participatif »</p>
-              <p class="text-sm">Dans les 14 régions du Sénégal</p>
-            </div><button class="bg-violet/20 text-violet px-4 py-1 rounded-full text-sm">Participer</button>
-          </div>
-        </div>
+        <h1 class="font-heading text-3xl font-bold text-deep" data-i18n="events.title">Événements à venir</h1>
+        <div class="space-y-5 mt-8" id="allEventsList"></div>
       </div>
     </div>
 
-    <!-- OPPORTUNITÉS -->
+    <!-- ========== PAGE OPPORTUNITÉS ========== -->
     <div id="page-opportunites" class="page">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <h1 class="font-heading text-3xl font-bold text-deep">Marketplace – Opportunités d’affaires & collaborations
-        </h1>
-        <div class="grid md:grid-cols-2 gap-6 mt-8">
-          <div class="border rounded-xl p-6"><i data-lucide="briefcase" class="text-gold w-8 h-8"></i>
-            <h3 class="font-bold text-xl mt-2">Appel d’offres : développement d’une API publique</h3>
-            <p class="text-gray-600 mt-1">L’observatoire recherche un prestataire pour l’ouverture des données. Budget :
-              8M FCFA.</p><button class="mt-3 bg-deep text-white px-4 py-2 rounded-lg text-sm">Postuler</button>
-          </div>
-          <div class="border rounded-xl p-6"><i data-lucide="users" class="text-gold w-8 h-8"></i>
-            <h3 class="font-bold text-xl mt-2">Recherche partenaires locaux – 14 régions</h3>
-            <p class="text-gray-600">Pour la collecte de données terrain et la sensibilisation.</p><button
-              class="mt-3 bg-deep text-white px-4 py-2 rounded-lg text-sm">Devenir partenaire</button>
-          </div>
-          <div class="border rounded-xl p-6"><i data-lucide="handshake" class="text-gold w-8 h-8"></i>
-            <h3 class="font-bold text-xl mt-2">Incubateur "ELLES Innovent"</h3>
-            <p class="text-gray-600">Accompagnement et financement de startups féminines dans l’agritech.</p><button
-              class="mt-3 bg-deep text-white px-4 py-2 rounded-lg text-sm">Candidater</button>
-          </div>
-          <div class="border rounded-xl p-6"><i data-lucide="globe" class="text-gold w-8 h-8"></i>
-            <h3 class="font-bold text-xl mt-2">Consultant·e en analyse de données</h3>
-            <p class="text-gray-600">Mission de 6 mois pour la mise à jour des indicateurs.</p><button
-              class="mt-3 bg-deep text-white px-4 py-2 rounded-lg text-sm">Postuler</button>
-          </div>
-        </div>
+        <h1 class="font-heading text-3xl font-bold text-deep" data-i18n="opportunities.title">Marketplace – Opportunités
+          d’affaires & collaborations</h1>
+        <div class="grid md:grid-cols-2 gap-6 mt-8" id="opportunitiesFullGrid"></div>
       </div>
     </div>
 
@@ -1120,8 +996,6 @@
       </div>
     </div>
 
-
-
     <!-- FOOTER -->
     <footer class="bg-deep text-white/70 mt-auto">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
@@ -1132,20 +1006,24 @@
                   class="text-gold font-heading font-bold"><img style="width: 100px;height: auto;" src="jeader.jpg"
                     alt=""></span></div><span class="font-heading font-bold text-white">JIGEENINDEX</span>
             </div>
-            <p class="text-sm leading-relaxed">Observatoire digital national des conditions des femmes au Sénégal.
-              Données ouvertes pour l'action.</p>
+            <p class="text-sm leading-relaxed" data-i18n="footer.description">Observatoire digital national des
+              conditions des femmes au Sénégal. Données ouvertes pour l'action.</p>
           </div>
           <div>
-            <h4 class="text-white font-semibold mb-3 text-sm">Navigation</h4>
+            <h4 class="text-white font-semibold mb-3 text-sm" data-i18n="footer.navigation">Navigation</h4>
             <div class="space-y-1.5 text-sm">
-              <p class="cursor-pointer hover:text-gold transition" onclick="navigateTo('dashboard')">Dashboard</p>
-              <p class="cursor-pointer hover:text-gold transition" onclick="navigateTo('cartographie')">Cartographie</p>
-              <p class="cursor-pointer hover:text-gold transition" onclick="navigateTo('indicateurs')">Indicateurs</p>
-              <p class="cursor-pointer hover:text-gold transition" onclick="navigateTo('bibliotheque')">Bibliothèque</p>
+              <p class="cursor-pointer hover:text-gold transition" onclick="navigateTo('dashboard')"
+                data-i18n="nav.dashboard">Dashboard</p>
+              <p class="cursor-pointer hover:text-gold transition" onclick="navigateTo('cartographie')"
+                data-i18n="nav.cartographie">Cartographie</p>
+              <p class="cursor-pointer hover:text-gold transition" onclick="navigateTo('indicateurs')"
+                data-i18n="nav.indicateurs">Indicateurs</p>
+              <p class="cursor-pointer hover:text-gold transition" onclick="navigateTo('bibliotheque')"
+                data-i18n="nav.bibliotheque">Bibliothèque</p>
             </div>
           </div>
           <div>
-            <h4 class="text-white font-semibold mb-3 text-sm">Contact</h4>
+            <h4 class="text-white font-semibold mb-3 text-sm" data-i18n="footer.contact">Contact</h4>
             <p class="text-sm">info@jigeenindex.sn</p>
             <p class="text-sm">Dakar, Sénégal</p>
             <div class="flex gap-3 mt-3">
@@ -1171,169 +1049,309 @@
   </div>
 
   <script>
-    // ==================== DONNÉES EXISTANTES ====================
-    const PILLARS = [
-      { name: 'Inclusion sociale & pauvreté', icon: 'users', score: 62, color: '#e76f51', desc: 'Taux de pauvreté monétaire, droits de propriété, Code de la Famille, autonomie financière.' },
-      { name: 'Alimentation', icon: 'utensils', score: 58, color: '#f4a261', desc: 'Sous-alimentation, insécurité alimentaire, anémie, accès à l\'alimentation.' },
-      { name: 'Santé & protection sociale', icon: 'heart-pulse', score: 70, color: '#2a9d8f', desc: 'Mortalité maternelle, fécondité adolescente, planification familiale, VBG, MGF, protection sociale.' },
-      { name: 'Éducation de qualité', icon: 'graduation-cap', score: 65, color: '#264653', desc: 'Scolarisation filles, alphabétisation, NEET, achèvement secondaire, filières scientifiques.' },
-      { name: 'Inclusion politique & gouvernance', icon: 'landmark', score: 52, color: '#6C4AB6', desc: 'Femmes maires, parlementaires, participation électorale, postes ministériels.' },
-      { name: 'Eau, assainissement & énergie', icon: 'droplet', score: 67, color: '#0B3C5D', desc: 'Accès eau potable, assainissement, énergie propre, temps de collecte, satisfaction.' },
-      { name: 'Travail décent & croissance', icon: 'briefcase', score: 61, color: '#e9c46a', desc: 'Égalité salariale, inclusion financière, taux d\'activité, emploi formel.' },
-      { name: 'Innovation & infrastructures', icon: 'microchip', score: 58, color: '#9b5de5', desc: 'Accès financements, paiements digitaux, internet, entrepreneuriat, accès à la terre.' },
-      { name: 'Justice & réduction inégalités', icon: 'scale', score: 63, color: '#52b788', desc: 'Autonomie personnelle, assistance juridique, temps traitement VBG, instruments internationaux.' }
-    ];
+    // ==================== MULTILINGUE & OBJECTIFS ====================
+    let currentLang = localStorage.getItem('lang') || 'fr';
+    let currentYear = 2024;
 
-    const REGIONS = [
-      { name: 'Dakar', score: 78, pop: '3.9M', path: 'M95,235 L115,220 L130,230 L120,250 L100,248Z' },
-      { name: 'Thiès', score: 71, pop: '2.1M', path: 'M130,220 L160,210 L170,235 L145,250 L130,240Z' },
-      { name: 'Diourbel', score: 64, pop: '1.8M', path: 'M170,200 L200,190 L210,215 L185,230 L170,220Z' },
-      { name: 'Fatick', score: 62, pop: '0.9M', path: 'M155,250 L185,240 L195,265 L170,275 L155,260Z' },
-      { name: 'Kaolack', score: 60, pop: '1.1M', path: 'M195,235 L225,225 L240,255 L215,265 L195,255Z' },
-      { name: 'Kaffrine', score: 57, pop: '0.7M', path: 'M240,220 L280,210 L290,240 L260,250 L240,240Z' },
-      { name: 'Saint-Louis', score: 68, pop: '1.1M', path: 'M130,120 L200,100 L210,160 L170,180 L130,170Z' },
-      { name: 'Louga', score: 63, pop: '1.0M', path: 'M160,160 L210,145 L220,185 L185,200 L160,190Z' },
-      { name: 'Matam', score: 55, pop: '0.7M', path: 'M280,90 L350,75 L370,130 L310,150 L280,130Z' },
-      { name: 'Tambacounda', score: 53, pop: '0.8M', path: 'M310,160 L400,140 L420,220 L340,240 L310,210Z' },
-      { name: 'Kédougou', score: 50, pop: '0.2M', path: 'M400,250 L450,230 L470,280 L430,300 L400,290Z' },
-      { name: 'Kolda', score: 56, pop: '0.8M', path: 'M310,290 L370,275 L385,320 L340,335 L310,320Z' },
-      { name: 'Sédhiou', score: 58, pop: '0.5M', path: 'M265,300 L310,290 L320,330 L285,340 L265,325Z' },
-      { name: 'Ziguinchor', score: 66, pop: '0.6M', path: 'M210,310 L265,295 L275,340 L235,355 L210,340Z' }
-    ];
-
-    // Indicateurs dérivés
-    const INDICATORS = [];
-    const indMap = {
-      "Inclusion sociale & pauvreté": ["Taux de pauvreté monétaire", "Droits de propriété", "Code de la Famille", "Autonomie financière"],
-      "Alimentation": ["Sous-alimentation", "Insécurité alimentaire", "Anémie", "Accès alimentation"],
-      "Santé & protection sociale": ["Mortalité maternelle", "Fécondité adolescente", "Planification familiale", "Accouchements assistés", "MGF", "Protection sociale"],
-      "Éducation de qualité": ["Scolarisation filles", "Alphabétisation", "NEET", "Achèvement secondaire", "Filières scientifiques"],
-      "Inclusion politique & gouvernance": ["Femmes maires", "Femmes parlementaires", "Participation électorale", "Postes ministériels"],
-      "Eau, assainissement & énergie": ["Accès eau potable", "Assainissement", "Énergie propre", "Temps collecte eau"],
-      "Travail décent & croissance": ["Égalité salariale", "Inclusion financière", "Taux d'activité", "Emploi formel"],
-      "Innovation & infrastructures": ["Accès financements", "Paiements digitaux", "Accès internet", "Entrepreneuriat"],
-      "Justice & réduction inégalités": ["Autonomie personnelle", "Assistance juridique", "Traitement plaintes VBG", "Instruments internationaux"]
+    const translations = {
+      fr: {
+        nav: { accueil: "Accueil", observatoire: "Observatoire", dashboard: "Tableau de bord", cartographie: "Cartographie", indicateurs: "Indicateurs", ressources: "Ressources", engagement: "Engagement", jigeenindeer: "Commission JIGEENINDEER", partenaires: "Partenaires", opportunites: "Opportunités", about: "À propos", communauté: "Communauté", bibliotheque: "Bibliothèque", signalement: "Signalement", actualites: "Actualités", evenements: "Événements", menu: "Menu" },
+        hero: { slogan: "Observatoire national numérique", title: "Mesurer pour mieux agir", sub: "55 indicateurs · 14 régions · 9 piliers", cta: "Voir l'Index" },
+        home: { presentation_title: "Un outil de pilotage pour la complémentarité : suivre, analyser, agir.", presentation_desc: "JIGEENINDEX SENEGAL agrège 55 indicateurs socio-économiques répartis en 9 piliers thématiques pour produire un score synthétique par région. Conçu pour les décideurs, chercheurs et la société civile.", badge_open_data: "Open Data", badge_regions: "14 régions", badge_realtime: "Temps réel", pillars_title: "Les 9 piliers de l'Index", news_title: "Actualités récentes", events_title: "Événements à venir", opportunities_title: "Opportunités de collaboration", see_all: "Voir toutes les offres →" },
+        dashboard: { title: "Dashboard National", subtitle: "Vue d'ensemble de l'Index JIGEEN — Données 2024", global_score: "Score Global JIGEENINDEX", scores_by_pillar: "Scores par pilier", radar: "Radar des piliers", evolution: "Évolution nationale", regional_comparison: "Comparaison régionale", national: "🇸🇳 National" },
+        cartography: { title: "Cartographie régionale", subtitle: "Score JIGEENINDEX par région du Sénégal (illustration – formes non contractuelles)", legend: "Légende", excellent: "75+ Excellent", good: "65–74 Bon", average: "55–64 Moyen", low: "<55 Faible", hover: "Survolez une région sur la carte" },
+        indicators: { title: "Indicateurs", subtitle: "55 indicateurs répartis en 9 piliers thématiques", all_pillars: "Tous les piliers", national: "National", search_placeholder: "Rechercher un indicateur…", table: { indicator: "Indicateur", pillar: "Pilier", score: "Score", level: "Niveau" } },
+        report: { title: "Signalement confidentiel", subtitle: "Votre témoignage est anonyme et sécurisé. Il contribue à améliorer les données de l'observatoire.", type: "Type de signalement", select: "Sélectionnez…", type_vbg: "Violence basée sur le genre", type_assistance: "Besoin d'assistance", type_discrimination: "Discrimination", type_other: "Autre", region: "Région", description: "Description", desc_placeholder: "Décrivez la situation…", confidentiality: "Vos données sont traitées de manière anonyme et confidentielle.", send: "Envoyer le signalement", success_title: "Signalement envoyé", success_message: "Merci pour votre contribution.", new: "➕ Nouveau signalement" },
+        library: { title: "Bibliothèque", subtitle: "Rapports, études et publications de l'observatoire", filters: { all: "Tous", reports: "Rapports", studies: "Études", policy: "Policy Briefs" } },
+        partners: { title: "Partenaires", subtitle: "Institutions et organisations soutenant l'observatoire" },
+        news: { title: "Actualités" },
+        events: { title: "Événements à venir" },
+        opportunities: { title: "Marketplace – Opportunités d’affaires & collaborations" },
+        about: { title: "À propos de JIGEENINDEX SENEGAL", pillars: "Piliers stratégiques", indicators: "Indicateurs suivis", regions: "Régions couvertes" },
+        commissions: { title: "Espace collaboratif des commissions JEADER", subtitle: "Partagez vos idées, commentaires et ressources avec les membres de chaque commission.", link: "Site JEADER →", add_comment: "Ajouter un commentaire", your_name: "Votre nom (optionnel)", commission: "Commission", message: "Message", publish: "Publier", recent_discussions: "Discussions récentes" },
+        footer: { description: "Observatoire digital national des conditions des femmes au Sénégal. Données ouvertes pour l'action.", navigation: "Navigation", contact: "Contact" }
+      },
+      en: {
+        nav: { accueil: "Home", observatoire: "Observatory", dashboard: "Dashboard", cartographie: "Mapping", indicateurs: "Indicators", ressources: "Resources", engagement: "Engagement", jigeenindeer: "JIGEENINDEER Commission", partenaires: "Partners", opportunites: "Opportunities", about: "About", communauté: "Community", bibliotheque: "Library", signalement: "Report", actualites: "News", evenements: "Events", menu: "Menu" },
+        hero: { slogan: "National digital observatory", title: "Measure to act better", sub: "55 indicators · 14 regions · 9 pillars", cta: "View Index" },
+        home: { presentation_title: "A steering tool for complementarity: monitor, analyze, act.", presentation_desc: "JIGEENINDEX SENEGAL aggregates 55 socio-economic indicators across 9 thematic pillars to produce a composite score per region. Designed for policymakers, researchers, and civil society.", badge_open_data: "Open Data", badge_regions: "14 regions", badge_realtime: "Real-time", pillars_title: "The 9 pillars of the Index", news_title: "Recent news", events_title: "Upcoming events", opportunities_title: "Collaboration opportunities", see_all: "See all offers →" },
+        dashboard: { title: "National Dashboard", subtitle: "Overview of the JIGEEN Index — 2024 data", global_score: "JIGEENINDEX Global Score", scores_by_pillar: "Scores by pillar", radar: "Pillar radar", evolution: "National evolution", regional_comparison: "Regional comparison", national: "🇸🇳 National" },
+        cartography: { title: "Regional mapping", subtitle: "JIGEENINDEX score per region of Senegal (illustration – non-binding shapes)", legend: "Legend", excellent: "75+ Excellent", good: "65–74 Good", average: "55–64 Average", low: "<55 Low", hover: "Hover over a region on the map" },
+        indicators: { title: "Indicators", subtitle: "55 indicators across 9 thematic pillars", all_pillars: "All pillars", national: "National", search_placeholder: "Search indicator…", table: { indicator: "Indicator", pillar: "Pillar", score: "Score", level: "Level" } },
+        report: { title: "Confidential report", subtitle: "Your testimony is anonymous and secure. It helps improve the observatory's data.", type: "Report type", select: "Select…", type_vbg: "Gender-based violence", type_assistance: "Need assistance", type_discrimination: "Discrimination", type_other: "Other", region: "Region", description: "Description", desc_placeholder: "Describe the situation…", confidentiality: "Your data is processed anonymously and confidentially.", send: "Send report", success_title: "Report sent", success_message: "Thank you for your contribution.", new: "➕ New report" },
+        library: { title: "Library", subtitle: "Reports, studies and publications from the observatory", filters: { all: "All", reports: "Reports", studies: "Studies", policy: "Policy Briefs" } },
+        partners: { title: "Partners", subtitle: "Institutions and organizations supporting the observatory" },
+        news: { title: "News" },
+        events: { title: "Upcoming events" },
+        opportunities: { title: "Marketplace – Business & collaboration opportunities" },
+        about: { title: "About JIGEENINDEX SENEGAL", pillars: "Strategic pillars", indicators: "Indicators tracked", regions: "Regions covered" },
+        commissions: { title: "JEADER commissions collaborative space", subtitle: "Share your ideas, comments and resources with members of each commission.", link: "JEADER website →", add_comment: "Add a comment", your_name: "Your name (optional)", commission: "Commission", message: "Message", publish: "Publish", recent_discussions: "Recent discussions" },
+        footer: { description: "National digital observatory of women's conditions in Senegal. Open data for action.", navigation: "Navigation", contact: "Contact" }
+      },
     };
-    PILLARS.forEach(p => {
-      let items = indMap[p.name] || ["Indicateur exemple"];
-      items.forEach(item => {
-        let base = p.score;
-        let delta = Math.floor(Math.random() * 21) - 10;
-        let score = Math.min(100, Math.max(30, base + delta));
-        INDICATORS.push({ name: item, pillar: p.name, score: score });
+    translations.de = { ...translations.en };
+    translations.ar = { ...translations.en };
+    translations.es = { ...translations.en };
+
+    function t(key) {
+      const keys = key.split('.');
+      let val = translations[currentLang];
+      for (let k of keys) if (val) val = val[k];
+      return val !== undefined ? val : key;
+    }
+
+    // ========== DONNÉES ==========
+    const PILLARS_DATA = [
+      { id: "social_inclusion", icon: "users", color: "#e76f51", currentScore: 62, targets: { 2027: 68, 2030: 74, 2035: 80 }, name: { fr: "Inclusion sociale & pauvreté", en: "Social inclusion & poverty", de: "Soziale Eingliederung & Armut", ar: "الاندماج الاجتماعي والفقر", es: "Inclusión social y pobreza" }, desc: { fr: "Taux de pauvreté monétaire, droits de propriété, Code de la Famille, autonomie financière.", en: "Monetary poverty rate, property rights, Family Code, financial autonomy.", de: "Geldarmutsrate, Eigentumsrechte, Familienrecht, finanzielle Autonomie.", ar: "معدل الفقر النقدي، حقوق الملكية، قانون الأسرة، الاستقلال المالي.", es: "Tasa de pobreza monetaria, derechos de propiedad, Código de Familia, autonomía financiera." } },
+      { id: "alimentation", icon: "utensils", color: "#f4a261", currentScore: 58, targets: { 2027: 64, 2030: 70, 2035: 76 }, name: { fr: "Alimentation", en: "Food", de: "Ernährung", ar: "التغذية", es: "Alimentación" }, desc: { fr: "Sous-alimentation, insécurité alimentaire, anémie, accès à l'alimentation.", en: "Undernourishment, food insecurity, anemia, access to food.", de: "Unterernährung, Ernährungsunsicherheit, Anämie, Zugang zu Nahrung.", ar: "سوء التغذية، انعدام الأمن الغذائي، فقر الدم، الوصول إلى الغذاء.", es: "Subalimentación, inseguridad alimentaria, anemia, acceso a alimentos." } },
+      { id: "sante", icon: "heart-pulse", color: "#2a9d8f", currentScore: 70, targets: { 2027: 75, 2030: 80, 2035: 85 }, name: { fr: "Santé & protection sociale", en: "Health & social protection", de: "Gesundheit & Sozialschutz", ar: "الصحة والحماية الاجتماعية", es: "Salud y protección social" }, desc: { fr: "Mortalité maternelle, fécondité adolescente, planification familiale, VBG, MGF, protection sociale.", en: "Maternal mortality, adolescent fertility, family planning, GBV, FGM, social protection.", de: "Müttersterblichkeit, Jugendfruchtbarkeit, Familienplanung, GBV, FGM, Sozialschutz.", ar: "وفيات الأمهات، خصوبة المراهقات، تنظيم الأسرة، العنف القائم على النوع الاجتماعي، ختان الإناث، الحماية الاجتماعية.", es: "Mortalidad materna, fecundidad adolescente, planificación familiar, VBG, MGF, protección social." } },
+      { id: "education", icon: "graduation-cap", color: "#264653", currentScore: 65, targets: { 2027: 70, 2030: 75, 2035: 80 }, name: { fr: "Éducation de qualité", en: "Quality education", de: "Hochwertige Bildung", ar: "التعليم الجيد", es: "Educación de calidad" }, desc: { fr: "Scolarisation filles, alphabétisation, NEET, achèvement secondaire, filières scientifiques.", en: "Girls' schooling, literacy, NEET, secondary completion, STEM fields.", de: "Schulbildung für Mädchen, Alphabetisierung, NEET, Sekundarstufenabschluss, MINT-Fächer.", ar: "تعليم الفتيات، محو الأمية، NEET، إكمال الثانوية، التخصصات العلمية.", es: "Escolarización de niñas, alfabetización, NEET, finalización de secundaria, carreras científicas." } },
+      { id: "politique", icon: "landmark", color: "#6C4AB6", currentScore: 52, targets: { 2027: 58, 2030: 64, 2035: 70 }, name: { fr: "Inclusion politique & gouvernance", en: "Political inclusion & governance", de: "Politische Inklusion & Regierungsführung", ar: "الإدماج السياسي والحوكمة", es: "Inclusión política y gobernanza" }, desc: { fr: "Femmes maires, parlementaires, participation électorale, postes ministériels.", en: "Women mayors, parliamentarians, electoral participation, ministerial positions.", de: "Bürgermeisterinnen, Parlamentarierinnen, Wahlbeteiligung, Ministerämter.", ar: "عميدات، برلمانيات، مشاركة انتخابية، مناصب وزارية.", es: "Alcaldesas, parlamentarias, participación electoral, cargos ministeriales." } },
+      { id: "eau", icon: "droplet", color: "#0B3C5D", currentScore: 67, targets: { 2027: 72, 2030: 77, 2035: 82 }, name: { fr: "Eau, assainissement & énergie", en: "Water, sanitation & energy", de: "Wasser, Sanitärversorgung & Energie", ar: "المياه والصرف الصحي والطاقة", es: "Agua, saneamiento y energía" }, desc: { fr: "Accès eau potable, assainissement, énergie propre, temps de collecte, satisfaction.", en: "Access to drinking water, sanitation, clean energy, collection time, satisfaction.", de: "Zugang zu Trinkwasser, Sanitärversorgung, saubere Energie, Sammelzeit, Zufriedenheit.", ar: "الوصول إلى مياه الشرب، الصرف الصحي، الطاقة النظيفة، وقت التجميع، الرضا.", es: "Acceso a agua potable, saneamiento, energía limpia, tiempo de recolección, satisfacción." } },
+      { id: "travail", icon: "briefcase", color: "#e9c46a", currentScore: 61, targets: { 2027: 66, 2030: 71, 2035: 76 }, name: { fr: "Travail décent & croissance", en: "Decent work & growth", de: "Menschenwürdige Arbeit & Wachstum", ar: "العمل اللائق والنمو", es: "Trabajo decente y crecimiento" }, desc: { fr: "Égalité salariale, inclusion financière, taux d'activité, emploi formel.", en: "Pay equity, financial inclusion, activity rate, formal employment.", de: "Lohngleichheit, finanzielle Inklusion, Erwerbsquote, formelle Beschäftigung.", ar: "المساواة في الأجور، الإدماج المالي، معدل النشاط، العمل الرسمي.", es: "Igualdad salarial, inclusión financiera, tasa de actividad, empleo formal." } },
+      { id: "innovation", icon: "microchip", color: "#9b5de5", currentScore: 58, targets: { 2027: 64, 2030: 70, 2035: 76 }, name: { fr: "Innovation & infrastructures", en: "Innovation & infrastructure", de: "Innovation & Infrastruktur", ar: "الابتكار والبنية التحتية", es: "Innovación e infraestructura" }, desc: { fr: "Accès financements, paiements digitaux, internet, entrepreneuriat, accès à la terre.", en: "Access to funding, digital payments, internet, entrepreneurship, access to land.", de: "Zugang zu Finanzierungen, digitalen Zahlungen, Internet, Unternehmertum, Zugang zu Land.", ar: "الوصول إلى التمويل، المدفوعات الرقمية، الإنترنت، ريادة الأعمال، الوصول إلى الأراضي.", es: "Acceso a financiamiento, pagos digitales, internet, emprendimiento, acceso a la tierra." } },
+      { id: "justice", icon: "scale", color: "#52b788", currentScore: 63, targets: { 2027: 68, 2030: 73, 2035: 78 }, name: { fr: "Justice & réduction inégalités", en: "Justice & inequality reduction", de: "Justiz & Ungleichheitsreduzierung", ar: "العدالة والحد من عدم المساواة", es: "Justicia y reducción de desigualdades" }, desc: { fr: "Autonomie personnelle, assistance juridique, temps traitement VBG, instruments internationaux.", en: "Personal autonomy, legal aid, GBV case processing time, international instruments.", de: "Persönliche Autonomie, Rechtshilfe, Bearbeitungszeit bei GBV-Fällen, internationale Instrumente.", ar: "الاستقلالية الشخصية، المساعدة القانونية، وقت معالجة قضايا العنف القائم على النوع الاجتماعي، الصكوك الدولية.", es: "Autonomía personal, asistencia legal, tiempo de tramitación de casos de VBG, instrumentos internacionales." } }
+    ];
+
+    const INDICATORS_DATA = [];
+    const indMap = {
+      social_inclusion: ["Taux de pauvreté monétaire", "Droits de propriété", "Code de la Famille", "Autonomie financière"],
+      alimentation: ["Sous-alimentation", "Insécurité alimentaire", "Anémie", "Accès alimentation"],
+      sante: ["Mortalité maternelle", "Fécondité adolescente", "Planification familiale", "Accouchements assistés", "MGF", "Protection sociale"],
+      education: ["Scolarisation filles", "Alphabétisation", "NEET", "Achèvement secondaire", "Filières scientifiques"],
+      politique: ["Femmes maires", "Femmes parlementaires", "Participation électorale", "Postes ministériels"],
+      eau: ["Accès eau potable", "Assainissement", "Énergie propre", "Temps collecte eau"],
+      travail: ["Égalité salariale", "Inclusion financière", "Taux d'activité", "Emploi formel"],
+      innovation: ["Accès financements", "Paiements digitaux", "Accès internet", "Entrepreneuriat"],
+      justice: ["Autonomie personnelle", "Assistance juridique", "Traitement plaintes VBG", "Instruments internationaux"]
+    };
+    PILLARS_DATA.forEach(p => {
+      const baseIndicators = indMap[p.id] || ["Indicateur exemple"];
+      baseIndicators.forEach(indBase => {
+        const nameObj = {};
+        for (let l of ['fr', 'en', 'de', 'ar', 'es']) nameObj[l] = indBase;
+        let current = p.currentScore + (Math.random() * 20 - 10);
+        current = Math.min(100, Math.max(30, Math.round(current)));
+        const targets = {};
+        for (let y of [2027, 2030, 2035]) {
+          let target = p.targets[y] + (Math.random() * 10 - 5);
+          targets[y] = Math.min(100, Math.max(30, Math.round(target)));
+        }
+        INDICATORS_DATA.push({ id: `${p.id}_${indBase.replace(/\s/g, '_')}`, name: nameObj, pillarId: p.id, current: current, targets: targets, unit: "%" });
       });
     });
 
-    const DOCS = [
-      { title: 'Rapport annuel JIGEENINDEX 2024', cat: 'rapport', date: 'Mars 2024', pages: 84 },
-      { title: 'Étude sur l\'accès à l\'éducation des filles', cat: 'etude', date: 'Jan 2024', pages: 42 },
-      { title: 'Policy Brief — Violences basées sur le genre', cat: 'policy', date: 'Fév 2024', pages: 12 },
-      { title: 'Analyse régionale Casamance', cat: 'rapport', date: 'Déc 2023', pages: 56 },
-      { title: 'Étude entrepreneuriat féminin', cat: 'etude', date: 'Nov 2023', pages: 38 },
-      { title: 'Policy Brief — Santé maternelle', cat: 'policy', date: 'Oct 2023', pages: 10 }
+    const REGIONS_DATA = [
+      { id: "dakar", name: { fr: "Dakar", en: "Dakar", de: "Dakar", ar: "داكار", es: "Dakar" }, currentScore: 78, pop: "3.9M", path: "M95,235 L115,220 L130,230 L120,250 L100,248Z" },
+      { id: "thies", name: { fr: "Thiès", en: "Thiès", de: "Thiès", ar: "تييس", es: "Thiès" }, currentScore: 71, pop: "2.1M", path: "M130,220 L160,210 L170,235 L145,250 L130,240Z" },
+      { id: "diourbel", name: { fr: "Diourbel", en: "Diourbel", de: "Diourbel", ar: "ديوربيل", es: "Diourbel" }, currentScore: 64, pop: "1.8M", path: "M170,200 L200,190 L210,215 L185,230 L170,220Z" },
+      { id: "fatick", name: { fr: "Fatick", en: "Fatick", de: "Fatick", ar: "فاتيك", es: "Fatick" }, currentScore: 62, pop: "0.9M", path: "M155,250 L185,240 L195,265 L170,275 L155,260Z" },
+      { id: "kaolack", name: { fr: "Kaolack", en: "Kaolack", de: "Kaolack", ar: "كاولاك", es: "Kaolack" }, currentScore: 60, pop: "1.1M", path: "M195,235 L225,225 L240,255 L215,265 L195,255Z" },
+      { id: "kaffrine", name: { fr: "Kaffrine", en: "Kaffrine", de: "Kaffrine", ar: "كافرين", es: "Kaffrine" }, currentScore: 57, pop: "0.7M", path: "M240,220 L280,210 L290,240 L260,250 L240,240Z" },
+      { id: "saintlouis", name: { fr: "Saint-Louis", en: "Saint-Louis", de: "Saint-Louis", ar: "سانت لويس", es: "Saint-Louis" }, currentScore: 68, pop: "1.1M", path: "M130,120 L200,100 L210,160 L170,180 L130,170Z" },
+      { id: "louga", name: { fr: "Louga", en: "Louga", de: "Louga", ar: "لوغا", es: "Louga" }, currentScore: 63, pop: "1.0M", path: "M160,160 L210,145 L220,185 L185,200 L160,190Z" },
+      { id: "matam", name: { fr: "Matam", en: "Matam", de: "Matam", ar: "ماتام", es: "Matam" }, currentScore: 55, pop: "0.7M", path: "M280,90 L350,75 L370,130 L310,150 L280,130Z" },
+      { id: "tambacounda", name: { fr: "Tambacounda", en: "Tambacounda", de: "Tambacounda", ar: "تامباكوندا", es: "Tambacounda" }, currentScore: 53, pop: "0.8M", path: "M310,160 L400,140 L420,220 L340,240 L310,210Z" },
+      { id: "kedougou", name: { fr: "Kédougou", en: "Kédougou", de: "Kédougou", ar: "كيدوغو", es: "Kédougou" }, currentScore: 50, pop: "0.2M", path: "M400,250 L450,230 L470,280 L430,300 L400,290Z" },
+      { id: "kolda", name: { fr: "Kolda", en: "Kolda", de: "Kolda", ar: "كولدا", es: "Kolda" }, currentScore: 56, pop: "0.8M", path: "M310,290 L370,275 L385,320 L340,335 L310,320Z" },
+      { id: "sedhiou", name: { fr: "Sédhiou", en: "Sédhiou", de: "Sédhiou", ar: "سيدهيو", es: "Sédhiou" }, currentScore: 58, pop: "0.5M", path: "M265,300 L310,290 L320,330 L285,340 L265,325Z" },
+      { id: "ziguinchor", name: { fr: "Ziguinchor", en: "Ziguinchor", de: "Ziguinchor", ar: "زيغينشور", es: "Ziguinchor" }, currentScore: 66, pop: "0.6M", path: "M210,310 L265,295 L275,340 L235,355 L210,340Z" }
     ];
+    REGIONS_DATA.forEach(r => {
+      r.targets = { 2027: Math.min(100, Math.round(r.currentScore + (68 - r.currentScore) * 0.3 + 2)), 2030: Math.min(100, Math.round(r.currentScore + (68 - r.currentScore) * 0.6 + 4)), 2035: Math.min(100, Math.round(r.currentScore + (68 - r.currentScore) * 0.9 + 6)) };
+    });
 
-    const PARTNERS = [
-      { cat: 'Public', items: ['Ministère de la Femme', 'ANSD', 'Ministère de la Santé', 'Assemblée Nationale'] },
-      { cat: 'ONG', items: ['ONU Femmes', 'UNICEF', 'Action Aid', 'Plan International'] },
-      { cat: 'Privé', items: ['Fondation Sonatel', 'Ecobank Foundation', 'DER/FJ'] }
+    function getScoreForYear(entity, year) {
+      if (year === 2024) return entity.currentScore !== undefined ? entity.currentScore : entity.current;
+      return entity.targets?.[year] ?? (entity.currentScore !== undefined ? entity.currentScore : entity.current);
+    }
+
+    function updateStaticTexts() {
+      document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); el.textContent = t(key); });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const key = el.getAttribute('data-i18n-placeholder'); el.placeholder = t(key); });
+    }
+
+    function updateAllTexts() {
+      updateStaticTexts();
+      updateHomeStats();
+      updatePillarsPreview();
+      updateDashboard();
+      updateMap();
+      updateIndicatorsTable();
+      updateDocs();
+      updateNewsEvents();
+      updateOpportunities();
+      updateCommissionButtons();
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function updateHomeStats() {
+      const container = document.getElementById('homeStats');
+      if (!container) return;
+      const nationalScore = Math.round(PILLARS_DATA.reduce((sum, p) => sum + getScoreForYear(p, currentYear), 0) / PILLARS_DATA.length);
+      container.innerHTML = `<div class="bg-light rounded-2xl p-6 text-center card-hover"><p class="text-4xl font-heading font-bold text-violet">${INDICATORS_DATA.length}</p><p class="text-gray-500 text-sm mt-1" data-i18n="home.indicators">Indicateurs</p></div><div class="bg-light rounded-2xl p-6 text-center card-hover"><p class="text-4xl font-heading font-bold text-deep">${REGIONS_DATA.length}</p><p class="text-gray-500 text-sm mt-1" data-i18n="home.regions">Régions</p></div><div class="bg-light rounded-2xl p-6 text-center card-hover"><p class="text-4xl font-heading font-bold text-gold">${PILLARS_DATA.length}</p><p class="text-gray-500 text-sm mt-1" data-i18n="home.pillars">Piliers</p></div><div class="bg-light rounded-2xl p-6 text-center card-hover"><p class="text-4xl font-heading font-bold text-violet">${nationalScore}</p><p class="text-gray-500 text-sm mt-1" data-i18n="home.national_score">Score national</p></div>`;
+    }
+
+    function updatePillarsPreview() {
+      const container = document.getElementById('pillarPreview');
+      if (!container) return;
+      container.innerHTML = PILLARS_DATA.map(p => { const name = p.name[currentLang]; const desc = p.desc[currentLang]; const score = getScoreForYear(p, currentYear); const color = p.color; return `<div class="pillar-card bg-white rounded-xl p-5 flex items-center gap-4 shadow-sm relative"><div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background:${color}15"><i data-lucide="${p.icon}" class="w-6 h-6" style="color:${color}"></i></div><div class="flex-1"><p class="font-semibold text-deep text-sm">${name}</p><div class="flex items-center gap-2 mt-1"><div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full rounded-full" style="width:${score}%;background:${color}"></div></div><span class="text-xs font-bold" style="color:${color}">${score}</span></div></div><div class="tooltip-pillar">${desc}</div></div>`; }).join('');
+      lucide.createIcons();
+    }
+
+    function updateDashboard() {
+      const selectedRegion = document.getElementById('regionFilter')?.value || 'national';
+      let globalScore;
+      if (selectedRegion === 'national') globalScore = Math.round(PILLARS_DATA.reduce((sum, p) => sum + getScoreForYear(p, currentYear), 0) / PILLARS_DATA.length);
+      else { const region = REGIONS_DATA.find(r => r.id === selectedRegion); globalScore = getScoreForYear(region, currentYear); }
+      const ring = document.getElementById('scoreRing');
+      if (ring) { const circ = 2 * Math.PI * 58; ring.style.strokeDasharray = circ; ring.style.strokeDashoffset = circ - (circ * globalScore / 100); }
+      document.getElementById('scoreText').textContent = globalScore;
+      document.getElementById('scoreLabel').textContent = `${selectedRegion === 'national' ? 'National' : selectedRegion} • ${currentYear}`;
+      const pb = document.getElementById('pillarBars');
+      if (pb) pb.innerHTML = PILLARS_DATA.map(p => { const score = getScoreForYear(p, currentYear); return `<div class="flex items-center gap-3"><span class="text-xs font-medium text-gray-600 w-36 truncate">${p.name[currentLang]}</span><div class="flex-1 h-5 bg-gray-100 rounded-full overflow-hidden"><div class="bar h-full rounded-full flex items-center justify-end pr-2" style="width:${score}%;background:${p.color}"><span class="text-white text-xs font-bold">${score}</span></div></div></div>`; }).join('');
+      drawRadar(); drawLineChart(); drawRegionComparison();
+    }
+
+    function drawRadar() {
+      const svg = document.getElementById('radarChart'); if (!svg) return;
+      const cx = 150, cy = 150, r = 110;
+      const n = PILLARS_DATA.length;
+      let html = '';
+      for (let g = 1; g <= 4; g++) { const gr = r * g / 4; let pts = ''; for (let i = 0; i < n; i++) { const a = (Math.PI * 2 * i / n) - Math.PI / 2; pts += `${cx + gr * Math.cos(a)},${cy + gr * Math.sin(a)} `; } html += `<polygon points="${pts}" fill="none" stroke="#e5e7eb" stroke-width="1"/>`; }
+      for (let i = 0; i < n; i++) { const a = (Math.PI * 2 * i / n) - Math.PI / 2; const x2 = cx + r * Math.cos(a), y2 = cy + r * Math.sin(a); html += `<line x1="${cx}" y1="${cy}" x2="${x2}" y2="${y2}" stroke="#e5e7eb"/>`; const lx = cx + (r + 20) * Math.cos(a), ly = cy + (r + 20) * Math.sin(a); html += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" fill="#6b7280" font-size="9" font-family="DM Sans">${PILLARS_DATA[i].name[currentLang].split(' ')[0]}</text>`; }
+      let pts = ''; for (let i = 0; i < n; i++) { const score = getScoreForYear(PILLARS_DATA[i], currentYear); const a = (Math.PI * 2 * i / n) - Math.PI / 2; const dr = r * score / 100; pts += `${cx + dr * Math.cos(a)},${cy + dr * Math.sin(a)} `; } html += `<polygon points="${pts}" fill="rgba(108,74,182,0.15)" stroke="#6C4AB6" stroke-width="2"/>`;
+      svg.innerHTML = html;
+    }
+
+    function drawLineChart() {
+      const svg = document.getElementById('lineChart'); if (!svg) return;
+      const years = [2019, 2020, 2021, 2022, 2023, 2024];
+      const historicalScores = years.map((y, idx) => { if (y === 2024) return Math.round(PILLARS_DATA.reduce((sum, p) => sum + getScoreForYear(p, currentYear), 0) / PILLARS_DATA.length); const factor = (y - 2019) / 5; const final = currentYear === 2024 ? 68 : getScoreForYear({ currentScore: 68, targets: PILLARS_DATA[0].targets }, currentYear); const start = 52; return Math.round(start + (final - start) * factor); });
+      const pad = { l: 40, r: 20, t: 20, b: 30 }; const w = 500 - pad.l - pad.r, h = 240 - pad.t - pad.b;
+      let html = '';
+      for (let i = 0; i <= 4; i++) { const y = pad.t + h * i / 4; const val = 100 - i * 25; html += `<line x1="${pad.l}" y1="${y}" x2="${500 - pad.r}" y2="${y}" stroke="#f0f0f0"/>`; html += `<text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" fill="#9ca3af" font-size="10">${val}</text>`; }
+      const pts = historicalScores.map((s, i) => { const x = pad.l + w * i / (years.length - 1); const y = pad.t + h * (1 - s / 100); return { x, y, val: s }; });
+      let pathD = ''; pts.forEach((p, i) => { pathD += (i === 0 ? 'M' : 'L') + `${p.x},${p.y} `; });
+      html += `<path d="${pathD}" fill="none" stroke="#6C4AB6" stroke-width="2.5" stroke-linecap="round"/>`;
+      html += `<path d="${pathD} L${pts[pts.length - 1].x},${pad.t + h} L${pts[0].x},${pad.t + h}Z" fill="url(#areaGrad)" opacity="0.3"/>`;
+      html += `<defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6C4AB6"/><stop offset="100%" stop-color="#6C4AB6" stop-opacity="0"/></linearGradient></defs>`;
+      pts.forEach((p, i) => { html += `<circle cx="${p.x}" cy="${p.y}" r="4" fill="#6C4AB6" stroke="white" stroke-width="2"/>`; html += `<text x="${p.x}" y="${p.y - 12}" text-anchor="middle" fill="#0B3C5D" font-size="11" font-weight="bold">${p.val}</text>`; html += `<text x="${p.x}" y="${pad.t + h + 18}" text-anchor="middle" fill="#9ca3af" font-size="10">${years[i]}</text>`; });
+      svg.innerHTML = html;
+    }
+
+    function drawRegionComparison() {
+      const c = document.getElementById('regionComparison'); if (!c) return;
+      const sorted = [...REGIONS_DATA].sort((a, b) => getScoreForYear(b, currentYear) - getScoreForYear(a, currentYear));
+      c.innerHTML = sorted.map(r => { const score = getScoreForYear(r, currentYear); const col = getScoreColor(score); return `<div class="flex items-center gap-3"><span class="text-xs font-medium text-gray-600 w-28 truncate">${r.name[currentLang]}</span><div class="flex-1 h-4 bg-gray-100 rounded-full overflow-hidden"><div class="bar h-full rounded-full" style="width:${score}%;background:${col}"></div></div><span class="text-xs font-bold w-8 text-right" style="color:${col}">${score}</span></div>`; }).join('');
+    }
+
+    function getScoreColor(s) { return s >= 75 ? '#2d6a4f' : s >= 65 ? '#52b788' : s >= 55 ? '#f4a261' : '#e76f51'; }
+
+    function updateMap() {
+      const svg = document.getElementById('senegalMap'); if (!svg) return;
+      const tooltip = document.getElementById('mapTooltip');
+      svg.innerHTML = REGIONS_DATA.map(r => `<path d="${r.path}" fill="${getScoreColor(getScoreForYear(r, currentYear))}" class="region-path" data-region="${r.id}" data-score="${getScoreForYear(r, currentYear)}" data-pop="${r.pop}"/>`).join('');
+      svg.querySelectorAll('.region-path').forEach(path => { path.addEventListener('mouseenter', e => { const id = e.target.dataset.region; const region = REGIONS_DATA.find(r => r.id === id); if (!region) return; if (tooltip) { tooltip.innerHTML = `<strong class="text-gold">${region.name[currentLang]}</strong><br>Score: <strong>${getScoreForYear(region, currentYear)}/100</strong><br>Population: ${region.pop}`; tooltip.classList.add('show'); } const detail = document.getElementById('regionDetail'); if (detail) detail.innerHTML = `<h4 class="font-heading font-bold text-deep text-lg mb-2">${region.name[currentLang]}</h4><p class="text-3xl font-heading font-bold mb-1" style="color:${getScoreColor(getScoreForYear(region, currentYear))}">${getScoreForYear(region, currentYear)}/100</p><p class="text-sm text-gray-500 mb-3">Population: ${region.pop}</p>`; }); path.addEventListener('mousemove', e => { if (tooltip) { const rect = svg.closest('.relative').getBoundingClientRect(); tooltip.style.left = (e.clientX - rect.left + 12) + 'px'; tooltip.style.top = (e.clientY - rect.top - 10) + 'px'; } }); path.addEventListener('mouseleave', () => { if (tooltip) tooltip.classList.remove('show'); }); });
+    }
+
+    function updateIndicatorsTable() {
+      const pillarFilter = document.getElementById('pillarFilter')?.value || 'all';
+      const search = document.getElementById('indSearch')?.value.toLowerCase() || '';
+      const filtered = INDICATORS_DATA.filter(ind => { const pillarMatch = pillarFilter === 'all' || ind.pillarId === pillarFilter; const nameMatch = !search || ind.name[currentLang].toLowerCase().includes(search); return pillarMatch && nameMatch; });
+      const tb = document.getElementById('indicatorTable');
+      if (tb) tb.innerHTML = filtered.map((ind, i) => { const score = getScoreForYear(ind, currentYear); const pillarObj = PILLARS_DATA.find(p => p.id === ind.pillarId); const pillarName = pillarObj ? pillarObj.name[currentLang] : ind.pillarId; return `<tr class="${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-violet/5 transition"><td class="px-4 py-2.5 font-medium">${ind.name[currentLang]}</td><td class="px-4 py-2.5"><span class="px-2 py-0.5 rounded-full text-xs font-medium" style="background:${getScoreColor(score)}15;color:${getScoreColor(score)}">${pillarName}</span></td><td class="px-4 py-2.5 text-center font-bold" style="color:${getScoreColor(score)}">${score}</td><td class="px-4 py-2.5"><div class="h-2.5 bg-gray-100 rounded-full overflow-hidden"><div class="h-full rounded-full" style="width:${score}%;background:${getScoreColor(score)}"></div></div></td></tr>`; }).join('');
+      const pf = document.getElementById('pillarFilter');
+      if (pf && pf.children.length <= 1) PILLARS_DATA.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = p.name[currentLang]; pf.appendChild(opt); });
+    }
+
+    function filterIndicators() { updateIndicatorsTable(); }
+
+    const DOCS_DATA = [
+      { id: "rapport2024", cat: "rapport", title: { fr: "Rapport annuel JIGEENINDEX 2024", en: "JIGEENINDEX Annual Report 2024" }, desc: { fr: "Analyse complète des 55 indicateurs, tendances nationales et recommandations.", en: "Comprehensive analysis of 55 indicators, national trends and recommendations." }, date: "Mars 2024", pages: 84, file: "rapport2024.pdf" },
+      { id: "etude_education", cat: "etude", title: { fr: "Étude sur l'accès à l'éducation des filles", en: "Study on girls' access to education" }, desc: { fr: "Barrières et leviers d'accès à l'éducation pour les filles au Sénégal.", en: "Barriers and drivers of access to education for girls in Senegal." }, date: "Jan 2024", pages: 42, file: "etude_education.pdf" },
+      { id: "policy_vbg", cat: "policy", title: { fr: "Policy Brief — Violences basées sur le genre", en: "Policy Brief — Gender-based violence" }, desc: { fr: "Recommandations pour renforcer la prévention et la réponse.", en: "Recommendations to strengthen prevention and response." }, date: "Fév 2024", pages: 12, file: "policy_vbg.pdf" }
     ];
+    function updateDocs() {
+      const filter = document.querySelector('.doc-filter.active')?.dataset.cat || 'all';
+      const filtered = filter === 'all' ? DOCS_DATA : DOCS_DATA.filter(d => d.cat === filter);
+      const icons = { rapport: 'file-text', etude: 'book-open', policy: 'file-check' };
+      const colors = { rapport: '#0B3C5D', etude: '#6C4AB6', policy: '#2a9d8f' };
+      const grid = document.getElementById('docGrid');
+      if (grid) grid.innerHTML = filtered.map(d => `<div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm card-hover"><div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background:${colors[d.cat]}15"><i data-lucide="${icons[d.cat]}" class="w-5 h-5" style="color:${colors[d.cat]}"></i></div><h3 class="font-semibold text-deep text-sm mb-2 leading-snug">${d.title[currentLang]}</h3><p class="text-xs text-gray-400 mb-4">${d.date} · ${d.pages} pages</p><button class="w-full py-2 rounded-lg text-sm font-medium border border-deep/20 text-deep hover:bg-deep hover:text-white transition flex items-center justify-center gap-2" onclick="alert('Téléchargement ${d.file}')"><i data-lucide="download" class="w-4 h-4"></i> ${t('library.download') || 'Télécharger'}</button></div>`).join('');
+      lucide.createIcons();
+    }
+    function filterDocs(cat) { document.querySelectorAll('.doc-filter').forEach(btn => { if (btn.dataset.cat === cat) btn.classList.add('active', 'bg-deep', 'text-white'); else btn.classList.remove('active', 'bg-deep', 'text-white'); }); updateDocs(); }
 
-    // ==================== GESTION DES COMMENTAIRES ====================
+    const NEWS_ITEMS = [
+      { title: { fr: "Rapport JIGEENINDEX 2024 publié", en: "JIGEENINDEX 2024 Report published" }, date: "15 mars 2025", desc: { fr: "Le score national atteint 68/100, Dakar en tête.", en: "National score reaches 68/100, Dakar leads." } },
+      { title: { fr: "Atelier régional : données ouvertes pour les politiques publiques", en: "Regional workshop: open data for public policies" }, date: "5 avril 2025", desc: { fr: "Thiès, réunion des acteurs ministériels.", en: "Thiès, meeting of ministerial actors." } },
+      { title: { fr: "Partenariat avec ONU Femmes pour la collecte de données communautaires", en: "Partnership with UN Women for community data collection" }, date: "20 février 2025", desc: { fr: "Extension dans 6 régions.", en: "Expansion to 6 regions." } }
+    ];
+    const EVENTS_ITEMS = [
+      { title: { fr: "12 Mai 2025 – Webinaire « Femmes et leadership économique »", en: "May 12, 2025 – Webinar 'Women and economic leadership'" }, desc: { fr: "Inscription gratuite – avec le Ministère de la Femme", en: "Free registration – with the Ministry of Women" } },
+      { title: { fr: "28-30 Juin 2025 – Forum JIGEENINDEX : « Données pour l’égalité »", en: "June 28-30, 2025 – JIGEENINDEX Forum: 'Data for Equality'" }, desc: { fr: "Dakar, CICAD – Appel à communications ouvert", en: "Dakar, CICAD – Call for papers open" } },
+      { title: { fr: "8 Mars 2026 – Lancement de la campagne « Score régional participatif »", en: "March 8, 2026 – Launch of 'Participatory Regional Score' campaign" }, desc: { fr: "Dans les 14 régions du Sénégal", en: "In all 14 regions of Senegal" } }
+    ];
+    function updateNewsEvents() {
+      const newsContainer = document.getElementById('newsList');
+      if (newsContainer) newsContainer.innerHTML = NEWS_ITEMS.map(n => `<div class="border-l-4 border-violet pl-4"><p class="font-semibold">${n.title[currentLang]}</p><p class="text-sm text-gray-500">${n.date}</p><p class="text-sm text-gray-600">${n.desc[currentLang]}</p></div>`).join('');
+      const eventsContainer = document.getElementById('eventsList');
+      if (eventsContainer) eventsContainer.innerHTML = EVENTS_ITEMS.map(e => `<div class="bg-light p-4 rounded-xl"><p class="font-semibold">${e.title[currentLang]}</p><p class="text-sm">${e.desc[currentLang]}</p></div>`).join('');
+      const fullNews = document.getElementById('allNewsGrid');
+      if (fullNews) fullNews.innerHTML = NEWS_ITEMS.map(n => `<div class="border rounded-xl p-5"><div class="bg-violet/10 w-12 h-12 rounded-full flex items-center justify-center mb-3"><i data-lucide="newspaper" class="text-violet"></i></div><h3 class="font-bold">${n.title[currentLang]}</h3><p class="text-gray-500 text-sm mt-1">${n.desc[currentLang]}</p><span class="text-xs text-gold">${n.date}</span></div>`).join('');
+      const fullEvents = document.getElementById('allEventsList');
+      if (fullEvents) fullEvents.innerHTML = EVENTS_ITEMS.map(e => `<div class="bg-light p-5 rounded-xl flex justify-between items-center"><div><p class="font-semibold">${e.title[currentLang]}</p><p class="text-sm">${e.desc[currentLang]}</p></div><button class="bg-violet/20 text-violet px-4 py-1 rounded-full text-sm">${t('events.register') || 'S\'inscrire'}</button></div>`).join('');
+    }
+
+    const OPPORTUNITIES = [
+      { title: { fr: "Appel d’offres : développement d’une API publique", en: "Call for tenders: development of a public API" }, desc: { fr: "L’observatoire recherche un prestataire pour l’ouverture des données. Budget : 8M FCFA.", en: "The observatory is looking for a service provider for open data. Budget: 8M FCFA." }, btn: { fr: "Postuler", en: "Apply" } },
+      { title: { fr: "Recherche partenaires locaux – 14 régions", en: "Looking for local partners – 14 regions" }, desc: { fr: "Pour la collecte de données terrain et la sensibilisation.", en: "For field data collection and awareness raising." }, btn: { fr: "Devenir partenaire", en: "Become a partner" } },
+      { title: { fr: "Incubateur 'ELLES Innovent'", en: "'ELLES Innovent' Incubator" }, desc: { fr: "Accompagnement et financement de startups féminines dans l’agritech.", en: "Support and funding for women-led startups in agritech." }, btn: { fr: "Candidater", en: "Apply" } },
+      { title: { fr: "Consultant·e en analyse de données", en: "Data analysis consultant" }, desc: { fr: "Mission de 6 mois pour la mise à jour des indicateurs.", en: "6-month mission to update indicators." }, btn: { fr: "Postuler", en: "Apply" } }
+    ];
+    function updateOpportunities() {
+      const container = document.getElementById('opportunitiesList');
+      if (container) container.innerHTML = OPPORTUNITIES.map(o => `<div class="border rounded-xl p-4 hover:shadow transition"><div class="text-gold text-lg mb-1">📢</div><p class="font-semibold">${o.title[currentLang]}</p><p class="text-xs text-gray-500">${o.desc[currentLang]}</p><button class="mt-2 text-xs text-violet font-medium">${o.btn[currentLang]}</button></div>`).join('');
+      const fullGrid = document.getElementById('opportunitiesFullGrid');
+      if (fullGrid) fullGrid.innerHTML = OPPORTUNITIES.map(o => `<div class="border rounded-xl p-6"><i data-lucide="briefcase" class="text-gold w-8 h-8"></i><h3 class="font-bold text-xl mt-2">${o.title[currentLang]}</h3><p class="text-gray-600 mt-1">${o.desc[currentLang]}</p><button class="mt-3 bg-deep text-white px-4 py-2 rounded-lg text-sm">${o.btn[currentLang]}</button></div>`).join('');
+      lucide.createIcons();
+    }
+
+    const PARTNERS_DATA = { fr: { Public: ["Ministère de la Femme", "ANSD", "Ministère de la Santé", "Assemblée Nationale"], ONG: ["ONU Femmes", "UNICEF", "Action Aid", "Plan International"], Privé: ["Fondation Sonatel", "Ecobank Foundation", "DER/FJ"] }, en: { Public: ["Ministry of Women", "ANSD", "Ministry of Health", "National Assembly"], ONG: ["UN Women", "UNICEF", "Action Aid", "Plan International"], Privé: ["Sonatel Foundation", "Ecobank Foundation", "DER/FJ"] } };
+    function updatePartners() {
+      const partners = PARTNERS_DATA[currentLang] || PARTNERS_DATA.fr;
+      const icons = { 'Public': 'landmark', 'ONG': 'globe', 'Privé': 'building' };
+      const colors = { 'Public': '#0B3C5D', 'ONG': '#6C4AB6', 'Privé': '#2a9d8f' };
+      const grid = document.getElementById('partnersGrid');
+      if (grid) grid.innerHTML = Object.entries(partners).map(([cat, items]) => `<div class="mb-8"><div class="flex items-center gap-2 mb-4"><i data-lucide="${icons[cat]}" class="w-5 h-5" style="color:${colors[cat]}"></i><h3 class="font-heading font-bold text-deep text-lg">${cat}</h3></div><div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">${items.map(item => `<div class="bg-white rounded-xl border border-gray-100 p-5 text-center card-hover shadow-sm"><div class="w-14 h-14 rounded-full mx-auto mb-3 flex items-center justify-center text-xl font-heading font-bold text-white" style="background:${colors[cat]}">${item.charAt(0)}</div><p class="text-sm font-medium text-deep">${item}</p><p class="text-xs text-gray-400 mt-1">${cat}</p></div>`).join('')}</div></div>`).join('');
+      lucide.createIcons();
+    }
+
     let currentCommission = 'JIGEENINDEER';
     let comments = [];
-
-    function loadComments() {
-      const stored = localStorage.getItem('jigeenindex_comments');
-      if (stored) {
-        comments = JSON.parse(stored);
-      } else {
-        comments = [
-          { id: 1, commission: 'JIGEENINDEER', author: 'Awa', date: '2025-04-01T10:00:00', text: 'Très belle initiative ! Nous devrions organiser un atelier sur le financement des femmes.' },
-          { id: 2, commission: 'CitiZen', author: 'Moussa', date: '2025-04-02T14:30:00', text: 'Je propose d’ajouter un indicateur sur l’accès aux TIC pour les femmes rurales.' },
-          { id: 3, commission: 'Éducation', author: 'Fatou', date: '2025-04-03T09:15:00', text: 'Des ressources sur l’éducation financière seraient utiles pour les jeunes filles.' },
-          { id: 4, commission: 'Économie', author: 'Oumar', date: '2025-04-04T18:20:00', text: 'Il faudrait cartographier les projets d’économie solidaire dirigés par des femmes.' }
-        ];
-        saveComments();
-      }
-      renderComments();
-    }
-
-    function saveComments() {
-      localStorage.setItem('jigeenindex_comments', JSON.stringify(comments));
-    }
-
-    function addComment(commission, author, text) {
-      const newComment = {
-        id: Date.now(),
-        commission,
-        author: author.trim() || 'Anonyme',
-        date: new Date().toISOString(),
-        text: text.trim()
-      };
-      comments.unshift(newComment);
-      saveComments();
-      renderComments();
-    }
-
-    function setCommission(comm) {
-      currentCommission = comm;
-      document.querySelectorAll('.comm-btn').forEach(btn => {
-        if (btn.dataset.comm === comm) {
-          btn.classList.remove('bg-gray-200', 'text-gray-700');
-          btn.classList.add('bg-deep', 'text-white');
-        } else {
-          btn.classList.remove('bg-deep', 'text-white');
-          btn.classList.add('bg-gray-200', 'text-gray-700');
-        }
-      });
-      document.getElementById('commentCommission').value = comm;
-      renderComments();
-    }
-
+    function loadComments() { const stored = localStorage.getItem('jigeenindex_comments'); if (stored) comments = JSON.parse(stored); else comments = []; renderComments(); }
+    function saveComments() { localStorage.setItem('jigeenindex_comments', JSON.stringify(comments)); }
+    function addComment(commission, author, text) { comments.unshift({ id: Date.now(), commission, author: author.trim() || 'Anonyme', date: new Date().toISOString(), text: text.trim() }); saveComments(); renderComments(); }
+    function setCommission(comm) { currentCommission = comm; document.querySelectorAll('.comm-btn').forEach(btn => { if (btn.dataset.comm === comm) btn.classList.add('bg-deep', 'text-white'); else btn.classList.remove('bg-deep', 'text-white'); }); document.getElementById('commentCommission').value = comm; renderComments(); }
     function renderComments() {
       const container = document.getElementById('commentsList');
       if (!container) return;
       const filtered = comments.filter(c => c.commission === currentCommission);
-      if (filtered.length === 0) {
-        container.innerHTML = '<div class="bg-light rounded-xl p-8 text-center text-gray-500">Aucun commentaire pour cette commission. Soyez le premier à partager !</div>';
-        return;
-      }
-      container.innerHTML = filtered.map(c => `
-        <div class="bg-white border border-gray-100 rounded-xl p-5 shadow-sm">
-          <div class="flex justify-between items-start gap-3">
-            <div class="flex-1">
-              <div class="flex items-center gap-2 flex-wrap">
-                <span class="font-semibold text-deep">${escapeHtml(c.author)}</span>
-                <span class="text-xs text-gray-400">${new Date(c.date).toLocaleDateString('fr-FR')} ${new Date(c.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</span>
-              </div>
-              <p class="mt-2 text-gray-700 leading-relaxed">${escapeHtml(c.text)}</p>
-            </div>
-          </div>
-        </div>
-      `).join('');
+      if (filtered.length === 0) { container.innerHTML = `<div class="bg-light rounded-xl p-8 text-center text-gray-500" data-i18n="commissions.no_comments">Aucun commentaire pour cette commission. Soyez le premier à partager !</div>`; updateStaticTexts(); return; }
+      container.innerHTML = filtered.map(c => `<div class="bg-white border border-gray-100 rounded-xl p-5 shadow-sm"><div class="flex justify-between items-start gap-3"><div class="flex-1"><div class="flex items-center gap-2 flex-wrap"><span class="font-semibold text-deep">${escapeHtml(c.author)}</span><span class="text-xs text-gray-400">${new Date(c.date).toLocaleDateString('fr-FR')} ${new Date(c.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</span></div><p class="mt-2 text-gray-700 leading-relaxed">${escapeHtml(c.text)}</p></div></div></div>`).join('');
+    }
+    function escapeHtml(str) { return str.replace(/[&<>]/g, function (m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
+    function updateCommissionButtons() {
+      const commissionsList = ["JIGEENINDEER", "CitiZen", "Éducation", "Économie", "Graines", "Ayoo", "Diaspower", "Caravane", "Baydundee", "Academy"];
+      const container = document.getElementById('commissionButtons');
+      if (container) container.innerHTML = commissionsList.map(comm => `<button data-comm="${comm}" onclick="setCommission('${comm}')" class="comm-btn px-4 py-2 rounded-full ${comm === currentCommission ? 'bg-deep text-white' : 'bg-gray-200 text-gray-700'} font-medium transition-all">${comm}</button>`).join('');
+      const select = document.getElementById('commentCommission');
+      if (select) select.innerHTML = commissionsList.map(comm => `<option value="${comm}" ${comm === currentCommission ? 'selected' : ''}>${comm}</option>`).join('');
     }
 
-    function escapeHtml(str) {
-      return str.replace(/[&<>]/g, function (m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-      });
-    }
-
-    // ==================== FONCTIONS EXISTANTES ====================
     let slideIndex = 0;
-    function startCarousel() {
-      const slides = document.querySelectorAll('#heroCarousel .carousel-slide');
-      if (!slides.length) return;
-      setInterval(() => {
-        slides[slideIndex].classList.remove('active');
-        slideIndex = (slideIndex + 1) % slides.length;
-        slides[slideIndex].classList.add('active');
-      }, 5000);
-    }
+    function startCarousel() { const slides = document.querySelectorAll('#heroCarousel .carousel-slide'); if (!slides.length) return; setInterval(() => { slides[slideIndex].classList.remove('active'); slideIndex = (slideIndex + 1) % slides.length; slides[slideIndex].classList.add('active'); }, 5000); }
 
     function navigateTo(page) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1341,332 +1359,129 @@
       document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-link'));
       document.querySelectorAll(`[data-page="${page}"]`).forEach(l => l.classList.add('active-link'));
       document.getElementById('app').scrollTop = 0;
-      if (page === 'dashboard') initDashboard();
-      if (page === 'cartographie') initMap();
-      if (page === 'indicateurs') initIndicators();
-      if (page === 'bibliotheque') initDocs();
-      if (page === 'partenaires') initPartners();
+      if (page === 'dashboard') updateDashboard();
+      if (page === 'cartographie') updateMap();
+      if (page === 'indicateurs') updateIndicatorsTable();
+      if (page === 'bibliotheque') updateDocs();
+      if (page === 'partenaires') updatePartners();
       if (page === 'jigeenindeer') renderLeadersGallery();
+      if (page === 'commissions') { updateCommissionButtons(); renderComments(); }
       lucide.createIcons();
     }
-
     function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('open'); }
 
-    function initPillarPreview() {
-      const c = document.getElementById('pillarPreview');
-      if (!c) return;
-      c.innerHTML = PILLARS.map(p => `
-        <div class="pillar-card bg-white rounded-xl p-5 flex items-center gap-4 shadow-sm cursor-pointer relative" onclick="navigateTo('dashboard')">
-          <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background:${p.color}15"><i data-lucide="${p.icon}" class="w-6 h-6" style="color:${p.color}"></i></div>
-          <div class="flex-1 min-w-0"><p class="font-semibold text-deep text-sm">${p.name}</p><div class="flex items-center gap-2 mt-1"><div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full rounded-full" style="width:${p.score}%;background:${p.color}"></div></div><span class="text-xs font-bold" style="color:${p.color}">${p.score}</span></div></div>
-          <div class="tooltip-pillar">${p.desc}</div>
-        </div>
-      `).join('');
-      lucide.createIcons();
-    }
-
-    function initDashboard() {
-      const rf = document.getElementById('regionFilter');
-      if (rf && rf.children.length === 1) {
-        REGIONS.forEach(r => { const o = document.createElement('option'); o.value = r.name; o.textContent = r.name; rf.appendChild(o); });
-      }
-      updateDashboard();
-    }
-    function updateDashboard() {
-      const region = document.getElementById('regionFilter')?.value || 'national';
-      const year = document.getElementById('yearFilter')?.value || '2024';
-      const yearOffset = year === '2023' ? -3 : year === '2022' ? -7 : 0;
-      const isNational = region === 'national';
-      const regionData = isNational ? null : REGIONS.find(r => r.name === region);
-      const baseScore = isNational ? 68 : (regionData ? regionData.score : 68);
-      let score = Math.max(30, Math.min(95, baseScore + yearOffset));
-      const ring = document.getElementById('scoreRing');
-      if (ring) {
-        const circ = 2 * Math.PI * 58;
-        ring.style.strokeDasharray = circ;
-        ring.style.strokeDashoffset = circ - (circ * score / 100);
-      }
-      document.getElementById('scoreText').textContent = score;
-      document.getElementById('scoreLabel').textContent = (isNational ? 'National' : region) + ' • ' + year;
-      const pb = document.getElementById('pillarBars');
-      if (pb) {
-        pb.innerHTML = PILLARS.map(p => {
-          let ps = p.score + yearOffset;
-          ps = Math.max(30, Math.min(95, ps));
-          return `<div class="flex items-center gap-3"><span class="text-xs font-medium text-gray-600 w-36 truncate">${p.name}</span><div class="flex-1 h-5 bg-gray-100 rounded-full overflow-hidden"><div class="bar h-full rounded-full flex items-center justify-end pr-2" style="width:${ps}%;background:${p.color}"><span class="text-white text-xs font-bold">${ps}</span></div></div></div>`;
-        }).join('');
-      }
-      drawRadar(yearOffset);
-      drawLineChart(score, region);
-      drawRegionComparison(yearOffset);
-    }
-    function drawRadar(yearMod) {
-      const svg = document.getElementById('radarChart'); if (!svg) return;
-      const cx = 150, cy = 150, r = 110;
-      const n = PILLARS.length;
-      let html = '';
-      for (let g = 1; g <= 4; g++) {
-        const gr = r * g / 4;
-        let pts = '';
-        for (let i = 0; i < n; i++) {
-          const a = (Math.PI * 2 * i / n) - Math.PI / 2;
-          pts += `${cx + gr * Math.cos(a)},${cy + gr * Math.sin(a)} `;
-        }
-        html += `<polygon points="${pts}" fill="none" stroke="#e5e7eb" stroke-width="1"/>`;
-      }
-      for (let i = 0; i < n; i++) {
-        const a = (Math.PI * 2 * i / n) - Math.PI / 2;
-        const x2 = cx + r * Math.cos(a), y2 = cy + r * Math.sin(a);
-        html += `<line x1="${cx}" y1="${cy}" x2="${x2}" y2="${y2}" stroke="#e5e7eb"/>`;
-        const lx = cx + (r + 20) * Math.cos(a), ly = cy + (r + 20) * Math.sin(a);
-        html += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" fill="#6b7280" font-size="9" font-family="DM Sans">${PILLARS[i].name.split(' ')[0]}</text>`;
-      }
-      let pts = '';
-      for (let i = 0; i < n; i++) {
-        let s = Math.max(30, Math.min(95, PILLARS[i].score + yearMod));
-        const a = (Math.PI * 2 * i / n) - Math.PI / 2;
-        const dr = r * s / 100;
-        pts += `${cx + dr * Math.cos(a)},${cy + dr * Math.sin(a)} `;
-      }
-      html += `<polygon points="${pts}" fill="rgba(108,74,182,0.15)" stroke="#6C4AB6" stroke-width="2"/>`;
-      svg.innerHTML = html;
-    }
-    function drawLineChart(currentScore, region) {
-      const svg = document.getElementById('lineChart'); if (!svg) return;
-      const years = [2019, 2020, 2021, 2022, 2023, 2024];
-      let historicalScores;
-      if (region === 'national') {
-        historicalScores = [52, 55, 58, 61, 65, currentScore];
-      } else {
-        const reg = REGIONS.find(r => r.name === region);
-        const base = reg ? reg.score : 68;
-        historicalScores = years.map((_, idx) => { let delta = (years.length - 1 - idx) * 1.5; return Math.max(40, Math.min(95, base - delta)); });
-      }
-      const pad = { l: 40, r: 20, t: 20, b: 30 };
-      const w = 500 - pad.l - pad.r, h = 240 - pad.t - pad.b;
-      let html = '';
-      for (let i = 0; i <= 4; i++) {
-        const y = pad.t + h * i / 4;
-        const val = 100 - i * 25;
-        html += `<line x1="${pad.l}" y1="${y}" x2="${500 - pad.r}" y2="${y}" stroke="#f0f0f0"/>`;
-        html += `<text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" fill="#9ca3af" font-size="10">${val}</text>`;
-      }
-      const pts = historicalScores.map((s, i) => { const x = pad.l + w * i / (years.length - 1); const y = pad.t + h * (1 - s / 100); return { x, y, val: s }; });
-      let pathD = '';
-      pts.forEach((p, i) => { pathD += (i === 0 ? 'M' : 'L') + `${p.x},${p.y} `; });
-      html += `<path d="${pathD}" fill="none" stroke="#6C4AB6" stroke-width="2.5" stroke-linecap="round"/>`;
-      html += `<path d="${pathD} L${pts[pts.length - 1].x},${pad.t + h} L${pts[0].x},${pad.t + h}Z" fill="url(#areaGrad)" opacity="0.3"/>`;
-      html += `<defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6C4AB6"/><stop offset="100%" stop-color="#6C4AB6" stop-opacity="0"/></linearGradient></defs>`;
-      pts.forEach((p, i) => {
-        html += `<circle cx="${p.x}" cy="${p.y}" r="4" fill="#6C4AB6" stroke="white" stroke-width="2"/>`;
-        html += `<text x="${p.x}" y="${p.y - 12}" text-anchor="middle" fill="#0B3C5D" font-size="11" font-weight="bold">${p.val}</text>`;
-        html += `<text x="${p.x}" y="${pad.t + h + 18}" text-anchor="middle" fill="#9ca3af" font-size="10">${years[i]}</text>`;
-      });
-      svg.innerHTML = html;
-    }
-    function drawRegionComparison(yearMod) {
-      const c = document.getElementById('regionComparison'); if (!c) return;
-      const sorted = [...REGIONS].sort((a, b) => (b.score + yearMod) - (a.score + yearMod));
-      c.innerHTML = sorted.map(r => { const s = Math.max(30, Math.min(95, r.score + yearMod)); const col = getScoreColor(s); return `<div class="flex items-center gap-3"><span class="text-xs font-medium text-gray-600 w-28 truncate">${r.name}</span><div class="flex-1 h-4 bg-gray-100 rounded-full overflow-hidden"><div class="bar h-full rounded-full" style="width:${s}%;background:${col}"></div></div><span class="text-xs font-bold w-8 text-right" style="color:${col}">${s}</span></div>`; }).join('');
-    }
-    function getScoreColor(s) { return s >= 75 ? '#2d6a4f' : s >= 65 ? '#52b788' : s >= 55 ? '#f4a261' : '#e76f51'; }
-
-    function initMap() {
-      const svg = document.getElementById('senegalMap'); if (!svg) return;
-      const tooltip = document.getElementById('mapTooltip');
-      svg.innerHTML = REGIONS.map(r => `<path d="${r.path}" fill="${getScoreColor(r.score)}" class="region-path" data-region="${r.name}" data-score="${r.score}" data-pop="${r.pop}"/>`).join('');
-      svg.querySelectorAll('.region-path').forEach(path => {
-        path.addEventListener('mouseenter', e => { const name = e.target.dataset.region, score = e.target.dataset.score, pop = e.target.dataset.pop; if (tooltip) { tooltip.innerHTML = `<strong class="text-gold">${name}</strong><br>Score: <strong>${score}/100</strong><br>Population: ${pop}`; tooltip.classList.add('show'); } const detail = document.getElementById('regionDetail'); if (detail) detail.innerHTML = `<h4 class="font-heading font-bold text-deep text-lg mb-2">${name}</h4><p class="text-3xl font-heading font-bold mb-1" style="color:${getScoreColor(score)}">${score}/100</p><p class="text-sm text-gray-500 mb-3">Population: ${pop}</p>`; });
-        path.addEventListener('mousemove', e => { if (tooltip) { const rect = svg.closest('.relative').getBoundingClientRect(); tooltip.style.left = (e.clientX - rect.left + 12) + 'px'; tooltip.style.top = (e.clientY - rect.top - 10) + 'px'; } });
-        path.addEventListener('mouseleave', () => { if (tooltip) tooltip.classList.remove('show'); });
-      });
-    }
-
-    function initIndicators() {
-      const pf = document.getElementById('pillarFilter');
-      if (pf && pf.children.length <= 1) {
-        PILLARS.forEach(p => { const o = document.createElement('option'); o.value = p.name; o.textContent = p.name; pf.appendChild(o); });
-      }
-      filterIndicators();
-    }
-    function filterIndicators() {
-      const pillar = document.getElementById('pillarFilter')?.value || 'all';
-      const search = document.getElementById('indSearch')?.value.toLowerCase() || '';
-      const filtered = INDICATORS.filter(ind => (pillar === 'all' || ind.pillar === pillar) && (!search || ind.name.toLowerCase().includes(search)));
-      const tb = document.getElementById('indicatorTable');
-      if (tb) tb.innerHTML = filtered.map((ind, i) => `<tr class="${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-violet/5 transition"><td class="px-4 py-2.5 font-medium">${ind.name}</td><td class="px-4 py-2.5"><span class="px-2 py-0.5 rounded-full text-xs font-medium" style="background:${getScoreColor(ind.score)}15;color:${getScoreColor(ind.score)}">${ind.pillar}</span></td><td class="px-4 py-2.5 text-center font-bold" style="color:${getScoreColor(ind.score)}">${ind.score}</td><td class="px-4 py-2.5"><div class="h-2.5 bg-gray-100 rounded-full overflow-hidden"><div class="h-full rounded-full" style="width:${ind.score}%;background:${getScoreColor(ind.score)}"></div></div></td></tr>`).join('');
-      lucide.createIcons();
-    }
-
-    function submitReport(e) {
-      e.preventDefault();
-      document.getElementById('reportForm').querySelectorAll('input,select,textarea,button[type=submit]').forEach(el => el.style.display = 'none');
-      document.getElementById('reportSuccess').classList.remove('hidden');
-      lucide.createIcons();
-    }
-    function resetReportForm() {
-      const formContainer = document.getElementById('reportForm');
-      formContainer.querySelectorAll('input,select,textarea').forEach(el => el.style.display = '');
-      formContainer.querySelector('button[type=submit]').style.display = '';
-      document.getElementById('reportSuccess').classList.add('hidden');
-      formContainer.reset();
-    }
-    function initReportRegions() {
-      const s = document.getElementById('reportRegion');
-      if (s) s.innerHTML = '<option value="">Sélectionnez…</option>' + REGIONS.map(r => `<option>${r.name}</option>`).join('');
-    }
-
-    function initDocs() { filterDocs('all'); }
-    function filterDocs(cat) {
-      document.querySelectorAll('.doc-filter').forEach(btn => {
-        if (btn.dataset.cat === cat || (cat === 'all' && btn.dataset.cat === 'all')) {
-          btn.classList.remove('bg-gray-100', 'text-gray-600');
-          btn.classList.add('bg-deep', 'text-white');
-        } else {
-          btn.classList.remove('bg-deep', 'text-white');
-          btn.classList.add('bg-gray-100', 'text-gray-600');
-        }
-      });
-      const filtered = cat === 'all' ? DOCS : DOCS.filter(d => d.cat === cat);
-      const icons = { rapport: 'file-text', etude: 'book-open', policy: 'file-check' };
-      const colors = { rapport: '#0B3C5D', etude: '#6C4AB6', policy: '#2a9d8f' };
-      const grid = document.getElementById('docGrid');
-      if (grid) grid.innerHTML = filtered.map(d => `<div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm card-hover"><div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background:${colors[d.cat]}15"><i data-lucide="${icons[d.cat]}" class="w-5 h-5" style="color:${colors[d.cat]}"></i></div><h3 class="font-semibold text-deep text-sm mb-2 leading-snug">${d.title}</h3><p class="text-xs text-gray-400 mb-4">${d.date} · ${d.pages} pages</p><button class="w-full py-2 rounded-lg text-sm font-medium border border-deep/20 text-deep hover:bg-deep hover:text-white transition flex items-center justify-center gap-2"><i data-lucide="download" class="w-4 h-4"></i> Télécharger (Démo)</button></div>`).join('');
-      lucide.createIcons();
-    }
-
-    function initPartners() {
-      const icons = { 'Public': 'landmark', 'ONG': 'globe', 'Privé': 'building' };
-      const colors = { 'Public': '#0B3C5D', 'ONG': '#6C4AB6', 'Privé': '#2a9d8f' };
-      const grid = document.getElementById('partnersGrid');
-      if (grid) grid.innerHTML = PARTNERS.map(g => `<div class="mb-8"><div class="flex items-center gap-2 mb-4"><i data-lucide="${icons[g.cat]}" class="w-5 h-5" style="color:${colors[g.cat]}"></i><h3 class="font-heading font-bold text-deep text-lg">${g.cat}</h3></div><div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">${g.items.map(item => `<div class="bg-white rounded-xl border border-gray-100 p-5 text-center card-hover shadow-sm"><div class="w-14 h-14 rounded-full mx-auto mb-3 flex items-center justify-center text-xl font-heading font-bold text-white" style="background:${colors[g.cat]}">${item.charAt(0)}</div><p class="text-sm font-medium text-deep">${item}</p><p class="text-xs text-gray-400 mt-1">${g.cat}</p></div>`).join('')}</div></div>`).join('');
-      lucide.createIcons();
-    }
-
-    // ==================== GALERIE DES FEMMES LEADERS (68 noms) ====================
     const leadersList = [
-      { name: "Pr Ndioro Ndiaye", title: "Ancienne Ministre des Femmes", year: 2015 },
-      { name: "Mame Khary Diène", title: "Directrice Générale de BIOESSENCE", year: 2015 },
-      { name: "Nafi Gueye", title: "Activiste", year: 2015 },
-      { name: "Fanta Diallo", title: "Activiste", year: 2015 },
-      { name: "FATOU FATOU Mercedez", title: "Service de Maintenance mécanique", year: 2015 },
-      { name: "eCOVER Startup", title: "Carreaux écologiques (Souadou Fall)", year: 2015 },
-      { name: "Yoni Rassoul Diongue", title: "HandyCapable", year: 2015 },
-      { name: "Aminata Diagne", title: "DG PREBATUS BTP", year: 2016 },
-      { name: "Matou Marthe Diogo", title: "Activiste Social", year: 2016 },
-      { name: "Huguette Lassort", title: "Bénévole prisons", year: 2016 },
-      { name: "Excellence Fatou Sarr Bâ", title: "Ancien Ambassadeur", year: 2016 },
-      { name: "Fatimata Diallo Bâ", title: "Professeur de Français", year: 2016 },
-      { name: "Aissatou Diagne Deme", title: "Première productrice de céréales", year: 2016 },
-      { name: "Mame Fatou Niang", title: "Ancienne DG Amerger & SENEVISA", year: 2016 },
-      { name: "Thiaba Camara Sy", title: "Directrice générale de Deloitte Sénégal", year: 2016 },
-      { name: "Mona Chasserio", title: "Fondatrice ONG Unies vers Elles", year: 2016 },
-      { name: "Mame Diarra Bousso Ndiaye", title: "Fondatrice Solidarité Active", year: 2016 },
-      { name: "Moussoukoro Diop", title: "Influenceur", year: 2016 },
-      { name: "African Business Journal", title: "Alioune Gueye (Afrique qui Ose)", year: 2016 },
-      { name: "Elimane Haby Kane", title: "LEGS Africa", year: 2016 },
-      { name: "Honorable Député Mbayame Dione", title: "Parlementaire", year: 2017 },
-      { name: "Aissatou Diallo", title: "YALI 2014", year: 2017 },
-      { name: "Rokhaya Ngom Ndiaye", title: "DG MPS", year: 2017 },
-      { name: "Randa Filfili", title: "DG Zena Exotic", year: 2017 },
-      { name: "Astou Mbene Thioub", title: "Journaliste", year: 2017 },
-      { name: "Aminata Niang Dieng", title: "Fondatrice ORTHO PRO", year: 2017 },
-      { name: "Mboyo Sow", title: "Finaliste GREAT ENTREPRENEUR", year: 2017 },
-      { name: "Sophie Zinga Sy", title: "Créatrice de Mode", year: 2017 },
-      { name: "Faty Ly", title: "Designer", year: 2017 },
-      { name: "Marie Therese Fatou Sall", title: "EbenID", year: 2017 },
-      { name: "Ibrahima Seck", title: "Membre JEADER", year: 2017 },
-      { name: "Evelyne Tall", title: "Ancienne DGA Ecobank", year: 2017 },
-      { name: "Shula Ndiaye", title: "Musicienne", year: 2017 },
-      { name: "Dieynaba Wane Ndiaye", title: "Représentante ONU Femmes", year: 2017 },
-      { name: "Soukeyna Ndiaye Bâ", title: "Directrice FDEA", year: 2017 },
-      { name: "Oulimata Sarr", title: "Conseillère Régionale ONU Femmes", year: 2017 },
-      { name: "Le Groupe SAFARI", title: "Premier groupe 100% féminin", year: 2017 },
-      { name: "Le Groupe MAABO", title: "Couple de chanteurs", year: 2017 },
-      { name: "Gilles & Nadia Mensah Acogny", title: "ACOSPHERE", year: 2017 },
-      { name: "Nogaye Ndiaye & Olivier Mourgaye", title: "FANTAISIKA / ONGLMANIA", year: 2017 },
-      { name: "Maguette & Fatou Morgana Gueye", title: "CAR RAPIDE PRESTIGE", year: 2017 },
-      { name: "Yacine Dia Ndiaye", title: "FENTA", year: 2017 },
-      { name: "Aminata Sow Fall", title: "Écrivaine", year: 2018 },
-      { name: "Aissatou Paye", title: "Reporter", year: 2018 },
-      { name: "Nina Penda Faye", title: "Journaliste", year: 2018 },
-      { name: "Dr Fatma Guenoune", title: "LISCA", year: 2018 },
-      { name: "Dr Sokhna Diagne Ndiaye", title: "Pharmacie République", year: 2018 },
-      { name: "Khady Nakoulima", title: "Fondatrice Clinique NEST", year: 2018 },
-      { name: "Dr Aicha Conte", title: "Marque Cosmétique Nyara", year: 2018 },
-      { name: "Karima Grant", title: "Directrice IMAGINATION AFRIKA", year: 2018 },
-      { name: "Emma Adjovi", title: "Marque Habillement Emma Style", year: 2018 },
-      { name: "Tabaski Sy", title: "Traiteur MAAM", year: 2018 },
-      { name: "Tabara Ly Wane", title: "Réalisatrice", year: 2018 },
-      { name: "Aida Samb", title: "Chanteuse", year: 2018 },
-      { name: "Seynabou Pouye", title: "Présidente de FAADEV", year: 2019 },
-      { name: "Oumy Ndour", title: "Journaliste/MC", year: 2019 },
-      { name: "Dr Halima Diallo", title: "Sociologue", year: 2019 },
-      { name: "Zoubida Fall Bengeloune", title: "Podcasteuse", year: 2019 },
-      { name: "Bitilokho Ndiaye", title: "Présidente FESTIC", year: 2019 },
-      { name: "Dr Nafissatou Diouf", title: "Université Virtuelle du Sénégal", year: 2019 },
-      { name: "Marie Angele Diabang", title: "Réalisatrice de Films", year: 2019 },
-      { name: "Marietou Diouf", title: "Fondatrice ETOUNATURE", year: 2019 },
-      { name: "Fatou Kandé Senghor", title: "Artiste/Cinéaste", year: 2019 },
-      { name: "Maman Chérie Mme Dramé", title: "Chanteuse", year: 2019 },
-      { name: "Fatou Sarr", title: "Fondatrice TAKHAR ALOE VERA", year: 2019 },
-      { name: "Aissatou Cissé", title: "Ancienne ministre, écrivaine", year: 2019 },
-      { name: "Soyibou Ndao", title: "ADEPME", year: 2019 },
-      { name: "Venn Coumba Fall", title: "Personnalité inspirante", year: 2020 }
+      { name: "Pr Ndioro Ndiaye", title: "Ancienne Ministre des Femmes", year: 2015, img: "NdioroNdiaye.jpg" },
+      { name: "Mame Khary Diène", title: "Directrice Générale de BIOESSENCE", year: 2015, img: "KharyDiène.jpg" },
+      { name: "Nafi Gueye", title: "Activiste", year: 2015, img: "NafiGueye.jpg" },
+      { name: "Fanta Diallo", title: "Activiste", year: 2015, img: "FantaDiallo.jpg" },
+      { name: "FATOU FATOU Mercedez", title: "Service de Maintenance mécanique", year: 2015, img: "FATOUFATOU.jpg" },
+      { name: "eCOVER Startup", title: "Carreaux écologiques (Souadou Fall)", year: 2015, img: "Souadou.jpg" },
+      { name: "Yoni Rassoul Diongue", title: "HandyCapable", year: 2015, img: "YoniRassoul.jpg" },
+      { name: "Aminata Diagne", title: "DG PREBATUS BTP", year: 2016, img: "DGPREBATUS.jpg" },
+      { name: "Matou Marthe Diogo", title: "Activiste Social", year: 2016, img: "MatouMarthe.jpg" },
+      { name: "Huguette Lassort", title: "Bénévole prisons", year: 2016, img: "HuguetteLassort.jpg" },
+      { name: "Fatimata Diallo Bâ", title: "Professeur de Français", year: 2016, img: "FatimataDiallo.jpg" },
+      { name: "Aissatou Diagne Deme", title: "Première productrice de céréales", year: 2016, img: "AissatouDiagne.jpg" },
+      { name: "Mame Fatou Niang", title: "Ancienne DG Amerger & SENEVISA", year: 2016, img: "MameFatou.jpg" },
+      { name: "Thiaba Camara Sy", title: "Directrice générale de Deloitte Sénégal", year: 2016, img: "ThiabaCamara.jpg" },
+      { name: "Mona Chasserio", title: "Fondatrice ONG Unies vers Elles", year: 2016, img: "MonaChasserio.jpg" },
+      { name: "Mame Diarra Bousso Ndiaye", title: "Fondatrice Solidarité Active", year: 2016, img: "MameDiarra.jpg" },
+      { name: "Moussoukoro Diop", title: "Influenceur", year: 2016, img: "MoussoukoroDiop.jpg" },
+      { name: "African Business Journal", title: "Alioune Gueye (Afrique qui Ose)", year: 2016, img: "AliouneGueye.jpg" },
+      { name: "Elimane Haby Kane", title: "LEGS Africa", year: 2016, img: "ElimaneHaby.jpg" },
+      { name: "Honorable Député Mbayame Dione", title: "Parlementaire", year: 2017, img: "DéputéMbayame.jpg" },
+      { name: "Rokhaya Ngom Ndiaye", title: "DG MPS", year: 2017, img: "RokhayaNgom.jpg" },
+      { name: "Randa Filfili", title: "DG Zena Exotic", year: 2017, img: "RandaFilfili.jpg" },
+      { name: "Astou Mbene Thioub", title: "Journaliste", year: 2017, img: "AstouMbene.jpg" },
+      { name: "Aminata Niang Dieng", title: "Fondatrice ORTHO PRO", year: 2017, img: "AminataDieng.jpg" },
+      { name: "Mboyo Sow", title: "Finaliste GREAT ENTREPRENEUR", year: 2017, img: "MboyoSow.jpg" },
+      { name: "Sophie Zinga Sy", title: "Créatrice de Mode", year: 2017, img: "SophieZinga.jpg" },
+      { name: "Faty Ly", title: "Designer", year: 2017, img: "FatyLy.jpg" },
+      { name: "Evelyne Tall", title: "Ancienne DGA Ecobank", year: 2017, img: "EvelyneTall.jpg" },
+      { name: "Shula Ndiaye", title: "Musicienne", year: 2017, img: "ShulaNdiaye.jpg" },
+      { name: "Dieynaba Wane Ndiaye", title: "Représentante ONU Femmes", year: 2017, img: "DieynabaWane.jpg" },
+      { name: "Soukeyna Ndiaye Bâ", title: "Directrice FDEA", year: 2017, img: "SoukeynaNdiaye.png" },
+      { name: "Oulimata Sarr", title: "Conseillère Régionale ONU Femmes", year: 2017, img: "OulimataSarr.jpg" },
+      { name: "Le Groupe SAFARI", title: "Premier groupe 100% féminin", year: 2017, img: "safary.jpg" },
+      { name: "Le Groupe MAABO", title: "Couple de chanteurs", year: 2017, img: "maabo.jpg" },
+      { name: "Gilles & Nadia Mensah Acogny", title: "ACOSPHERE", year: 2017, img: "GillesNadia.jpg" },
+      { name: "Nogaye Ndiaye & Olivier Mourgaye", title: "FANTAISIKA / ONGLMANIA", year: 2017, img: "NogayeNdiaye.jpg" },
+      { name: "Maguette & Fatou Morgana Gueye", title: "CAR RAPIDE PRESTIGE", year: 2017, img: "MaguetteFatou.jpg" },
+      { name: "Yacine Dia Ndiaye", title: "FENTA", year: 2017, img: "YacineDia.jpg" },
+      { name: "Aminata Sow Fall", title: "Écrivaine", year: 2018, img: "AminataSowFall.jpg" },
+      { name: "Aissatou Paye", title: "Reporter", year: 2018, img: "AissatouPaye.jpg" },
+      { name: "Nina Penda Faye", title: "Journaliste", year: 2018, img: "NinaPenda.jpg" },
+      { name: "Dr Fatma Guenoune", title: "LISCA", year: 2018, img: "FatmaGuenoune.jpg" },
+      { name: "Dr Sokhna Diagne Ndiaye", title: "Pharmacie République", year: 2018, img: "SokhnaDiagne.jpg" },
+      { name: "Khady Nakoulima", title: "Fondatrice Clinique NEST", year: 2018, img: "KhadyNakoulima.jpg" },
+      { name: "Dr Aicha Conte", title: "Marque Cosmétique Nyara", year: 2018, img: "AichaConte.jpg" },
+      { name: "Karima Grant", title: "Directrice IMAGINATION AFRIKA", year: 2018, img: "KarimaGrant.jpg" },
+      { name: "Emma Adjovi", title: "Marque Habillement Emma Style", year: 2018, img: "EmmaAdjovi.jpg" },
+      { name: "Tabaski Sy", title: "Traiteur MAAM", year: 2018, img: "tabaskily.jpg" },
+      { name: "Tabara Ly Wane", title: "Réalisatrice", year: 2018, img: "TabaraLy.jpg" },
+      { name: "Aida Samb", title: "Chanteuse", year: 2018, img: "AidaSamb.jpg" },
+      { name: "Seynabou Pouye", title: "Présidente de FAADEV", year: 2019, img: "SeynabouPouye.jpg" },
+      { name: "Oumy Ndour", title: "Journaliste/MC", year: 2019, img: "OumyNdour.jpg" },
+      { name: "Dr Halima Diallo", title: "Sociologue", year: 2019, img: "HalimaDiallo.jpg" },
+      { name: "Zoubida Fall Bengeloune", title: "Podcasteuse", year: 2019, img: "ZoubidaFall.jpg" },
+      { name: "Bitilokho Ndiaye", title: "Présidente FESTIC", year: 2019, img: "BitilokhoNdiaye.jpg" },
+      { name: "Dr Nafissatou Diouf", title: "Université Virtuelle du Sénégal", year: 2019, img: "NafissatouDiouf.jpg" },
+      { name: "Marie Angele Diabang", title: "Réalisatrice de Films", year: 2019, img: "MarieAngele.jpg" },
+      { name: "Marietou Diouf", title: "Fondatrice ETOUNATURE", year: 2019, img: "MarietouDiouf.jpg" },
+      { name: "Fatou Kandé Senghor", title: "Artiste/Cinéaste", year: 2019, img: "FatouKandé.jpg" },
+      { name: "Maman Chérie Mme Dramé", title: "Chanteuse", year: 2019, img: "MamanChérie.jpg" },
+      { name: "Fatou Sarr", title: "Fondatrice TAKHAR ALOE VERA", year: 2019, img: "FatouSarr.jpg" },
+      { name: "Aissatou Cissé", title: "Ancienne ministre, écrivaine", year: 2019, img: "AissatouCissé.jpg" },
+      { name: "Soyibou Ndao", title: "ADEPME", year: 2019, img: "KharyDiène.jpg" },
+      { name: "Venn Coumba Fall", title: "Directrice Exécutive de l'ONG Femmes Africa Solidarité", year: 2020, img: "VennCoumba.jpg" },
+      { name: "Marie Therese Fatou Sall", title: "EbenID", year: 2017, img: ".jpg" },
+      { name: "Ibrahima Seck", title: "Membre JEADER", year: 2017, img: "IbrahimaSeck.jpg" },
+      { name: "Excellence Fatou Sarr Bâ", title: "Ancien Ambassadeur", year: 2016, img: ".jpg" },
+      { name: "Aissatou Diallo", title: "YALI 2014", year: 2017, img: ".jpg" }
+
+
     ];
 
     function renderLeadersGallery() {
       const container = document.getElementById('leadersGallery');
       if (!container) return;
-      container.innerHTML = leadersList.map((leader, idx) => {
-        const imgId = (idx % 70) + 1;
-        const imgUrl = `https://randomuser.me/api/portraits/women/${imgId}.jpg`;
+
+      container.innerHTML = leadersList.map(leader => {
+        const imgUrl = leader.img; // chaque leader a sa propre image
         return `
-          <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 group">
-            <div class="h-36 w-full bg-gray-100 flex items-center justify-center overflow-hidden">
-              <img src="${imgUrl}" alt="${leader.name}" class="w-full h-full object-cover leader-card-img group-hover:scale-105 transition duration-300" onerror="this.src='https://cdn-icons-png.flaticon.com/512/6997/6997662.png'">
-            </div>
-            <div class="p-3 text-center">
-              <p class="font-bold text-deep text-sm">${leader.name}</p>
-              <p class="text-xs text-gray-500">${leader.title}</p>
-              <span class="inline-block mt-1 text-[10px] bg-gold/20 text-gold-dark px-2 py-0.5 rounded-full">Trophée ${leader.year}</span>
-            </div>
-          </div>
-        `;
+      <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+        <div class="h-36 w-full bg-gray-100 flex items-center justify-center overflow-hidden">
+          <img src="${imgUrl}" alt="${leader.name}" class="w-full h-full object-cover leader-card-img group-hover:scale-105 transition duration-300" onerror="this.src='https://cdn-icons-png.flaticon.com/512/6997/6997662.png'">
+        </div>
+        <div class="p-3 text-center">
+          <p class="font-bold text-deep text-sm">${leader.name}</p>
+          <p class="text-xs text-gray-500">${leader.title}</p>
+          <span class="inline-block mt-1 text-[10px] bg-gold/20 text-gold-dark px-2 py-0.5 rounded-full">Trophée ${leader.year}</span>
+        </div>
+      </div>
+    `;
       }).join('');
     }
 
+    function setLanguage(lang) { currentLang = lang; localStorage.setItem('lang', lang); document.documentElement.lang = lang; if (lang === 'ar') document.documentElement.dir = 'rtl'; else document.documentElement.dir = 'ltr'; updateAllTexts(); }
+    function setYear(year) { currentYear = parseInt(year); updateAllTexts(); }
+    function submitReport(e) { e.preventDefault(); document.getElementById('reportForm').querySelectorAll('input,select,textarea,button[type=submit]').forEach(el => el.style.display = 'none'); document.getElementById('reportSuccess').classList.remove('hidden'); lucide.createIcons(); }
+    function resetReportForm() { const form = document.getElementById('reportForm'); form.querySelectorAll('input,select,textarea').forEach(el => el.style.display = ''); form.querySelector('button[type=submit]').style.display = ''; document.getElementById('reportSuccess').classList.add('hidden'); form.reset(); }
+    function initReportRegions() { const s = document.getElementById('reportRegion'); if (s) s.innerHTML = '<option value="">Sélectionnez…</option>' + REGIONS_DATA.map(r => `<option value="${r.id}">${r.name[currentLang]}</option>`).join(''); }
+
     function init() {
-      initPillarPreview();
       startCarousel();
       initReportRegions();
       loadComments();
-      lucide.createIcons();
-      window.navigateTo = navigateTo;
-      window.toggleMobile = toggleMobile;
-      window.updateDashboard = updateDashboard;
-      window.filterIndicators = filterIndicators;
-      window.filterDocs = filterDocs;
-      window.initDashboard = initDashboard;
-      window.initMap = initMap;
-      window.initIndicators = initIndicators;
-      window.initDocs = initDocs;
-      window.initPartners = initPartners;
-      window.submitReport = submitReport;
-      window.resetReportForm = resetReportForm;
-      window.setCommission = setCommission;
-
-      document.getElementById('commentForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const author = document.getElementById('commentAuthor').value;
-        const commission = document.getElementById('commentCommission').value;
-        const text = document.getElementById('commentText').value;
-        if (!text.trim()) return;
-        addComment(commission, author, text);
-        document.getElementById('commentAuthor').value = '';
-        document.getElementById('commentText').value = '';
-        setCommission(commission);
-      });
+      updateAllTexts();
+      document.getElementById('langSwitcher').value = currentLang;
+      document.getElementById('langSwitcher').addEventListener('change', e => setLanguage(e.target.value));
+      document.getElementById('yearSwitcher').value = currentYear;
+      document.getElementById('yearSwitcher').addEventListener('change', e => setYear(e.target.value));
+      document.getElementById('regionFilter').addEventListener('change', () => updateDashboard());
+      document.getElementById('commentForm').addEventListener('submit', e => { e.preventDefault(); const author = document.getElementById('commentAuthor').value; const commission = document.getElementById('commentCommission').value; const text = document.getElementById('commentText').value; if (!text.trim()) return; addComment(commission, author, text); document.getElementById('commentAuthor').value = ''; document.getElementById('commentText').value = ''; setCommission(commission); });
+      window.navigateTo = navigateTo; window.toggleMobile = toggleMobile; window.filterIndicators = filterIndicators; window.filterDocs = filterDocs; window.submitReport = submitReport; window.resetReportForm = resetReportForm; window.setCommission = setCommission;
     }
     init();
   </script>
