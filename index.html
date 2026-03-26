@@ -315,13 +315,26 @@
             class="w-6 h-6"></i></button>
       </div>
     </header>
-    
+
 
     <!-- MOBILE MENU -->
-    <div id="mobileMenu" class="mobile-menu fixed inset-0 z-50 bg-white text-deep flex flex-col">
-      <div class="flex justify-between items-center px-6 h-16 border-b border-deep/10"><span
-          class="font-heading font-bold text-lg">Menu</span> <button onclick="toggleMobile()"><i data-lucide="x"
-            class="w-6 h-6"></i></button></div>
+    <div class="fixed top-4 right-4 z-50 md:hidden">
+      <button onclick="toggleMobile()" class="text-deep text-2xl">
+        ☰
+      </button>
+    </div>
+
+    <!-- MENU MOBILE -->
+    <div id="mobileMenu"
+      class="mobile-menu fixed inset-0 z-50 bg-white text-deep flex flex-col transform -translate-x-full transition-transform duration-300 md:hidden">
+
+      <!-- EN-TÊTE DU MENU (X pour fermer) -->
+      <div class="flex justify-between items-center px-6 h-16 border-b border-white/10">
+        <span class="font-heading font-bold text-lg">Menu</span>
+        <button onclick="toggleMobile()">
+          <i data-lucide="x" class="w-6 h-6 text-deep"></i>
+        </button>
+      </div>
       <nav class="flex flex-col p-6 gap-4 text-lg font-medium overflow-y-auto">
         <span onclick="navigateTo('accueil');toggleMobile()">Accueil</span>
         <span class="font-semibold text-gold mt-2">Observatoire</span>
@@ -334,7 +347,7 @@
         <span class="pl-4" onclick="navigateTo('actualites');toggleMobile()">Actualités</span>
         <span class="pl-4" onclick="navigateTo('evenements');toggleMobile()">Événements</span>
         <span class="font-semibold text-gold mt-2">Engagement</span>
-        <span class="pl-4 font-bold text-gold" onclick="navigateTo('jigeenindeer');toggleMobile()">⭐ Commission
+        <span class="pl-4 font-bold text-gold" onclick="navigateTo('jigeenindeer');toggleMobile()">Commission
           JIGEENINDEER</span>
         <span class="pl-4" onclick="navigateTo('partenaires');toggleMobile()">Partenaires</span>
         <span class="pl-4" onclick="navigateTo('opportunites');toggleMobile()">Opportunités</span>
@@ -342,6 +355,14 @@
         <span class="pl-4" onclick="navigateTo('commissions');toggleMobile()">Communauté</span>
       </nav>
     </div>
+
+    <!-- SCRIPT POUR OUVRIR / FERMER -->
+    <script>
+      function toggleMobile() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.toggle('-translate-x-full'); // affiche ou cache le menu
+      }
+    </script>
 
     <!-- LOGOS COMMISSIONS -->
     <div
@@ -609,7 +630,8 @@
                 <h3 class="font-bold text-xl text-deep">Beautiful Roses × Téléthon LISCA</h3>
                 <p class="text-gray-600 text-sm mt-2">11 Mai 2018 – Ateliers de pose de foulards, maquillage et
                   témoignages d'entrepreneurs pour accompagner les malades. Participation au Téléthon sur la RTS.
-                  <strong>Cagnotte : 198.872.672 FCFA | Audience TV : +2.5M</strong></p>
+                  <strong>Cagnotte : 198.872.672 FCFA | Audience TV : +2.5M</strong>
+                </p>
               </div>
             </div>
             <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
