@@ -285,9 +285,8 @@
     <header class="bg-white text-deep sticky top-0 z-40 shadow-lg">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
         <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('accueil')">
-          <div class="w-9 h-9 rounded-full bg-violet flex items-center justify-center">
-            <span class="text-gold font-heading font-bold text-lg"><img style="width: 100px;height: auto;"
-                src="jeader.jpg" alt=""></span>
+          <div class="w-9 h-9 rounded-full bg-violet flex items-center justify-center overflow-hidden">
+            <img src="jeader.jpg" alt="Logo" class="w-full h-full object-cover">
           </div>
           <div class="leading-tight"><span class="font-heading font-bold text-base tracking-wide">JIGEENINDEX</span>
             <span class="block text-gold text-xs font-medium -mt-0.5">SÉNÉGAL</span>
@@ -347,25 +346,18 @@
             </div>
           </div>
         </nav>
-        <button class="md:hidden text-white" onclick="toggleMobile()"><i data-lucide="menu"
-            class="w-6 h-6"></i></button>
+        <!-- BOUTON HAMBURGER MOBILE (le seul) -->
+        <button class="md:hidden text-deep text-2xl" onclick="toggleMobile()">
+          ☰
+        </button>
       </div>
     </header>
 
     <!-- MOBILE MENU -->
-    <!-- BOUTON HAMBURGER (ouvrir le menu) -->
-    <div class="fixed top-4 right-4 z-50 md:hidden">
-      <button onclick="toggleMobile()" class="text-deep text-2xl">
-        ☰
-      </button>
-    </div>
-
-    <!-- MENU MOBILE -->
     <div id="mobileMenu"
       class="mobile-menu fixed inset-0 z-50 bg-white text-deep flex flex-col transform -translate-x-full transition-transform duration-300 md:hidden">
 
-      <!-- EN-TÊTE DU MENU (X pour fermer) -->
-      <div class="flex justify-between items-center px-6 h-16 border-b border-white/10">
+      <div class="flex justify-between items-center px-6 h-16 border-b border-gray-200">
         <span class="font-heading font-bold text-lg">Menu</span>
         <button onclick="toggleMobile()">
           <i data-lucide="x" class="w-6 h-6 text-deep"></i>
@@ -401,11 +393,10 @@
       </nav>
     </div>
 
-    <!-- SCRIPT POUR OUVRIR / FERMER -->
     <script>
       function toggleMobile() {
         const menu = document.getElementById('mobileMenu');
-        menu.classList.toggle('-translate-x-full'); // affiche ou cache le menu
+        menu.classList.toggle('open');
       }
     </script>
 
@@ -426,7 +417,7 @@
 
     <!-- ========== PAGE ACCUEIL ========== -->
     <div id="page-accueil" class="page active">
-      <!-- Hero carousel -->
+      <!-- Hero carousel avec overlay amélioré pour la lisibilité -->
       <div class="relative h-[520px] overflow-hidden">
         <div id="heroCarousel" class="relative w-full h-full">
           <div class="carousel-slide active" style="background-image: url('a5.jpg');"></div>
@@ -435,14 +426,15 @@
           <div class="carousel-slide" style="background-image: url('a3.jpg');"></div>
           <div class="carousel-slide" style="background-image: url('a6.jpg');"></div>
           <div class="carousel-slide" style="background-image: url('a7.jpg');"></div>
-
         </div>
+        <!-- Overlay semi-transparent pour améliorer le contraste -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 to-black/30 z-5"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4 z-10">
-          <p class="text-gold font-medium tracking-widest uppercase mb-2" data-i18n="hero.slogan">Observatoire national
+          <p class="text-gold font-medium tracking-widest uppercase mb-2 drop-shadow-lg" data-i18n="hero.slogan">Observatoire national
             numérique</p>
-          <h1 class="font-heading text-4xl md:text-5xl font-extrabold leading-tight max-w-2xl" data-i18n="hero.title">
+          <h1 class="font-heading text-3xl md:text-5xl font-extrabold leading-tight max-w-2xl drop-shadow-xl" data-i18n="hero.title">
             Mesurer pour mieux agir</h1>
-          <p class="text-white/90 text-base md:text-lg max-w-xl mt-2" data-i18n="hero.sub">55 indicateurs · 14 régions ·
+          <p class="text-white/90 text-base md:text-lg max-w-xl mt-2 drop-shadow" data-i18n="hero.sub">55 indicateurs · 14 régions ·
             9 piliers</p>
           <button onclick="navigateTo('dashboard')"
             class="mt-6 inline-flex items-center gap-2 bg-violet hover:bg-violet/80 px-6 py-3 rounded-full font-semibold shadow-lg transition"
